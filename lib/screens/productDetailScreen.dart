@@ -607,7 +607,9 @@ List<String> produDes=["Product Description","Benefits"];
                                                     SizedBox(
                                                       height: 10,
                                                     ),
-                                                    Row(children: [
+                                                    Row(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
                                                       Container(
                                                         width:
                                                             MediaQuery.of(context)
@@ -625,6 +627,11 @@ List<String> produDes=["Product Description","Benefits"];
                                                                         13)),
                                                       ),
                                                       Container(
+                                                          width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.45,
                                                         child: Text(
                                                             getVarientsString(),
                                                             style: Theme.of(

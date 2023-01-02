@@ -20,7 +20,11 @@ out/
 # Gradle files
 .gradle/
 build/
-
+.dart_tool/
+windows/
+.flutter-plugins-dependencies
+.flutter-plugins
+.packages
 # Local configuration file (sdk path, etc)
 local.properties
 
