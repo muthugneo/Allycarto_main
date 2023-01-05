@@ -1377,7 +1377,7 @@ List<String> produDes=["Product Description","Benefits"];
                           ),
 
 // Similar products
-                    _isDataLoaded &&
+                    _isDataLoaded &&_productDetail!=null&&
                             _productDetail.similarProductList != null &&
                             _productDetail.similarProductList.length > 0
                         ? Padding(
@@ -1393,7 +1393,7 @@ List<String> produDes=["Product Description","Benefits"];
                           )
                         : SizedBox(),
                     _isDataLoaded
-                        ? _productDetail.similarProductList != null &&
+                        ?_productDetail!=null&& _productDetail.similarProductList != null &&
                                 _productDetail.similarProductList.length > 0
                             ? ListView.builder(
                                 itemCount:

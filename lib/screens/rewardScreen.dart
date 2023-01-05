@@ -121,6 +121,7 @@ class _RewardScreenState extends BaseRouteState {
                 MaterialPageRoute(
                     builder: (context) => PaymentSuccessScreen(
                           '${AppLocalizations.of(context).txt_reward_to_wallet}',
+                          0,
                           a: widget.analytics,
                           o: widget.observer,
                         )),

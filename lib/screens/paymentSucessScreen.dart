@@ -6,20 +6,36 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 
 class PaymentSuccessScreen extends BaseRoute {
   final String text;
-  PaymentSuccessScreen(this.text, {a, o}) : super(a: a, o: o, r: 'PaymentSuccessScreen');
+  final int popCount;
+  PaymentSuccessScreen(
+    this.text,
+    this.popCount, {
+    a,
+    o,
+  }) : super(a: a, o: o, r: 'PaymentSuccessScreen');
   @override
-  _PaymentSuccessScreenState createState() => new _PaymentSuccessScreenState(this.text);
+  _PaymentSuccessScreenState createState() =>
+      new _PaymentSuccessScreenState(this.text, this.popCount);
 }
 
 class _PaymentSuccessScreenState extends BaseRouteState {
   String text;
-  _PaymentSuccessScreenState(this.text) : super();
+  int popCount;
+  _PaymentSuccessScreenState(this.text, this.popCount) : super();
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => BottomNavigationWidget(a: widget.analytics, o: widget.observer)));
+      onWillPop: () async {
+        if (popCount > 0) {
+          Navigator.pop(context);
+          return true;
+        } else {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => BottomNavigationWidget(
+                  a: widget.analytics, o: widget.observer)));
+        }
+
         return null;
       },
       child: Scaffold(
@@ -43,21 +59,31 @@ class _PaymentSuccessScreenState extends BaseRouteState {
               ),
               Text(
                 "${AppLocalizations.of(context).tle_congrates}",
-                style: Theme.of(context).primaryTextTheme.headline3.copyWith(color: Colors.white),
+                style: Theme.of(context)
+                    .primaryTextTheme
+                    .headline3
+                    .copyWith(color: Colors.white),
               ),
               Padding(
                 padding: EdgeInsets.only(left: 20, right: 20, top: 20),
                 child: Text(
                   "$text",
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).primaryTextTheme.overline.copyWith(color: Colors.white, letterSpacing: 0.0),
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .overline
+                      .copyWith(color: Colors.white, letterSpacing: 0.0),
                 ),
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.35),
               TextButton(
-                style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.transparent)),
+                style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.transparent)),
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => BottomNavigationWidget(a: widget.analytics, o: widget.observer)));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => BottomNavigationWidget(
+                          a: widget.analytics, o: widget.observer)));
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -76,6 +102,37 @@ class _PaymentSuccessScreenState extends BaseRouteState {
                       padding: const EdgeInsets.all(4.0),
                       child: Icon(
                         MdiIcons.arrowRight,
+                        color: Colors.white,
+                        size: 20,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              TextButton(
+                style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.transparent)),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Done',
+                      style: TextStyle(
+                        color: Colors.white,
+                        letterSpacing: 2.0,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Icon(
+                        MdiIcons.check,
                         color: Colors.white,
                         size: 20,
                       ),

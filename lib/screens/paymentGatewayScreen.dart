@@ -34,7 +34,8 @@ class PaymentGatewayScreen extends BaseRoute {
     this.order,
   }) : super(a: a, o: o, r: 'PaymentGatewayScreen');
   @override
-  _PaymentGatewayScreenState createState() => new _PaymentGatewayScreenState(screenId, totalAmount,sts, membershipModel, order);
+  _PaymentGatewayScreenState createState() => new _PaymentGatewayScreenState(
+      screenId, totalAmount, sts, membershipModel, order);
 }
 
 class _PaymentGatewayScreenState extends BaseRouteState {
@@ -59,6 +60,7 @@ class _PaymentGatewayScreenState extends BaseRouteState {
   final _formKey = new GlobalKey<FormState>();
   bool _autovalidate = false;
   bool isLoading = false;
+  bool paymentadd = false;
   MembershipModel membershipModel;
   Order order;
   _PaymentGatewayScreenState(
@@ -106,46 +108,55 @@ class _PaymentGatewayScreenState extends BaseRouteState {
                     Visibility(
                       visible: screenId == 3 ? false : true,
                       child: RadioListTile(
-                              controlAffinity: ListTileControlAffinity.trailing,
-                              value: 1,
-                              groupValue: _isWallet,
-                              title: Text(
-                                "ARX Token "+AppLocalizations.of(context).lbl_wallet,
-                                style: Theme.of(context).primaryTextTheme.bodyText1,
-                              ),
-                              subtitle: Text(
-                                '${global.currentUser.wallet}',
-                                style: Theme.of(context).primaryTextTheme.headline1,
-                              ),
-                              secondary: Icon(
-                                MdiIcons.walletOutline,
-                                color: Theme.of(context).primaryIconTheme.color.withOpacity(0.7),
-                                size: 25,
-                              ),
-                              onChanged: (val) async {
+                          controlAffinity: ListTileControlAffinity.trailing,
+                          value: 1,
+                          groupValue: _isWallet,
+                          title: Text(
+                            "ARX Token " +
+                                AppLocalizations.of(context).lbl_wallet,
+                            style: Theme.of(context).primaryTextTheme.bodyText1,
+                          ),
+                          subtitle: Text(
+                            '${global.currentUser.wallet}',
+                            style: Theme.of(context).primaryTextTheme.headline1,
+                          ),
+                          secondary: Icon(
+                            MdiIcons.walletOutline,
+                            color: Theme.of(context)
+                                .primaryIconTheme
+                                .color
+                                .withOpacity(0.7),
+                            size: 25,
+                          ),
+                          onChanged: (val) async {
+                            if (global.currentUser.wallet >= totalAmount) {
+                              if (screenId == 2 && membershipModel != null) {
+                                showOnlyLoaderDialog();
+                                await _buyMemberShip('wallet', 'wallet', null);
+                              } else if (screenId == 1 && order != null) {
+                                showOnlyLoaderDialog();
+                                await _orderCheckOut(
+                                    'success', 'wallet', null, null);
+                              }
+                              _isWallet = val;
+                            } else {
+                              int cAmount =
+                                  totalAmount - global.currentUser.wallet;
+                              paymentadd = true;
+                              totalAmount = cAmount;
+                              showOnlyLoaderDialog();
+                              openCheckout(amount: cAmount);
 
-                                if (global.currentUser.wallet >= totalAmount) {
-                                  if (screenId == 2 && membershipModel != null) {
-                                    showOnlyLoaderDialog();
-                                    await _buyMemberShip('wallet', 'wallet', null);
-                                  } else if (screenId == 1 && order != null) {
-                                    showOnlyLoaderDialog();
-                                    await _orderCheckOut('success', 'wallet', null, null);
-                                  }
-                                  _isWallet = val;
-                                } else {
-                                  int cAmount=
-                                  totalAmount-global.currentUser.wallet;
-openCheckout(amount: cAmount);
-
-                          
-                                  // totalAmount = totalAmount - global.currentUser.wallet;
-                                  setState(() {});
-                                  showSnackBar(key: _scaffoldKey, snackBarMessage: 'Your ARX Token is lower than order value.Please recharge ARX Token!');
-                                }
-                              }),
+                              // totalAmount = totalAmount - global.currentUser.wallet;
+                              setState(() {});
+                              showSnackBar(
+                                  key: _scaffoldKey,
+                                  snackBarMessage:
+                                      'Your ARX Token is lower than order value.Please recharge ARX Token!');
+                            }
+                          }),
                     ),
-                        // : SizedBox(),
+                    // : SizedBox(),
                     // hide
                     // screenId > 1
                     //     ? SizedBox()
@@ -186,23 +197,25 @@ openCheckout(amount: cAmount);
                     //     : ListTile(
                     //         title: Text(AppLocalizations.of(context).lbl_other_methods, style: Theme.of(context).primaryTextTheme.headline5),
                     //       ),
-                    if(sts != true)
-                    global.paymentGateway.razorpay.razorpayStatus == 'Yes'
-                        ? ListTile(
-                            onTap: () {
-                              showOnlyLoaderDialog();
-                              openCheckout();
-                            },
-                            leading: Image.asset(
-                              'assets/razorpay.png',
-                              height: 25,
-                            ),
-                            title: Text(
-                              AppLocalizations.of(context).lbl_rezorpay,
-                              style: Theme.of(context).primaryTextTheme.bodyText1,
-                            ),
-                          )
-                        : SizedBox(),
+                    if (sts != true)
+                      global.paymentGateway.razorpay.razorpayStatus == 'Yes'
+                          ? ListTile(
+                              onTap: () {
+                                showOnlyLoaderDialog();
+                                openCheckout();
+                              },
+                              leading: Image.asset(
+                                'assets/razorpay.png',
+                                height: 25,
+                              ),
+                              title: Text(
+                                AppLocalizations.of(context).lbl_rezorpay,
+                                style: Theme.of(context)
+                                    .primaryTextTheme
+                                    .bodyText1,
+                              ),
+                            )
+                          : SizedBox(),
                     // global.paymentGateway.stripe.stripeStatus == 'Yes'
                     //     ? ListTile(
                     //         onTap: () {
@@ -248,10 +261,14 @@ openCheckout(amount: cAmount);
                   text: TextSpan(
                     style: Theme.of(context).primaryTextTheme.headline5,
                     children: [
-                      TextSpan(text: AppLocalizations.of(context).lbl_total_amount),
+                      TextSpan(
+                          text: AppLocalizations.of(context).lbl_total_amount),
                       TextSpan(
                         text: ' ${global.appInfo.currencySign} $totalAmount',
-                        style: Theme.of(context).primaryTextTheme.headline5.copyWith(fontWeight: FontWeight.bold),
+                        style: Theme.of(context)
+                            .primaryTextTheme
+                            .headline5
+                            .copyWith(fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -273,25 +290,36 @@ openCheckout(amount: cAmount);
     super.initState();
     _init();
   }
- void openCheckout({int amount=0}) async {
-  // void openCheckout() async {
-    print("aaaaaaaaa :: "+global.paymentGateway.razorpay.razorpayKey.toString());
+
+  void openCheckout({int amount = 0}) async {
+    // void openCheckout() async {
+    setState(() {});
+    print("aaaaaaaaa :: " +
+        global.paymentGateway.razorpay.razorpayKey.toString());
     var options;
     options = {
       'key': global.paymentGateway.razorpay.razorpayKey,
       // 'key': "rzp_test_DYDr3B0KYe4086",
-      "image" : "http://allycarto.com/images/app_logo/app_icon/25-08-2022/al2.png",
+      "image":
+          "http://allycarto.com/images/app_logo/app_icon/25-08-2022/al2.png",
       // 'amount': _amountInPaise(totalAmount),
-      'amount': _amountInPaise(amount!=0?amount:totalAmount),
+      'amount': _amountInPaise(amount != 0 ? amount : totalAmount),
       'name': "${global.currentUser.name}",
       "theme": {"color": "#F44336"},
-      'prefill': {'contact': global.currentUser.userPhone, 'email': global.currentUser.email},
+      'prefill': {
+        'contact': global.currentUser.userPhone,
+        'email': global.currentUser.email
+      },
       'currency': 'INR'
     };
 
     try {
+      // _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+      // _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
       hideLoader();
       _razorpay.open(options);
+      // _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+      // _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     } catch (e) {
       debugPrint('Error: e');
     }
@@ -309,16 +337,21 @@ openCheckout(amount: cAmount);
     // }
   }
 
-  _orderCheckOut(String paymentStatus, String paymentMethod, String paymentId, String paymentGateway) async {
+  _orderCheckOut(String paymentStatus, String paymentMethod, String paymentId,
+      String paymentGateway) async {
     try {
       bool isConnected = await br.checkConnectivity();
       if (isConnected) {
-        await apiHelper.checkout(order.cartId, paymentStatus, paymentMethod, _isWallet == 1 ? 'yes' : 'no', paymentId, paymentGateway).then((result) async {
+        await apiHelper
+            .checkout(order.cartId, paymentStatus, paymentMethod,
+                _isWallet == 1 ? 'yes' : 'no', paymentId, paymentGateway)
+            .then((result) async {
           if (result != null) {
             if (result.status == "1") {
               if (_isWallet == 1) {
                 if (global.currentUser.wallet >= totalAmount) {
-                  global.currentUser.wallet = global.currentUser.wallet - totalAmount;
+                  global.currentUser.wallet =
+                      global.currentUser.wallet - totalAmount;
                 } else {
                   global.currentUser.wallet = 0;
                 }
@@ -341,35 +374,45 @@ openCheckout(amount: cAmount);
               );
             } else {
               hideLoader();
-              showSnackBar(key: _scaffoldKey, snackBarMessage: '${result.message}');
+              showSnackBar(
+                  key: _scaffoldKey, snackBarMessage: '${result.message}');
             }
           } else {
             hideLoader();
-            showSnackBar(key: _scaffoldKey, snackBarMessage: 'Something went wrong. Please try again later.');
+            showSnackBar(
+                key: _scaffoldKey,
+                snackBarMessage:
+                    'Something went wrong. Please try again later.');
           }
         });
       } else {
         showNetworkErrorSnackBar(_scaffoldKey);
       }
     } catch (e) {
-      print("Exception - paymentGatewayScreen.dart - _orderCheckOut():" + e.toString());
+      print("Exception - paymentGatewayScreen.dart - _orderCheckOut():" +
+          e.toString());
     }
   }
 
   stripe({int amount, CardModel card, String currency}) async {
     var customers;
     try {
-      customers = await StripeService.createCustomer(email: global.currentUser.email);
+      customers =
+          await StripeService.createCustomer(email: global.currentUser.email);
 
       var paymentMethodsObject = await StripeService.createPaymentMethod(card);
 
-      var paymentIntent = await StripeService.createPaymentIntent(amount, currency, customerId: customers["id"]);
-      var response = await StripeService.confirmPaymentIntent(paymentIntent["id"], paymentMethodsObject["id"]);
+      var paymentIntent = await StripeService.createPaymentIntent(
+          amount, currency,
+          customerId: customers["id"]);
+      var response = await StripeService.confirmPaymentIntent(
+          paymentIntent["id"], paymentMethodsObject["id"]);
       if (response["status"] == 'succeeded') {
         if (screenId == 2 && membershipModel != null) {
           await _buyMemberShip('success', 'stripe', '${response["id"]}');
         } else if (screenId == 1 && order != null) {
-          await _orderCheckOut('success', 'stripe', '${response["id"]}', 'stripe');
+          await _orderCheckOut(
+              'success', 'stripe', '${response["id"]}', 'stripe');
         } else if (screenId == 3) {
           await _rechargeWallet('success', 'stripe', '${response["id"]}');
         }
@@ -390,10 +433,13 @@ openCheckout(amount: cAmount);
         }
       }
     } on PlatformException catch (err) {
-      print('Platfrom Exception: paymentGatewaysScreen.dart -  stripe() : ${err.toString()}');
+      print(
+          'Platfrom Exception: paymentGatewaysScreen.dart -  stripe() : ${err.toString()}');
     } catch (err) {
-      print('Exception: paymentGatewaysScreen.dart -  stripe() : ${err.toString()}');
-      return new StripeTransactionResponse(message: 'Transaction failed: ${err.toString()}', success: false);
+      print(
+          'Exception: paymentGatewaysScreen.dart -  stripe() : ${err.toString()}');
+      return new StripeTransactionResponse(
+          message: 'Transaction failed: ${err.toString()}', success: false);
     }
   }
 
@@ -402,37 +448,47 @@ openCheckout(amount: cAmount);
       int x = amount * 100;
       return x.toString();
     } catch (e) {
-      print("Exception - paymentGatewaysScreen.dart - _amountInPaise():" + e.toString());
+      print("Exception - paymentGatewaysScreen.dart - _amountInPaise():" +
+          e.toString());
       return '0';
     }
   }
 
-  _buyMemberShip(String buyStatus, String paymentGateway, String transactionId) async {
+  _buyMemberShip(
+      String buyStatus, String paymentGateway, String transactionId) async {
     try {
       bool isConnected = await br.checkConnectivity();
       if (isConnected) {
-        await apiHelper.buyMembership(buyStatus, paymentGateway, transactionId, membershipModel.planId).then((result) async {
+        await apiHelper
+            .buyMembership(buyStatus, paymentGateway, transactionId,
+                membershipModel.planId)
+            .then((result) async {
           if (result != null) {
             if (result.status == "1") {
               if (_isWallet == 1) {
                 if (global.currentUser.wallet >= totalAmount) {
-                  global.currentUser.wallet = global.currentUser.wallet - totalAmount;
+                  global.currentUser.wallet =
+                      global.currentUser.wallet - totalAmount;
                 } else {
                   global.currentUser.wallet = 0;
                 }
               }
               hideLoader();
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                    builder: (context) => PaymentSuccessScreen(
-                          'Payment Successfull, Enjoy your journey.',
-                          a: widget.analytics,
-                          o: widget.observer,
-                        )),
-              );
+              Navigator.of(context)
+                  .push(
+                    MaterialPageRoute(
+                        builder: (context) => PaymentSuccessScreen(
+                              'Payment Successfull, Enjoy your journey.',
+                              0,
+                              a: widget.analytics,
+                              o: widget.observer,
+                            )),
+                  )
+                  .then((value) => setState(() {}));
             } else {
               hideLoader();
-              showSnackBar(key: _scaffoldKey, snackBarMessage: '${result.message}');
+              showSnackBar(
+                  key: _scaffoldKey, snackBarMessage: '${result.message}');
             }
           }
         });
@@ -440,30 +496,40 @@ openCheckout(amount: cAmount);
         showNetworkErrorSnackBar(_scaffoldKey);
       }
     } catch (e) {
-      print("Exception - paymentGatewayScreen.dart - _buyMemberShip():" + e.toString());
+      print("Exception - paymentGatewayScreen.dart - _buyMemberShip():" +
+          e.toString());
     }
   }
 
-  _rechargeWallet(String rechargeStatus, String paymentGateway, String paymentId) async {
+  _rechargeWallet(
+      String rechargeStatus, String paymentGateway, String paymentId) async {
     try {
       bool isConnected = await br.checkConnectivity();
       if (isConnected) {
-        await apiHelper.rechargeWallet(rechargeStatus, totalAmount, paymentId, paymentGateway).then((result) async {
+        await apiHelper
+            .rechargeWallet(
+                rechargeStatus, totalAmount, paymentId, paymentGateway)
+            .then((result) async {
           if (result != null) {
             if (result.status == "1") {
-              global.currentUser.wallet = global.currentUser.wallet + totalAmount;
+              global.currentUser.wallet =
+                  global.currentUser.wallet + totalAmount;
               hideLoader();
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                    builder: (context) => PaymentSuccessScreen(
-                          'Wallet recharged successfully. Enjoy your journey.',
-                          a: widget.analytics,
-                          o: widget.observer,
-                        )),
-              );
+              Navigator.of(context)
+                  .push(
+                    MaterialPageRoute(
+                        builder: (context) => PaymentSuccessScreen(
+                              'Wallet recharged successfully. Enjoy your journey.',
+                              2,
+                              a: widget.analytics,
+                              o: widget.observer,
+                            )),
+                  )
+                  .then((value) => setState(() {}));
             } else {
               hideLoader();
-              showSnackBar(key: _scaffoldKey, snackBarMessage: '${result.message}');
+              showSnackBar(
+                  key: _scaffoldKey, snackBarMessage: '${result.message}');
             }
           }
         });
@@ -471,7 +537,8 @@ openCheckout(amount: cAmount);
         showNetworkErrorSnackBar(_scaffoldKey);
       }
     } catch (e) {
-      print("Exception - paymentGatewayScreen.dart - _rechargeWallet():" + e.toString());
+      print("Exception - paymentGatewayScreen.dart - _rechargeWallet():" +
+          e.toString());
     }
   }
 
@@ -481,8 +548,11 @@ openCheckout(amount: cAmount);
         barrierColor: Colors.transparent,
         builder: (BuildContext context) {
           return StatefulBuilder(
-              builder: (BuildContext context, StateSetter setState) => AlertDialog(
-                    backgroundColor: global.isDarkModeEnable ? Theme.of(context).scaffoldBackgroundColor : Theme.of(context).inputDecorationTheme.fillColor,
+              builder: (BuildContext context, StateSetter setState) =>
+                  AlertDialog(
+                    backgroundColor: global.isDarkModeEnable
+                        ? Theme.of(context).scaffoldBackgroundColor
+                        : Theme.of(context).inputDecorationTheme.fillColor,
                     contentPadding: EdgeInsets.all(0),
                     title: Text(
                       AppLocalizations.of(context).lbl_card_Details,
@@ -497,7 +567,8 @@ openCheckout(amount: cAmount);
                                 Navigator.of(context).pop();
                                 setState(() {});
                               },
-                              child: Text('${AppLocalizations.of(context).btn_close}')),
+                              child: Text(
+                                  '${AppLocalizations.of(context).btn_close}')),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 8.0),
                             child: ElevatedButton(
@@ -506,32 +577,44 @@ openCheckout(amount: cAmount);
 
                                   _save(paymentCallId);
                                 },
-                                child: Text('${AppLocalizations.of(context).lbl_pay}')),
+                                child: Text(
+                                    '${AppLocalizations.of(context).lbl_pay}')),
                           )
                         ],
                       )
                     ],
                     content: Form(
                       key: _formKey,
-                      autovalidateMode: _autovalidate ? AutovalidateMode.always : AutovalidateMode.disabled,
+                      autovalidateMode: _autovalidate
+                          ? AutovalidateMode.always
+                          : AutovalidateMode.disabled,
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
+                        padding:
+                            const EdgeInsets.only(left: 15, right: 15, top: 15),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             TextFormField(
-                              style: Theme.of(context).primaryTextTheme.bodyText1,
+                              style:
+                                  Theme.of(context).primaryTextTheme.bodyText1,
                               controller: _cCardNumber,
                               inputFormatters: [
-                                FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                                FilteringTextInputFormatter.allow(
+                                    RegExp(r'[0-9]')),
                                 new LengthLimitingTextInputFormatter(16),
                                 new CardNumberInputFormatter(),
                               ],
                               textInputAction: TextInputAction.next,
                               decoration: new InputDecoration(
-                                fillColor: global.isDarkModeEnable ? Theme.of(context).inputDecorationTheme.fillColor : Theme.of(context).scaffoldBackgroundColor,
-                                contentPadding: EdgeInsets.only(top: 10, left: 10, right: 10),
-                                hintText: AppLocalizations.of(context).lbl_card_number,
+                                fillColor: global.isDarkModeEnable
+                                    ? Theme.of(context)
+                                        .inputDecorationTheme
+                                        .fillColor
+                                    : Theme.of(context).scaffoldBackgroundColor,
+                                contentPadding: EdgeInsets.only(
+                                    top: 10, left: 10, right: 10),
+                                hintText: AppLocalizations.of(context)
+                                    .lbl_card_number,
                                 prefixIcon: Icon(Icons.credit_card),
                               ),
                               textCapitalization: TextCapitalization.none,
@@ -542,13 +625,15 @@ openCheckout(amount: cAmount);
                               // ignore: missing_return
                               validator: (input) {
                                 if (input.isEmpty) {
-                                  return AppLocalizations.of(context).txt_enter_card_number;
+                                  return AppLocalizations.of(context)
+                                      .txt_enter_card_number;
                                 }
 
                                 input = br.getCleanedNumber(input);
 
                                 if (input.length < 8) {
-                                  return AppLocalizations.of(context).txt_enter_valid_card_number;
+                                  return AppLocalizations.of(context)
+                                      .txt_enter_valid_card_number;
                                 }
 
                                 int sum = 0;
@@ -568,7 +653,8 @@ openCheckout(amount: cAmount);
                                   return null;
                                 }
 
-                                return AppLocalizations.of(context).txt_enter_valid_card_number;
+                                return AppLocalizations.of(context)
+                                    .txt_enter_valid_card_number;
                               },
                             ),
                             SizedBox(
@@ -578,32 +664,44 @@ openCheckout(amount: cAmount);
                               children: [
                                 Expanded(
                                   child: TextFormField(
-                                    style: Theme.of(context).primaryTextTheme.bodyText1,
+                                    style: Theme.of(context)
+                                        .primaryTextTheme
+                                        .bodyText1,
                                     inputFormatters: [
-                                      FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                                      FilteringTextInputFormatter.allow(
+                                          RegExp(r'[0-9]')),
                                       new LengthLimitingTextInputFormatter(4),
                                       new CardMonthInputFormatter(),
                                     ],
                                     controller: _cExpiry,
                                     textInputAction: TextInputAction.next,
                                     decoration: new InputDecoration(
-                                      fillColor: global.isDarkModeEnable ? Theme.of(context).inputDecorationTheme.fillColor : Theme.of(context).scaffoldBackgroundColor,
-                                      contentPadding: EdgeInsets.only(top: 10, left: 10, right: 10),
+                                      fillColor: global.isDarkModeEnable
+                                          ? Theme.of(context)
+                                              .inputDecorationTheme
+                                              .fillColor
+                                          : Theme.of(context)
+                                              .scaffoldBackgroundColor,
+                                      contentPadding: EdgeInsets.only(
+                                          top: 10, left: 10, right: 10),
                                       prefixIcon: Icon(
                                         Icons.date_range,
                                       ),
                                       hintText: 'MM/YY',
                                     ),
-                                    textCapitalization: TextCapitalization.sentences,
+                                    textCapitalization:
+                                        TextCapitalization.sentences,
                                     keyboardType: TextInputType.number,
                                     onFieldSubmitted: (value) {
-                                      List<int> expiryDate = br.getExpiryDate(value);
+                                      List<int> expiryDate =
+                                          br.getExpiryDate(value);
                                       _month = expiryDate[0];
                                       _year = expiryDate[1];
                                     },
                                     validator: (value) {
                                       if (value.isEmpty) {
-                                        return AppLocalizations.of(context).txt_enter_expiry_date;
+                                        return AppLocalizations.of(context)
+                                            .txt_enter_expiry_date;
                                       }
 
                                       int year;
@@ -611,31 +709,39 @@ openCheckout(amount: cAmount);
                                       // The value contains a forward slash if the month and year has been
                                       // entered.
                                       if (value.contains(new RegExp(r'(\/)'))) {
-                                        var split = value.split(new RegExp(r'(\/)'));
+                                        var split =
+                                            value.split(new RegExp(r'(\/)'));
                                         // The value before the slash is the month while the value to right of
                                         // it is the year.
                                         month = int.parse(split[0]);
                                         year = int.parse(split[1]);
                                       } else {
                                         // Only the month was entered
-                                        month = int.parse(value.substring(0, (value.length)));
-                                        year = -1; // Lets use an invalid year intentionally
+                                        month = int.parse(
+                                            value.substring(0, (value.length)));
+                                        year =
+                                            -1; // Lets use an invalid year intentionally
                                       }
 
                                       if ((month < 1) || (month > 12)) {
                                         // A valid month is between 1 (January) and 12 (December)
-                                        return AppLocalizations.of(context).txt_expiry_month_is_invalid;
+                                        return AppLocalizations.of(context)
+                                            .txt_expiry_month_is_invalid;
                                       }
 
-                                      var fourDigitsYear = br.convertYearTo4Digits(year);
-                                      if ((fourDigitsYear < 1) || (fourDigitsYear > 2099)) {
+                                      var fourDigitsYear =
+                                          br.convertYearTo4Digits(year);
+                                      if ((fourDigitsYear < 1) ||
+                                          (fourDigitsYear > 2099)) {
                                         // We are assuming a valid should be between 1 and 2099.
                                         // Note that, it's valid doesn't mean that it has not expired.
-                                        return AppLocalizations.of(context).txt_expiry_year_is_invalid;
+                                        return AppLocalizations.of(context)
+                                            .txt_expiry_year_is_invalid;
                                       }
 
                                       if (!br.hasDateExpired(month, year)) {
-                                        return AppLocalizations.of(context).txt_card_has_expired;
+                                        return AppLocalizations.of(context)
+                                            .txt_card_has_expired;
                                       }
                                       return null;
                                     },
@@ -646,29 +752,43 @@ openCheckout(amount: cAmount);
                                 ),
                                 Expanded(
                                   child: TextFormField(
-                                    style: Theme.of(context).primaryTextTheme.bodyText1,
+                                    style: Theme.of(context)
+                                        .primaryTextTheme
+                                        .bodyText1,
                                     inputFormatters: [
-                                      FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                                      FilteringTextInputFormatter.allow(
+                                          RegExp(r'[0-9]')),
                                       new LengthLimitingTextInputFormatter(3),
                                     ],
                                     controller: _cCvv,
                                     obscureText: true,
                                     textInputAction: TextInputAction.next,
                                     decoration: new InputDecoration(
-                                      fillColor: global.isDarkModeEnable ? Theme.of(context).inputDecorationTheme.fillColor : Theme.of(context).scaffoldBackgroundColor,
-                                      contentPadding: EdgeInsets.only(top: 10, left: 10, right: 10),
+                                      fillColor: global.isDarkModeEnable
+                                          ? Theme.of(context)
+                                              .inputDecorationTheme
+                                              .fillColor
+                                          : Theme.of(context)
+                                              .scaffoldBackgroundColor,
+                                      contentPadding: EdgeInsets.only(
+                                          top: 10, left: 10, right: 10),
                                       prefixIcon: Icon(
                                         MdiIcons.creditCard,
                                       ),
-                                      hintText: AppLocalizations.of(context).lbl_cvv,
+                                      hintText:
+                                          AppLocalizations.of(context).lbl_cvv,
                                     ),
-                                    textCapitalization: TextCapitalization.sentences,
+                                    textCapitalization:
+                                        TextCapitalization.sentences,
                                     keyboardType: TextInputType.number,
                                     validator: (value) {
                                       if (value.isEmpty) {
-                                        return AppLocalizations.of(context).lbl_enter_cvv;
-                                      } else if (value.length < 3 || value.length > 4) {
-                                        return AppLocalizations.of(context).txt_cvv_is_invalid;
+                                        return AppLocalizations.of(context)
+                                            .lbl_enter_cvv;
+                                      } else if (value.length < 3 ||
+                                          value.length > 4) {
+                                        return AppLocalizations.of(context)
+                                            .txt_cvv_is_invalid;
                                       }
                                       return null;
                                     },
@@ -680,19 +800,27 @@ openCheckout(amount: cAmount);
                               height: 10,
                             ),
                             TextFormField(
-                              style: Theme.of(context).primaryTextTheme.bodyText1,
+                              style:
+                                  Theme.of(context).primaryTextTheme.bodyText1,
                               controller: _cName,
                               textInputAction: TextInputAction.next,
                               inputFormatters: [
-                                FilteringTextInputFormatter.allow(RegExp('[a-zA-Z ]')),
+                                FilteringTextInputFormatter.allow(
+                                    RegExp('[a-zA-Z ]')),
                               ],
                               decoration: new InputDecoration(
-                                fillColor: global.isDarkModeEnable ? Theme.of(context).inputDecorationTheme.fillColor : Theme.of(context).scaffoldBackgroundColor,
-                                contentPadding: EdgeInsets.only(top: 10, left: 10, right: 10),
+                                fillColor: global.isDarkModeEnable
+                                    ? Theme.of(context)
+                                        .inputDecorationTheme
+                                        .fillColor
+                                    : Theme.of(context).scaffoldBackgroundColor,
+                                contentPadding: EdgeInsets.only(
+                                    top: 10, left: 10, right: 10),
                                 prefixIcon: Icon(
                                   Icons.person,
                                 ),
-                                hintText: AppLocalizations.of(context).txt_card_holder_name,
+                                hintText: AppLocalizations.of(context)
+                                    .txt_card_holder_name,
                               ),
                               textCapitalization: TextCapitalization.words,
                               keyboardType: TextInputType.text,
@@ -771,7 +899,9 @@ openCheckout(amount: cAmount);
             if (result.status == "1") {
               global.paymentGateway = result.data;
             } else {
-              showSnackBar(key: _scaffoldKey, snackBarMessage: result.message.toString());
+              showSnackBar(
+                  key: _scaffoldKey,
+                  snackBarMessage: result.message.toString());
             }
           }
         });
@@ -779,7 +909,9 @@ openCheckout(amount: cAmount);
         showNetworkErrorSnackBar(_scaffoldKey);
       }
     } catch (e) {
-      print("Exception - paymentGatewaysScreen.dart.dart - _getPaymentGateways():" + e.toString());
+      print(
+          "Exception - paymentGatewaysScreen.dart.dart - _getPaymentGateways():" +
+              e.toString());
     }
   }
 
@@ -807,39 +939,46 @@ openCheckout(amount: cAmount);
             await _buyMemberShip('failed', 'razorpay', null);
           } else if (screenId == 1 && order != null) {
             await _orderCheckOut('failed', 'razorpay', null, 'razorpay');
-          } else if (screenId == 3) {
+          } else if (screenId == 3 || paymentadd) {
             await _rechargeWallet('failed', 'razorpay', null);
           }
         }
-
+        paymentadd = false;
         hideLoader();
         _tryAgainDialog(openCheckout);
         setState(() {});
       } else {
         showNetworkErrorSnackBar(_scaffoldKey);
       }
-      showSnackBar(key: _scaffoldKey, snackBarMessage: AppLocalizations.of(context).lbl_transaction_failed);
+      showSnackBar(
+          key: _scaffoldKey,
+          snackBarMessage: AppLocalizations.of(context).lbl_transaction_failed);
     } catch (e) {
-      print("Exception - paymentGatewaysScreen.dart -  _handlePaymentError" + e.toString());
+      print("Exception - paymentGatewaysScreen.dart -  _handlePaymentError" +
+          e.toString());
     }
   }
 
   _handlePaymentSuccess(PaymentSuccessResponse response) async {
     try {
-      print("response   -  _handlePaymentSuccess   ${response.orderId} ${response.paymentId}");
+      print(
+          "response   -  _handlePaymentSuccess   ${response.orderId} ${response.paymentId}");
       if (response != null && response.paymentId != null) {
         showOnlyLoaderDialog();
 
         if (screenId == 2 && membershipModel != null) {
           await _buyMemberShip('success', 'razorpay', '${response.paymentId}');
-        } else if (screenId == 1 && order != null) {
-          await _orderCheckOut('success', 'razorpay', '${response.paymentId}', 'razorpay');
-        } else if (screenId == 3) {
+        } else if (screenId == 3 || paymentadd) {
           await _rechargeWallet('success', 'razorpay', '${response.paymentId}');
+        } else if (screenId == 1 && order != null) {
+          await _orderCheckOut(
+              'success', 'razorpay', '${response.paymentId}', 'razorpay');
         }
       }
+      paymentadd = false;
     } catch (e) {
-      print("Exception - paymentGetwaysScreen.dart- _handlePaymentSuccess():" + e.toString());
+      print("Exception - paymentGetwaysScreen.dart- _handlePaymentSuccess():" +
+          e.toString());
     }
   }
 
@@ -849,6 +988,7 @@ openCheckout(amount: cAmount);
       _razorpay = Razorpay();
       _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
       _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+      _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handlePaymentSuccess);
       if (totalAmount != null) {
         if (screenId == 2 && membershipModel != null) {
           totalAmount = membershipModel.price;
@@ -857,7 +997,8 @@ openCheckout(amount: cAmount);
       _isDataLoaded = true;
       setState(() {});
     } catch (e) {
-      print("Exception - paymentGatewaysScreen.dart.dart - _init():" + e.toString());
+      print("Exception - paymentGatewaysScreen.dart.dart - _init():" +
+          e.toString());
     }
   }
 
@@ -896,14 +1037,18 @@ openCheckout(amount: cAmount);
         },
       );
     } catch (e) {
-      print("Exception - productDetailScreen.dart - _productShimmer():" + e.toString());
+      print("Exception - productDetailScreen.dart - _productShimmer():" +
+          e.toString());
       return SizedBox();
     }
   }
 
   Future _save(int callId) async {
     try {
-      if (_cCardNumber.text.trim().isNotEmpty && _cExpiry.text.trim().isNotEmpty && _cCvv.text.trim().isNotEmpty && _cName.text.trim().isNotEmpty) {
+      if (_cCardNumber.text.trim().isNotEmpty &&
+          _cExpiry.text.trim().isNotEmpty &&
+          _cCvv.text.trim().isNotEmpty &&
+          _cName.text.trim().isNotEmpty) {
         if (_formKey.currentState.validate()) {
           bool isConnected = await br.checkConnectivity();
           if (isConnected) {
@@ -918,13 +1063,17 @@ openCheckout(amount: cAmount);
             if (callId == 1) {
               payStack(global.paymentGateway.paystack.paystackSeckeyKey);
             } else {
-              await stripe(card: stripeCard, amount: totalAmount.toInt() * 100, currency: '${global.appInfo.paymentCurrency}');
+              await stripe(
+                  card: stripeCard,
+                  amount: totalAmount.toInt() * 100,
+                  currency: '${global.appInfo.paymentCurrency}');
             }
           }
         }
       }
     } catch (e) {
-      print("Exception - paymentGatewaysScreen.dart - _save(): " + e.toString());
+      print(
+          "Exception - paymentGatewaysScreen.dart - _save(): " + e.toString());
     }
   }
 
@@ -983,7 +1132,8 @@ openCheckout(amount: cAmount);
             );
           });
     } catch (e) {
-      print('Exception - paymentGatewaysScreen.dart - _tryAgainDialog(): ' + e.toString());
+      print('Exception - paymentGatewaysScreen.dart - _tryAgainDialog(): ' +
+          e.toString());
     }
   }
 }
