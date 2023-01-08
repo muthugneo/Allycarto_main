@@ -89,21 +89,39 @@ class _OrderListScreenState extends BaseRouteState {
                                   Radius.circular(10.0),
                                 ),
                               ),
-                              backgroundColor: global.isDarkModeEnable ? Color(0xFF435276) : Color(0xFFEDF2F6),
+                              backgroundColor: global.isDarkModeEnable
+                                  ? Color(0xFF435276)
+                                  : Color(0xFFEDF2F6),
                               bottom: TabBar(
                                 indicator: UnderlineTabIndicator(
                                   borderSide: BorderSide(
                                     width: 3.0,
-                                    color: global.isDarkModeEnable ? Theme.of(context).primaryColor : Color(0xFFEF5656),
+                                    color: global.isDarkModeEnable
+                                        ? Theme.of(context).primaryColor
+                                        : Color(0xFFEF5656),
                                   ),
                                   insets: EdgeInsets.symmetric(horizontal: 8.0),
                                 ),
-                                labelColor: global.isDarkModeEnable ? Colors.white : Colors.black,
+                                labelColor: global.isDarkModeEnable
+                                    ? Colors.white
+                                    : Colors.black,
                                 indicatorWeight: 4,
-                                unselectedLabelStyle: TextStyle(fontSize: 13, color: global.isDarkModeEnable ? Colors.white : Colors.black, fontWeight: FontWeight.w400),
-                                labelStyle: TextStyle(fontSize: 13, color: global.isDarkModeEnable ? Colors.white : Colors.black, fontWeight: FontWeight.bold),
+                                unselectedLabelStyle: TextStyle(
+                                    fontSize: 13,
+                                    color: global.isDarkModeEnable
+                                        ? Colors.white
+                                        : Colors.black,
+                                    fontWeight: FontWeight.w400),
+                                labelStyle: TextStyle(
+                                    fontSize: 13,
+                                    color: global.isDarkModeEnable
+                                        ? Colors.white
+                                        : Colors.black,
+                                    fontWeight: FontWeight.bold),
                                 indicatorSize: TabBarIndicatorSize.label,
-                                indicatorColor: global.isDarkModeEnable ? Theme.of(context).primaryColor : Color(0xFFEF5656),
+                                indicatorColor: global.isDarkModeEnable
+                                    ? Theme.of(context).primaryColor
+                                    : Color(0xFFEF5656),
                                 tabs: [
                                   Tab(
                                       child: Text(
@@ -169,7 +187,10 @@ class _OrderListScreenState extends BaseRouteState {
                           onTap: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) => OrderDetailScreen(_allOrderList[index], a: widget.analytics, o: widget.observer),
+                                builder: (context) => OrderDetailScreen(
+                                    _allOrderList[index],
+                                    a: widget.analytics,
+                                    o: widget.observer),
                               ),
                             );
                           },
@@ -180,7 +201,8 @@ class _OrderListScreenState extends BaseRouteState {
                                 padding: EdgeInsets.only(top: 0.0),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Container(
@@ -188,45 +210,67 @@ class _OrderListScreenState extends BaseRouteState {
                                         borderRadius: BorderRadius.all(
                                           Radius.circular(10.0),
                                         ),
-                                        color: global.isDarkModeEnable ? Color(0xFF373C58) : Color(0xFFF2F5F8),
+                                        color: global.isDarkModeEnable
+                                            ? Color(0xFF373C58)
+                                            : Color(0xFFF2F5F8),
                                       ),
-                                      padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 4, horizontal: 8),
                                       child: Text(
                                         _allOrderList[index].cartId,
-                                        style: Theme.of(context).primaryTextTheme.headline2,
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .headline2,
                                       ),
                                     ),
                                     Expanded(child: SizedBox()),
                                     Icon(
-                                      _allOrderList[index].orderStatus == 'Cancelled' ? MdiIcons.closeOctagon : MdiIcons.checkDecagram,
+                                      _allOrderList[index].orderStatus ==
+                                              'Cancelled'
+                                          ? MdiIcons.closeOctagon
+                                          : MdiIcons.checkDecagram,
                                       size: 20,
-                                      color: _allOrderList[index].orderStatus == 'Cancelled'
+                                      color: _allOrderList[index].orderStatus ==
+                                              'Cancelled'
                                           ? Colors.red
-                                          : _allOrderList[index].orderStatus == 'Completed'
+                                          : _allOrderList[index].orderStatus ==
+                                                  'Completed'
                                               ? Colors.greenAccent
-                                              : _allOrderList[index].orderStatus == 'Confirmed'
+                                              : _allOrderList[index]
+                                                          .orderStatus ==
+                                                      'Confirmed'
                                                   ? Colors.blue
-                                                  : _allOrderList[index].orderStatus == 'Pending'
+                                                  : _allOrderList[index]
+                                                              .orderStatus ==
+                                                          'Pending'
                                                       ? Colors.yellow
-                                                      : Theme.of(context).primaryColorLight,
+                                                      : Theme.of(context)
+                                                          .primaryColorLight,
                                     ),
                                     Padding(
-                                      padding: global.isRTL ? EdgeInsets.only(right: 8) : EdgeInsets.only(left: 8.0),
+                                      padding: global.isRTL
+                                          ? EdgeInsets.only(right: 8)
+                                          : EdgeInsets.only(left: 8.0),
                                       child: Text(
                                         _allOrderList[index].orderStatus,
-                                        style: Theme.of(context).primaryTextTheme.headline2,
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .headline2,
                                       ),
                                     )
                                   ],
                                 ),
                               ),
                               ListTile(
-                                visualDensity: VisualDensity(vertical: -3, horizontal: -4),
+                                visualDensity:
+                                    VisualDensity(vertical: -3, horizontal: -4),
                                 contentPadding: EdgeInsets.all(0),
                                 minLeadingWidth: 0,
                                 title: Text(
                                   _allOrderList[index].userName,
-                                  style: Theme.of(context).primaryTextTheme.bodyText1,
+                                  style: Theme.of(context)
+                                      .primaryTextTheme
+                                      .bodyText1,
                                 ),
                                 // subtitle: Row(
                                 //   children: [
@@ -246,18 +290,28 @@ class _OrderListScreenState extends BaseRouteState {
                                     children: [
                                       Text(
                                         "${global.appInfo.currencySign} ${_allOrderList[index].remPrice > 0 ? _allOrderList[index].remPrice : _allOrderList[index].paidByWallet}",
-                                        style: Theme.of(context).primaryTextTheme.bodyText1,
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .bodyText1,
                                       ),
                                       Text(
                                         "${_allOrderList[index].paymentMethod}",
-                                        style: Theme.of(context).primaryTextTheme.headline2.copyWith(color: Colors.red),
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .headline2
+                                            .copyWith(color: Colors.red),
                                       ),
                                     ],
                                   ),
                                 ),
                               ),
                               Divider(
-                                color: global.isDarkModeEnable ? Theme.of(context).dividerTheme.color.withOpacity(0.05) : Theme.of(context).dividerTheme.color,
+                                color: global.isDarkModeEnable
+                                    ? Theme.of(context)
+                                        .dividerTheme
+                                        .color
+                                        .withOpacity(0.05)
+                                    : Theme.of(context).dividerTheme.color,
                               ),
                             ],
                           ),
@@ -300,7 +354,10 @@ class _OrderListScreenState extends BaseRouteState {
                           onTap: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) => OrderDetailScreen(_completedOrdeList[index], a: widget.analytics, o: widget.observer),
+                                builder: (context) => OrderDetailScreen(
+                                    _completedOrdeList[index],
+                                    a: widget.analytics,
+                                    o: widget.observer),
                               ),
                             );
                           },
@@ -311,7 +368,8 @@ class _OrderListScreenState extends BaseRouteState {
                                 padding: EdgeInsets.only(top: 0.0),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Container(
@@ -319,49 +377,77 @@ class _OrderListScreenState extends BaseRouteState {
                                         borderRadius: BorderRadius.all(
                                           Radius.circular(10.0),
                                         ),
-                                        color: global.isDarkModeEnable ? Color(0xFF373C58) : Color(0xFFF2F5F8),
+                                        color: global.isDarkModeEnable
+                                            ? Color(0xFF373C58)
+                                            : Color(0xFFF2F5F8),
                                       ),
-                                      padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 4, horizontal: 8),
                                       child: Text(
                                         _completedOrdeList[index].cartId,
-                                        style: Theme.of(context).primaryTextTheme.headline2,
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .headline2,
                                       ),
                                     ),
                                     Expanded(child: SizedBox()),
                                     Icon(
-                                      _completedOrdeList[index].orderStatus == 'Cancelled' ? MdiIcons.closeOctagon : MdiIcons.checkDecagram,
+                                      _completedOrdeList[index].orderStatus ==
+                                              'Cancelled'
+                                          ? MdiIcons.closeOctagon
+                                          : MdiIcons.checkDecagram,
                                       size: 20,
-                                      color: _completedOrdeList[index].orderStatus == 'Cancelled'
+                                      color: _completedOrdeList[index]
+                                                  .orderStatus ==
+                                              'Cancelled'
                                           ? Colors.red
-                                          : _completedOrdeList[index].orderStatus == 'Completed'
+                                          : _completedOrdeList[index]
+                                                      .orderStatus ==
+                                                  'Completed'
                                               ? Colors.greenAccent
-                                              : _completedOrdeList[index].orderStatus == 'Confirmed'
+                                              : _completedOrdeList[index]
+                                                          .orderStatus ==
+                                                      'Confirmed'
                                                   ? Colors.blue
-                                                  : _completedOrdeList[index].orderStatus == 'Pending'
+                                                  : _completedOrdeList[index]
+                                                              .orderStatus ==
+                                                          'Pending'
                                                       ? Colors.yellow
-                                                      : Theme.of(context).primaryColorLight,
+                                                      : Theme.of(context)
+                                                          .primaryColorLight,
                                     ),
                                     Padding(
-                                      padding: global.isRTL ? EdgeInsets.only(right: 8) : EdgeInsets.only(left: 8.0),
+                                      padding: global.isRTL
+                                          ? EdgeInsets.only(right: 8)
+                                          : EdgeInsets.only(left: 8.0),
                                       child: Text(
                                         _completedOrdeList[index].orderStatus,
-                                        style: Theme.of(context).primaryTextTheme.headline2,
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .headline2,
                                       ),
                                     )
                                   ],
                                 ),
                               ),
                               ListTile(
-                                visualDensity: VisualDensity(vertical: -3, horizontal: -4),
+                                visualDensity:
+                                    VisualDensity(vertical: -3, horizontal: -4),
                                 contentPadding: EdgeInsets.all(0),
                                 minLeadingWidth: 0,
                                 title: Text(
                                   _completedOrdeList[index].userName,
-                                  style: Theme.of(context).primaryTextTheme.bodyText1,
+                                  style: Theme.of(context)
+                                      .primaryTextTheme
+                                      .bodyText1,
                                 ),
                                 subtitle: Text(
-                                  _completedOrdeList[index].timeSlot + ' | ' + _completedOrdeList[index].deliveryDate,
-                                  style: Theme.of(context).primaryTextTheme.headline2,
+                                  _completedOrdeList[index].timeSlot +
+                                      ' | ' +
+                                      _completedOrdeList[index].deliveryDate,
+                                  style: Theme.of(context)
+                                      .primaryTextTheme
+                                      .headline2,
                                 ),
                                 trailing: Column(
                                   mainAxisSize: MainAxisSize.min,
@@ -370,17 +456,27 @@ class _OrderListScreenState extends BaseRouteState {
                                   children: [
                                     Text(
                                       "${global.appInfo.currencySign} ${_completedOrdeList[index].remPrice > 0 ? _completedOrdeList[index].remPrice : _completedOrdeList[index].paidByWallet}",
-                                      style: Theme.of(context).primaryTextTheme.bodyText1,
+                                      style: Theme.of(context)
+                                          .primaryTextTheme
+                                          .bodyText1,
                                     ),
                                     Text(
                                       "${_completedOrdeList[index].paymentMethod}",
-                                      style: Theme.of(context).primaryTextTheme.headline2.copyWith(color: Colors.red),
+                                      style: Theme.of(context)
+                                          .primaryTextTheme
+                                          .headline2
+                                          .copyWith(color: Colors.red),
                                     ),
                                   ],
                                 ),
                               ),
                               Divider(
-                                color: global.isDarkModeEnable ? Theme.of(context).dividerTheme.color.withOpacity(0.05) : Theme.of(context).dividerTheme.color,
+                                color: global.isDarkModeEnable
+                                    ? Theme.of(context)
+                                        .dividerTheme
+                                        .color
+                                        .withOpacity(0.05)
+                                    : Theme.of(context).dividerTheme.color,
                               ),
                             ],
                           ),
@@ -412,7 +508,9 @@ class _OrderListScreenState extends BaseRouteState {
       await _getOnGoingOrder();
       await _getCompletedOrder();
       _allOrderScrollController.addListener(() async {
-        if (_allOrderScrollController.position.pixels == _allOrderScrollController.position.maxScrollExtent && !_isAllOrderMoreDataLoaded) {
+        if (_allOrderScrollController.position.pixels ==
+                _allOrderScrollController.position.maxScrollExtent &&
+            !_isAllOrderMoreDataLoaded) {
           setState(() {
             _isAllOrderMoreDataLoaded = true;
           });
@@ -424,7 +522,9 @@ class _OrderListScreenState extends BaseRouteState {
       });
 
       _ongoingScrollController.addListener(() async {
-        if (_ongoingScrollController.position.pixels == _ongoingScrollController.position.maxScrollExtent && !_isOngoingOrderMoreDataLoaded) {
+        if (_ongoingScrollController.position.pixels ==
+                _ongoingScrollController.position.maxScrollExtent &&
+            !_isOngoingOrderMoreDataLoaded) {
           setState(() {
             _isOngoingOrderMoreDataLoaded = true;
           });
@@ -436,7 +536,9 @@ class _OrderListScreenState extends BaseRouteState {
       });
 
       _completedScrollController.addListener(() async {
-        if (_completedScrollController.position.pixels == _completedScrollController.position.maxScrollExtent && !_isCompletedOrderMoreDataLoaded) {
+        if (_completedScrollController.position.pixels ==
+                _completedScrollController.position.maxScrollExtent &&
+            !_isCompletedOrderMoreDataLoaded) {
           setState(() {
             _isCompletedOrderMoreDataLoaded = true;
           });
@@ -481,7 +583,8 @@ class _OrderListScreenState extends BaseRouteState {
         });
       }
     } catch (e) {
-      print("Exception - orderListScreen.dart - _getAllOrder():" + e.toString());
+      print(
+          "Exception - orderListScreen.dart - _getAllOrder():" + e.toString());
     }
   }
 
@@ -512,7 +615,8 @@ class _OrderListScreenState extends BaseRouteState {
         });
       }
     } catch (e) {
-      print("Exception - orderListScreen.dart - _getOnGoingOrder():" + e.toString());
+      print("Exception - orderListScreen.dart - _getOnGoingOrder():" +
+          e.toString());
     }
   }
 
@@ -527,7 +631,9 @@ class _OrderListScreenState extends BaseRouteState {
         } else {
           _completedOrderPage++;
         }
-        await apiHelper.completedOrder(_completedOrderPage).then((result) async {
+        await apiHelper
+            .completedOrder(_completedOrderPage)
+            .then((result) async {
           if (result != null) {
             if (result.status == "1") {
               List<Order> _tList = result.data;
@@ -543,7 +649,8 @@ class _OrderListScreenState extends BaseRouteState {
         });
       }
     } catch (e) {
-      print("Exception - productListScreen.dart - _getSubcategoryProduct():" + e.toString());
+      print("Exception - productListScreen.dart - _getSubcategoryProduct():" +
+          e.toString());
     }
   }
 
@@ -564,7 +671,10 @@ class _OrderListScreenState extends BaseRouteState {
                           onTap: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) => OrderDetailScreen(_onGoingOrderList[index], a: widget.analytics, o: widget.observer),
+                                builder: (context) => OrderDetailScreen(
+                                    _onGoingOrderList[index],
+                                    a: widget.analytics,
+                                    o: widget.observer),
                               ),
                             );
                           },
@@ -575,7 +685,8 @@ class _OrderListScreenState extends BaseRouteState {
                                 padding: EdgeInsets.only(top: 0.0),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Container(
@@ -583,49 +694,82 @@ class _OrderListScreenState extends BaseRouteState {
                                         borderRadius: BorderRadius.all(
                                           Radius.circular(10.0),
                                         ),
-                                        color: global.isDarkModeEnable ? Color(0xFF373C58) : Color(0xFFF2F5F8),
+                                        color: global.isDarkModeEnable
+                                            ? Color(0xFF373C58)
+                                            : Color(0xFFF2F5F8),
                                       ),
-                                      padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 4, horizontal: 8),
                                       child: Text(
                                         _onGoingOrderList[index].cartId,
-                                        style: Theme.of(context).primaryTextTheme.headline2,
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .headline2,
                                       ),
                                     ),
                                     Expanded(child: SizedBox()),
                                     Icon(
-                                      _onGoingOrderList[index].orderStatus == 'Cancelled' ? MdiIcons.closeOctagon : MdiIcons.checkDecagram,
+                                      _onGoingOrderList[index].orderStatus ==
+                                              'Cancelled'
+                                          ? MdiIcons.closeOctagon
+                                          : MdiIcons.checkDecagram,
                                       size: 20,
-                                      color: _onGoingOrderList[index].orderStatus == 'Cancelled'
+                                      color: _onGoingOrderList[index]
+                                                  .orderStatus ==
+                                              'Cancelled'
                                           ? Colors.red
-                                          : _onGoingOrderList[index].orderStatus == 'Completed'
+                                          : _onGoingOrderList[index]
+                                                      .orderStatus ==
+                                                  'Completed'
                                               ? Colors.greenAccent
-                                              : _onGoingOrderList[index].orderStatus == 'Confirmed'
+                                              : _onGoingOrderList[index]
+                                                          .orderStatus ==
+                                                      'Confirmed'
                                                   ? Colors.blue
-                                                  : _onGoingOrderList[index].orderStatus == 'Pending'
+                                                  : _onGoingOrderList[index]
+                                                              .orderStatus ==
+                                                          'Pending'
                                                       ? Colors.yellow
-                                                      : Theme.of(context).primaryColorLight,
+                                                      : Theme.of(context)
+                                                          .primaryColorLight,
                                     ),
                                     Padding(
-                                      padding: global.isRTL ? EdgeInsets.only(right: 8) : EdgeInsets.only(left: 8.0),
+                                      padding: global.isRTL
+                                          ? EdgeInsets.only(right: 8)
+                                          : EdgeInsets.only(left: 8.0),
                                       child: Text(
                                         _onGoingOrderList[index].orderStatus,
-                                        style: Theme.of(context).primaryTextTheme.headline2,
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .headline2,
                                       ),
                                     )
                                   ],
                                 ),
                               ),
                               ListTile(
-                                visualDensity: VisualDensity(vertical: -3, horizontal: -4),
+                                visualDensity:
+                                    VisualDensity(vertical: -3, horizontal: -4),
                                 contentPadding: EdgeInsets.all(0),
                                 minLeadingWidth: 0,
                                 title: Text(
                                   _onGoingOrderList[index].userName,
-                                  style: Theme.of(context).primaryTextTheme.bodyText1,
+                                  style: Theme.of(context)
+                                      .primaryTextTheme
+                                      .bodyText1,
                                 ),
                                 subtitle: Text(
-                                  _onGoingOrderList[index].timeSlot + ' | ' + _onGoingOrderList[index].deliveryDate,
-                                  style: Theme.of(context).primaryTextTheme.headline2,
+                                  _onGoingOrderList[index].timeSlot != null
+                                      ? (_onGoingOrderList[index].timeSlot ??
+                                              '') +
+                                          ' | ' +
+                                          (_onGoingOrderList[index]
+                                                  .deliveryDate ??
+                                              '')
+                                      : '',
+                                  style: Theme.of(context)
+                                      .primaryTextTheme
+                                      .headline2,
                                 ),
                                 trailing: Column(
                                   mainAxisSize: MainAxisSize.min,
@@ -634,17 +778,27 @@ class _OrderListScreenState extends BaseRouteState {
                                   children: [
                                     Text(
                                       "${global.appInfo.currencySign} ${_onGoingOrderList[index].remPrice > 0 ? _onGoingOrderList[index].remPrice : _onGoingOrderList[index].paidByWallet}",
-                                      style: Theme.of(context).primaryTextTheme.bodyText1,
+                                      style: Theme.of(context)
+                                          .primaryTextTheme
+                                          .bodyText1,
                                     ),
                                     Text(
                                       "${_onGoingOrderList[index].paymentMethod}",
-                                      style: Theme.of(context).primaryTextTheme.headline2.copyWith(color: Colors.red),
+                                      style: Theme.of(context)
+                                          .primaryTextTheme
+                                          .headline2
+                                          .copyWith(color: Colors.red),
                                     ),
                                   ],
                                 ),
                               ),
                               Divider(
-                                color: global.isDarkModeEnable ? Theme.of(context).dividerTheme.color.withOpacity(0.05) : Theme.of(context).dividerTheme.color,
+                                color: global.isDarkModeEnable
+                                    ? Theme.of(context)
+                                        .dividerTheme
+                                        .color
+                                        .withOpacity(0.05)
+                                    : Theme.of(context).dividerTheme.color,
                               ),
                             ],
                           ),

@@ -67,8 +67,16 @@ class _CheckoutScreenState extends BaseRouteState {
   _CheckoutScreenState() : super();
   @override
   Widget build(BuildContext context) {
-    List<String> _orderProcess = ['${AppLocalizations.of(context).txt_cart}', '${AppLocalizations.of(context).txt_address}', '${AppLocalizations.of(context).txt_payment}'];
-    List<String> _orderProcessText = ['${AppLocalizations.of(context).txt_shopping_cart}', '${AppLocalizations.of(context).txt_address}', '${AppLocalizations.of(context).txt_payment}'];
+    List<String> _orderProcess = [
+      '${AppLocalizations.of(context).txt_cart}',
+      '${AppLocalizations.of(context).txt_address}',
+      '${AppLocalizations.of(context).txt_payment}'
+    ];
+    List<String> _orderProcessText = [
+      '${AppLocalizations.of(context).txt_shopping_cart}',
+      '${AppLocalizations.of(context).txt_address}',
+      '${AppLocalizations.of(context).txt_payment}'
+    ];
 
     return WillPopScope(
       onWillPop: () {
@@ -88,7 +96,9 @@ class _CheckoutScreenState extends BaseRouteState {
                   if (_currentIndex == 0) {
                     Navigator.of(context).pop();
                   } else {
-                    _pageController.animateToPage(_currentIndex - 1, duration: Duration(seconds: 1), curve: Curves.fastOutSlowIn);
+                    _pageController.animateToPage(_currentIndex - 1,
+                        duration: Duration(seconds: 1),
+                        curve: Curves.fastOutSlowIn);
                     if (_currentIndex == 0) {
                       step1Done = false;
                     } else if (_currentIndex == 1) {
@@ -109,7 +119,8 @@ class _CheckoutScreenState extends BaseRouteState {
                     Container(
                       width: MediaQuery.of(context).size.width,
                       height: 20,
-                      margin: EdgeInsets.only(left: 8, right: 8, bottom: 0, top: 10),
+                      margin: EdgeInsets.only(
+                          left: 8, right: 8, bottom: 0, top: 10),
                       child: Center(
                         child: ListView.builder(
                             controller: _scrollController,
@@ -125,17 +136,21 @@ class _CheckoutScreenState extends BaseRouteState {
                                           children: [
                                             Container(
                                                 decoration: BoxDecoration(
-                                                  color: _currentIndex >= i ? Colors.black : Color(0xFF505266),
+                                                  color: _currentIndex >= i
+                                                      ? Colors.black
+                                                      : Color(0xFF505266),
                                                   border: Border.all(
                                                     color: Colors.black,
                                                     width: 1.5,
                                                   ),
-                                                  borderRadius: BorderRadius.all(
+                                                  borderRadius:
+                                                      BorderRadius.all(
                                                     Radius.circular(10.0),
                                                   ),
                                                 ),
                                                 alignment: Alignment.center,
-                                                padding: EdgeInsets.only(left: 25, right: 10),
+                                                padding: EdgeInsets.only(
+                                                    left: 25, right: 10),
                                                 child: Text(
                                                   _orderProcess[i],
                                                   style: TextStyle(
@@ -147,8 +162,14 @@ class _CheckoutScreenState extends BaseRouteState {
                                               height: 20,
                                               width: 20,
                                               decoration: BoxDecoration(
-                                                color: _currentIndex >= i ? Colors.white : Colors.black,
-                                                border: Border.all(color: _currentIndex == i ? Colors.black : Color(0xFF505266), width: 1.5),
+                                                color: _currentIndex >= i
+                                                    ? Colors.white
+                                                    : Colors.black,
+                                                border: Border.all(
+                                                    color: _currentIndex == i
+                                                        ? Colors.black
+                                                        : Color(0xFF505266),
+                                                    width: 1.5),
                                                 borderRadius: BorderRadius.all(
                                                   Radius.circular(20.0),
                                                 ),
@@ -157,7 +178,9 @@ class _CheckoutScreenState extends BaseRouteState {
                                               child: Icon(
                                                 Icons.circle,
                                                 size: 8,
-                                                color: _currentIndex >= i ? Colors.black : Color(0xFF505266),
+                                                color: _currentIndex >= i
+                                                    ? Colors.black
+                                                    : Color(0xFF505266),
                                               ),
                                             ),
                                           ],
@@ -166,7 +189,9 @@ class _CheckoutScreenState extends BaseRouteState {
                                             ? SizedBox()
                                             : Container(
                                                 height: 2,
-                                                color: _currentIndex >= i ? Colors.black : Color(0xFF505266),
+                                                color: _currentIndex >= i
+                                                    ? Colors.black
+                                                    : Color(0xFF505266),
                                                 width: 20,
                                                 margin: EdgeInsets.all(0),
                                               ),
@@ -179,17 +204,23 @@ class _CheckoutScreenState extends BaseRouteState {
                                           children: [
                                             Container(
                                                 decoration: BoxDecoration(
-                                                  color: _currentIndex >= i ? Color(0xFF4A4352) : Color(0xFFBcc8d2),
+                                                  color: _currentIndex >= i
+                                                      ? Color(0xFF4A4352)
+                                                      : Color(0xFFBcc8d2),
                                                   border: Border.all(
-                                                    color: _currentIndex >= i ? Color(0xFF4A4352) : Color(0xFFBcc8d2),
+                                                    color: _currentIndex >= i
+                                                        ? Color(0xFF4A4352)
+                                                        : Color(0xFFBcc8d2),
                                                     width: 1.5,
                                                   ),
-                                                  borderRadius: BorderRadius.all(
+                                                  borderRadius:
+                                                      BorderRadius.all(
                                                     Radius.circular(10.0),
                                                   ),
                                                 ),
                                                 alignment: Alignment.center,
-                                                padding: EdgeInsets.only(left: 25, right: 10),
+                                                padding: EdgeInsets.only(
+                                                    left: 25, right: 10),
                                                 child: Text(
                                                   _orderProcess[i],
                                                   style: TextStyle(
@@ -202,7 +233,11 @@ class _CheckoutScreenState extends BaseRouteState {
                                               width: 20,
                                               decoration: BoxDecoration(
                                                 color: Colors.white,
-                                                border: Border.all(color: _currentIndex >= i ? Color(0xFF4A4352) : Color(0xFFBcc8d2), width: 1.5),
+                                                border: Border.all(
+                                                    color: _currentIndex >= i
+                                                        ? Color(0xFF4A4352)
+                                                        : Color(0xFFBcc8d2),
+                                                    width: 1.5),
                                                 borderRadius: BorderRadius.all(
                                                   Radius.circular(20.0),
                                                 ),
@@ -211,7 +246,9 @@ class _CheckoutScreenState extends BaseRouteState {
                                               child: Icon(
                                                 Icons.circle,
                                                 size: 8,
-                                                color: _currentIndex >= i ? Color(0xFF4A4352) : Color(0xFFBcc8d2),
+                                                color: _currentIndex >= i
+                                                    ? Color(0xFF4A4352)
+                                                    : Color(0xFFBcc8d2),
                                               ),
                                             ),
                                           ],
@@ -220,7 +257,9 @@ class _CheckoutScreenState extends BaseRouteState {
                                             ? SizedBox()
                                             : Container(
                                                 height: 2,
-                                                color: _currentIndex >= i ? Color(0xFF4A4352) : Color(0xFFBcc8d2),
+                                                color: _currentIndex >= i
+                                                    ? Color(0xFF4A4352)
+                                                    : Color(0xFFBcc8d2),
                                                 width: 20,
                                                 margin: EdgeInsets.all(0),
                                               ),
@@ -236,7 +275,9 @@ class _CheckoutScreenState extends BaseRouteState {
                         onPageChanged: (index) {
                           _currentIndex = index;
                           double currentIndex = _currentIndex.toDouble();
-                          _scrollController.animateTo(currentIndex, duration: Duration(seconds: 1), curve: Curves.fastOutSlowIn);
+                          _scrollController.animateTo(currentIndex,
+                              duration: Duration(seconds: 1),
+                              curve: Curves.fastOutSlowIn);
                           setState(() {});
                         },
                         children: [
@@ -273,19 +314,18 @@ class _CheckoutScreenState extends BaseRouteState {
                               if (_currentIndex == 2) {
                                 // bool isdone = await _makeOrder();
                                 // if (isdone) {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          PaymentGatewayScreen(
-                                            screenId: 1,
-                                            totalAmount: _order.remPrice,
-                                            sts: true,
-                                            order: _order,
-                                            a: widget.analytics,
-                                            o: widget.observer,
-                                          ),
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => PaymentGatewayScreen(
+                                      screenId: 1,
+                                      totalAmount: _order.remPrice,
+                                      sts: true,
+                                      order: _order,
+                                      a: widget.analytics,
+                                      o: widget.observer,
                                     ),
-                                  );
+                                  ),
+                                );
                                 // }
                               } else if (_currentIndex == 1) {
                                 if (_selectedAddress != null) {
@@ -298,7 +338,10 @@ class _CheckoutScreenState extends BaseRouteState {
                                         curve: Curves.fastOutSlowIn);
                                   }
                                 } else {
-                                  showSnackBar(key: _scaffoldKey, snackBarMessage: '${AppLocalizations.of(context).txt_select_deluvery_address}');
+                                  showSnackBar(
+                                      key: _scaffoldKey,
+                                      snackBarMessage:
+                                          '${AppLocalizations.of(context).txt_select_deluvery_address}');
                                 }
                               }
                               // else if (_currentIndex == 2) {
@@ -320,9 +363,15 @@ class _CheckoutScreenState extends BaseRouteState {
                               // }
                               else if (_currentIndex == 0) {
                                 if (_cart.productList.length > 0) {
-                                  _pageController.animateToPage(_currentIndex + 1, duration: Duration(seconds: 1), curve: Curves.fastOutSlowIn);
+                                  _pageController.animateToPage(
+                                      _currentIndex + 1,
+                                      duration: Duration(seconds: 1),
+                                      curve: Curves.fastOutSlowIn);
                                 } else if (_cart.productList.length == 0) {
-                                  showSnackBar(key: _scaffoldKey, snackBarMessage: '${AppLocalizations.of(context).txt_add_product_in_cart}');
+                                  showSnackBar(
+                                      key: _scaffoldKey,
+                                      snackBarMessage:
+                                          '${AppLocalizations.of(context).txt_add_product_in_cart}');
                                 }
                               }
                             },
@@ -377,7 +426,8 @@ class _CheckoutScreenState extends BaseRouteState {
         ),
       );
     } catch (e) {
-      print("Exception - checkOutScreen.dart - deleteConfirmationDialog():" + e.toString());
+      print("Exception - checkOutScreen.dart - deleteConfirmationDialog():" +
+          e.toString());
       return false;
     }
   }
@@ -395,7 +445,7 @@ class _CheckoutScreenState extends BaseRouteState {
         Navigator.of(context).push(
           MaterialPageRoute(
               builder: (context) => LoginScreen(
-                false,
+                    false,
                     a: widget.analytics,
                     o: widget.observer,
                   )),
@@ -406,7 +456,8 @@ class _CheckoutScreenState extends BaseRouteState {
     //   _openingTime = DateFormat('yyyy-MM-dd hh:mm a').parse((global.nearStoreModel.storeOpeningTime).toUpperCase());
     //    _closingTime = DateFormat('yyyy-MM-dd hh:mm a').parse((global.nearStoreModel.storeClosingTime).toUpperCase());
     // }
-    _scrollController = new ScrollController(initialScrollOffset: _currentIndex.toDouble());
+    _scrollController =
+        new ScrollController(initialScrollOffset: _currentIndex.toDouble());
     _pageController = new PageController(initialPage: _currentIndex);
     _pageController.addListener(() {});
     _init();
@@ -423,7 +474,8 @@ class _CheckoutScreenState extends BaseRouteState {
               Navigator.of(context)
                   .push(
                 MaterialPageRoute(
-                  builder: (context) => AddAddressScreen(new Address(), a: widget.analytics, o: widget.observer),
+                  builder: (context) => AddAddressScreen(new Address(),
+                      a: widget.analytics, o: widget.observer),
                 ),
               )
                   .then((value) async {
@@ -449,7 +501,8 @@ class _CheckoutScreenState extends BaseRouteState {
               ),
               child: Container(
                   decoration: BoxDecoration(
-                    color: global.isDarkModeEnable ? Colors.black : Colors.white,
+                    color:
+                        global.isDarkModeEnable ? Colors.black : Colors.white,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   width: MediaQuery.of(context).size.width,
@@ -457,7 +510,12 @@ class _CheckoutScreenState extends BaseRouteState {
                   alignment: Alignment.center,
                   child: Text(
                     "${AppLocalizations.of(context).btn_add_new_address}",
-                    style: TextStyle(fontSize: 16, color: global.isDarkModeEnable ? Theme.of(context).primaryColorLight : Theme.of(context).primaryColor, fontWeight: FontWeight.w400),
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: global.isDarkModeEnable
+                            ? Theme.of(context).primaryColorLight
+                            : Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.w400),
                   )),
             ),
           ),
@@ -474,7 +532,16 @@ class _CheckoutScreenState extends BaseRouteState {
                     value: index,
                     title: Text(
                       _addressList[index].type,
-                      style: _selectedAddress == index ? Theme.of(context).primaryTextTheme.bodyText1 : Theme.of(context).primaryTextTheme.bodyText1.copyWith(color: Theme.of(context).primaryTextTheme.headline2.color),
+                      style: _selectedAddress == index
+                          ? Theme.of(context).primaryTextTheme.bodyText1
+                          : Theme.of(context)
+                              .primaryTextTheme
+                              .bodyText1
+                              .copyWith(
+                                  color: Theme.of(context)
+                                      .primaryTextTheme
+                                      .headline2
+                                      .color),
                     ),
                     onChanged: (val) {
                       _selectedAddress = val;
@@ -487,7 +554,16 @@ class _CheckoutScreenState extends BaseRouteState {
                       children: [
                         Text(
                           "${_addressList[index].houseNo}, ${_addressList[index].landmark}, ${_addressList[index].city}",
-                          style: _selectedAddress == index ? Theme.of(context).primaryTextTheme.headline2.copyWith(color: Theme.of(context).primaryTextTheme.bodyText1.color) : Theme.of(context).primaryTextTheme.headline2,
+                          style: _selectedAddress == index
+                              ? Theme.of(context)
+                                  .primaryTextTheme
+                                  .headline2
+                                  .copyWith(
+                                      color: Theme.of(context)
+                                          .primaryTextTheme
+                                          .bodyText1
+                                          .color)
+                              : Theme.of(context).primaryTextTheme.headline2,
                         ),
                         _selectedAddress == index
                             ? Row(
@@ -499,7 +575,11 @@ class _CheckoutScreenState extends BaseRouteState {
                                       onPressed: () {
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
-                                            builder: (context) => AddAddressScreen(_addressList[index], a: widget.analytics, o: widget.observer),
+                                            builder: (context) =>
+                                                AddAddressScreen(
+                                                    _addressList[index],
+                                                    a: widget.analytics,
+                                                    o: widget.observer),
                                           ),
                                         );
                                       },
@@ -528,24 +608,30 @@ class _CheckoutScreenState extends BaseRouteState {
     ));
   }
 
-  Future<bool> _addToCart(String StoreId, int qty, int varientId, int special, GlobalKey<ScaffoldState> scaffoldKey) async {
+  Future<bool> _addToCart(String StoreId, int qty, int varientId, int special,
+      GlobalKey<ScaffoldState> scaffoldKey) async {
     bool _isAddedSuccesFully = false;
     try {
       showOnlyLoaderDialog();
-      await apiHelper.addToCart(StoreId,qty, varientId, special).then((result) async {
+      await apiHelper
+          .addToCart(StoreId, qty, varientId, special)
+          .then((result) async {
         if (result != null) {
           if (result.status == "1") {
             if (qty == 0 && global.currentUser.cartCount > 0) {
               global.currentUser.cartCount = global.currentUser.cartCount - 1;
             }
-
             _cart = result.data;
+            await _getCart();
             _isAddedSuccesFully = true;
             hideLoader();
           } else {
             hideLoader();
             _isAddedSuccesFully = false;
-            showSnackBar(key: scaffoldKey, snackBarMessage: AppLocalizations.of(context).txt_please_try_again_after_sometime);
+            showSnackBar(
+                key: scaffoldKey,
+                snackBarMessage: AppLocalizations.of(context)
+                    .txt_please_try_again_after_sometime);
           }
         }
       });
@@ -581,7 +667,11 @@ class _CheckoutScreenState extends BaseRouteState {
                           onTap: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) => ProductDetailScreen(productId: _cart.productList[index].productId, a: widget.analytics, o: widget.observer),
+                                builder: (context) => ProductDetailScreen(
+                                    productId:
+                                        _cart.productList[index].productId,
+                                    a: widget.analytics,
+                                    o: widget.observer),
                               ),
                             );
                           },
@@ -603,58 +693,97 @@ class _CheckoutScreenState extends BaseRouteState {
                                     ),
                                   ),
                                   child: Padding(
-                                    padding: const EdgeInsets.only(top: 15, left: 130),
+                                    padding: const EdgeInsets.only(
+                                        top: 15, left: 130),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: global.isRTL ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment: global.isRTL
+                                          ? CrossAxisAlignment.end
+                                          : CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           '${_cart.productList[index].productName}',
-                                          style: Theme.of(context).primaryTextTheme.bodyText1,
+                                          style: Theme.of(context)
+                                              .primaryTextTheme
+                                              .bodyText1,
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                         Text(
                                           '${_cart.productList[index].type}',
-                                          style: Theme.of(context).primaryTextTheme.headline2,
+                                          style: Theme.of(context)
+                                              .primaryTextTheme
+                                              .headline2,
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                         RichText(
-                                            text: TextSpan(text: "${global.appInfo.currencySign} ", style: Theme.of(context).primaryTextTheme.headline2, children: [
-                                          TextSpan(
-                                            text: '${_cart.productList[index].price}',
-                                            style: Theme.of(context).primaryTextTheme.bodyText1,
-                                          ),
-                                          TextSpan(
-                                            text: ' / ${_cart.productList[index].quantity} ${_cart.productList[index].unit}',
-                                            style: Theme.of(context).primaryTextTheme.headline2,
-                                          )
-                                        ])),
-                                        _cart.productList[index].rating != null && _cart.productList[index].rating > 0
+                                            text: TextSpan(
+                                                text:
+                                                    "${global.appInfo.currencySign} ",
+                                                style: Theme.of(context)
+                                                    .primaryTextTheme
+                                                    .headline2,
+                                                children: [
+                                              TextSpan(
+                                                text:
+                                                    '${_cart.productList[index].price}',
+                                                style: Theme.of(context)
+                                                    .primaryTextTheme
+                                                    .bodyText1,
+                                              ),
+                                              TextSpan(
+                                                text:
+                                                    ' / ${_cart.productList[index].quantity} ${_cart.productList[index].unit}',
+                                                style: Theme.of(context)
+                                                    .primaryTextTheme
+                                                    .headline2,
+                                              )
+                                            ])),
+                                        _cart.productList[index].rating !=
+                                                    null &&
+                                                _cart.productList[index]
+                                                        .rating >
+                                                    0
                                             ? Padding(
-                                                padding: EdgeInsets.only(top: 4.0),
+                                                padding:
+                                                    EdgeInsets.only(top: 4.0),
                                                 child: Row(
-                                                  mainAxisSize: MainAxisSize.min,
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
                                                   children: [
                                                     Icon(
                                                       Icons.star,
                                                       size: 18,
-                                                      color: Theme.of(context).primaryColorLight,
+                                                      color: Theme.of(context)
+                                                          .primaryColorLight,
                                                     ),
                                                     RichText(
                                                       text: TextSpan(
-                                                        text: "${_cart.productList[index].rating} ",
-                                                        style: Theme.of(context).primaryTextTheme.bodyText1,
+                                                        text:
+                                                            "${_cart.productList[index].rating} ",
+                                                        style: Theme.of(context)
+                                                            .primaryTextTheme
+                                                            .bodyText1,
                                                         children: [
                                                           TextSpan(
                                                             text: '|',
-                                                            style: Theme.of(context).primaryTextTheme.headline2,
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .primaryTextTheme
+                                                                .headline2,
                                                           ),
                                                           TextSpan(
-                                                            text: ' ${_cart.productList[index].ratingCount} ${AppLocalizations.of(context).txt_ratings}',
-                                                            style: Theme.of(context).primaryTextTheme.headline1,
+                                                            text:
+                                                                ' ${_cart.productList[index].ratingCount} ${AppLocalizations.of(context).txt_ratings}',
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .primaryTextTheme
+                                                                .headline1,
                                                           )
                                                         ],
                                                       ),
@@ -676,7 +805,9 @@ class _CheckoutScreenState extends BaseRouteState {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    _cart.productList[index].discount != null && _cart.productList[index].discount > 0
+                                    _cart.productList[index].discount != null &&
+                                            _cart.productList[index].discount >
+                                                0
                                         ? Container(
                                             height: 20,
                                             width: 70,
@@ -690,7 +821,9 @@ class _CheckoutScreenState extends BaseRouteState {
                                             child: Text(
                                               "${_cart.productList[index].discount}% ${AppLocalizations.of(context).txt_off}",
                                               textAlign: TextAlign.center,
-                                              style: Theme.of(context).primaryTextTheme.caption,
+                                              style: Theme.of(context)
+                                                  .primaryTextTheme
+                                                  .caption,
                                             ),
                                           )
                                         : SizedBox(
@@ -699,9 +832,15 @@ class _CheckoutScreenState extends BaseRouteState {
                                           ),
                                     IconButton(
                                       onPressed: () async {
-                                        bool _isAdded = await addRemoveWishList(_cart.productList[index].storeId.toString(),_cart.productList[index].varientId, _scaffoldKey);
+                                        bool _isAdded = await addRemoveWishList(
+                                            _cart.productList[index].storeId
+                                                .toString(),
+                                            _cart.productList[index].varientId,
+                                            _scaffoldKey);
                                         if (_isAdded) {
-                                          _cart.productList[index].isFavourite = !_cart.productList[index].isFavourite;
+                                          _cart.productList[index].isFavourite =
+                                              !_cart.productList[index]
+                                                  .isFavourite;
                                         }
 
                                         setState(() {});
@@ -722,7 +861,12 @@ class _CheckoutScreenState extends BaseRouteState {
                                 ),
                               ),
                               _cart.productList[index].stock > 0
-                                  ? _cart.productList[index].cartQty == null || (_cart.productList[index].cartQty != null && _cart.productList[index].cartQty == 0)
+                                  ? _cart.productList[index].cartQty == null ||
+                                          (_cart.productList[index].cartQty !=
+                                                  null &&
+                                              _cart.productList[index]
+                                                      .cartQty ==
+                                                  0)
                                       ? Positioned(
                                           bottom: 0,
                                           right: 0,
@@ -730,23 +874,38 @@ class _CheckoutScreenState extends BaseRouteState {
                                             height: 30,
                                             width: 30,
                                             decoration: BoxDecoration(
-                                              color: Theme.of(context).iconTheme.color,
+                                              color: Theme.of(context)
+                                                  .iconTheme
+                                                  .color,
                                               borderRadius: BorderRadius.only(
-                                                bottomRight: Radius.circular(10),
+                                                bottomRight:
+                                                    Radius.circular(10),
                                                 topLeft: Radius.circular(10),
                                               ),
                                             ),
                                             child: IconButton(
                                               padding: EdgeInsets.all(0),
-                                              visualDensity: VisualDensity(vertical: -4, horizontal: -4),
+                                              visualDensity: VisualDensity(
+                                                  vertical: -4, horizontal: -4),
                                               onPressed: () async {
-                                                await _addToCart(_cart.productList[index].storeId.toString(),1, _cart.productList[index].varientId, 0, _scaffoldKey);
+                                                await _addToCart(
+                                                    _cart.productList[index]
+                                                        .storeId
+                                                        .toString(),
+                                                    1,
+                                                    _cart.productList[index]
+                                                        .varientId,
+                                                    0,
+                                                    _scaffoldKey);
 
                                                 setState(() {});
                                               },
                                               icon: Icon(
                                                 Icons.add,
-                                                color: Theme.of(context).primaryTextTheme.caption.color,
+                                                color: Theme.of(context)
+                                                    .primaryTextTheme
+                                                    .caption
+                                                    .color,
                                               ),
                                             ),
                                           ),
@@ -762,46 +921,104 @@ class _CheckoutScreenState extends BaseRouteState {
                                                 stops: [0, .90],
                                                 begin: Alignment.centerLeft,
                                                 end: Alignment.centerRight,
-                                                colors: [Color(0xFFe03337), Color(0xFFb73537)],
+                                                colors: [
+                                                  Color(0xFFe03337),
+                                                  Color(0xFFb73537)
+                                                ],
                                               ),
                                               borderRadius: BorderRadius.only(
-                                                bottomRight: Radius.circular(10),
+                                                bottomRight:
+                                                    Radius.circular(10),
                                                 topLeft: Radius.circular(10),
                                               ),
                                             ),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.min,
-                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
                                               children: [
                                                 IconButton(
                                                     padding: EdgeInsets.all(0),
-                                                    visualDensity: VisualDensity(vertical: -4, horizontal: -4),
+                                                    visualDensity:
+                                                        VisualDensity(
+                                                            vertical: -4,
+                                                            horizontal: -4),
                                                     onPressed: () async {
-                                                      await _addToCart(_cart.productList[index].storeId.toString(),_cart.productList[index].cartQty - 1, _cart.productList[index].varientId, 0, _scaffoldKey);
+                                                      await _addToCart(
+                                                          _cart
+                                                              .productList[
+                                                                  index]
+                                                              .storeId
+                                                              .toString(),
+                                                          _cart
+                                                                  .productList[
+                                                                      index]
+                                                                  .cartQty -
+                                                              1,
+                                                          _cart
+                                                              .productList[
+                                                                  index]
+                                                              .varientId,
+                                                          0,
+                                                          _scaffoldKey);
 
                                                       setState(() {});
                                                     },
                                                     icon: Icon(
                                                       FontAwesomeIcons.minus,
                                                       size: 11,
-                                                      color: Theme.of(context).primaryTextTheme.caption.color,
+                                                      color: Theme.of(context)
+                                                          .primaryTextTheme
+                                                          .caption
+                                                          .color,
                                                     )),
                                                 Text(
                                                   "${_cart.productList[index].cartQty}",
-                                                  style: Theme.of(context).primaryTextTheme.bodyText1.copyWith(color: Theme.of(context).primaryTextTheme.caption.color),
+                                                  style: Theme.of(context)
+                                                      .primaryTextTheme
+                                                      .bodyText1
+                                                      .copyWith(
+                                                          color: Theme.of(
+                                                                  context)
+                                                              .primaryTextTheme
+                                                              .caption
+                                                              .color),
                                                 ),
                                                 IconButton(
                                                     padding: EdgeInsets.all(0),
-                                                    visualDensity: VisualDensity(vertical: -4, horizontal: -4),
+                                                    visualDensity:
+                                                        VisualDensity(
+                                                            vertical: -4,
+                                                            horizontal: -4),
                                                     onPressed: () async {
-                                                      await _addToCart(_cart.productList[index].storeId.toString(),_cart.productList[index].cartQty + 1, _cart.productList[index].varientId, 0, _scaffoldKey);
+                                                      await _addToCart(
+                                                          _cart
+                                                              .productList[
+                                                                  index]
+                                                              .storeId
+                                                              .toString(),
+                                                          _cart
+                                                                  .productList[
+                                                                      index]
+                                                                  .cartQty +
+                                                              1,
+                                                          _cart
+                                                              .productList[
+                                                                  index]
+                                                              .varientId,
+                                                          0,
+                                                          _scaffoldKey);
                                                       setState(() {});
                                                     },
                                                     icon: Icon(
                                                       FontAwesomeIcons.plus,
                                                       size: 11,
-                                                      color: Theme.of(context).primaryTextTheme.caption.color,
+                                                      color: Theme.of(context)
+                                                          .primaryTextTheme
+                                                          .caption
+                                                          .color,
                                                     )),
                                               ],
                                             ),
@@ -813,8 +1030,10 @@ class _CheckoutScreenState extends BaseRouteState {
                                 top: -10,
                                 child: Container(
                                   child: CachedNetworkImage(
-                                    imageUrl: global.appInfo.imageUrl + _cart.productList[index].productImage,
-                                    imageBuilder: (context, imageProvider) => Container(
+                                    imageUrl: global.appInfo.imageUrl +
+                                        _cart.productList[index].productImage,
+                                    imageBuilder: (context, imageProvider) =>
+                                        Container(
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(15),
                                         image: DecorationImage(
@@ -824,34 +1043,64 @@ class _CheckoutScreenState extends BaseRouteState {
                                       ),
                                       alignment: Alignment.center,
                                       child: Visibility(
-                                        visible: _cart.productList[index].stock > 0 ? false : true,
+                                        visible:
+                                            _cart.productList[index].stock > 0
+                                                ? false
+                                                : true,
                                         child: Container(
                                           alignment: Alignment.center,
-                                          decoration: BoxDecoration(color: Theme.of(context).primaryColorLight.withOpacity(0.5), borderRadius: BorderRadius.circular(15)),
+                                          decoration: BoxDecoration(
+                                              color: Theme.of(context)
+                                                  .primaryColorLight
+                                                  .withOpacity(0.5),
+                                              borderRadius:
+                                                  BorderRadius.circular(15)),
                                           child: Container(
-                                            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5)),
-                                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:
+                                                    BorderRadius.circular(5)),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10, vertical: 5),
                                             child: Text(
                                               '${AppLocalizations.of(context).txt_out_of_stock}',
-                                              style: Theme.of(context).primaryTextTheme.headline2,
+                                              style: Theme.of(context)
+                                                  .primaryTextTheme
+                                                  .headline2,
                                             ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                    placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-                                    errorWidget: (context, url, error) => Container(
+                                    placeholder: (context, url) => Center(
+                                        child: CircularProgressIndicator()),
+                                    errorWidget: (context, url, error) =>
+                                        Container(
                                       child: Visibility(
-                                        visible: _cart.productList[index].stock > 0 ? false : true,
+                                        visible:
+                                            _cart.productList[index].stock > 0
+                                                ? false
+                                                : true,
                                         child: Container(
                                           alignment: Alignment.center,
-                                          decoration: BoxDecoration(color: Theme.of(context).primaryColorLight.withOpacity(0.5), borderRadius: BorderRadius.circular(15)),
+                                          decoration: BoxDecoration(
+                                              color: Theme.of(context)
+                                                  .primaryColorLight
+                                                  .withOpacity(0.5),
+                                              borderRadius:
+                                                  BorderRadius.circular(15)),
                                           child: Container(
-                                            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5)),
-                                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:
+                                                    BorderRadius.circular(5)),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10, vertical: 5),
                                             child: Text(
                                               '${AppLocalizations.of(context).txt_out_of_stock}',
-                                              style: Theme.of(context).primaryTextTheme.headline2,
+                                              style: Theme.of(context)
+                                                  .primaryTextTheme
+                                                  .headline2,
                                             ),
                                           ),
                                         ),
@@ -860,7 +1109,8 @@ class _CheckoutScreenState extends BaseRouteState {
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(15),
                                         image: DecorationImage(
-                                          image: AssetImage('${global.defaultImage}'),
+                                          image: AssetImage(
+                                              '${global.defaultImage}'),
                                           fit: BoxFit.cover,
                                         ),
                                       ),
@@ -917,7 +1167,10 @@ class _CheckoutScreenState extends BaseRouteState {
                 ),
                 Text(
                   " - ${global.appInfo.currencySign} ${_cart.discountonmrp}",
-                  style: Theme.of(context).primaryTextTheme.headline2.copyWith(color: Colors.blue),
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .headline2
+                      .copyWith(color: Colors.blue),
                 ),
               ],
             ),
@@ -934,7 +1187,10 @@ class _CheckoutScreenState extends BaseRouteState {
                 ),
                 Text(
                   "${global.appInfo.currencySign} ${_cart.totalTax}",
-                  style: Theme.of(context).primaryTextTheme.overline.copyWith(color: Colors.blue),
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .overline
+                      .copyWith(color: Colors.blue),
                 )
               ],
             ),
@@ -947,11 +1203,17 @@ class _CheckoutScreenState extends BaseRouteState {
             contentPadding: EdgeInsets.all(0),
             leading: Text(
               "${AppLocalizations.of(context).lbl_total_amount}",
-              style: Theme.of(context).primaryTextTheme.bodyText1.copyWith(fontWeight: FontWeight.w700),
+              style: Theme.of(context)
+                  .primaryTextTheme
+                  .bodyText1
+                  .copyWith(fontWeight: FontWeight.w700),
             ),
             trailing: Text(
               "${global.appInfo.currencySign} ${_cart.grand_total_price}",
-              style: Theme.of(context).primaryTextTheme.bodyText1.copyWith(fontWeight: FontWeight.w700),
+              style: Theme.of(context)
+                  .primaryTextTheme
+                  .bodyText1
+                  .copyWith(fontWeight: FontWeight.w700),
             ),
           ),
           global.isDarkModeEnable
@@ -994,13 +1256,15 @@ class _CheckoutScreenState extends BaseRouteState {
       } else {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => MemberShipScreen(a: widget.analytics, o: widget.observer),
+            builder: (context) =>
+                MemberShipScreen(a: widget.analytics, o: widget.observer),
           ),
         );
       }
       setState(() {});
     } catch (e) {
-      print("Exception - checkOutScreen.dart - _checkMembershipStatus():" + e.toString());
+      print("Exception - checkOutScreen.dart - _checkMembershipStatus():" +
+          e.toString());
     }
   }
 
@@ -1021,7 +1285,8 @@ class _CheckoutScreenState extends BaseRouteState {
       _isDataLoaded = true;
       setState(() {});
     } catch (e) {
-      print("Exception - checkOutScreen.dart - _getAddressList():" + e.toString());
+      print("Exception - checkOutScreen.dart - _getAddressList():" +
+          e.toString());
     }
   }
 
@@ -1055,7 +1320,8 @@ class _CheckoutScreenState extends BaseRouteState {
         }
       });
     } catch (e) {
-      print("Exception - checkOutScreen.dart - _getRewardLines():  " + e.toString());
+      print("Exception - checkOutScreen.dart - _getRewardLines():  " +
+          e.toString());
     }
   }
 
@@ -1100,8 +1366,12 @@ class _CheckoutScreenState extends BaseRouteState {
       bool isConnected = await br.checkConnectivity();
       if (isConnected) {
         showOnlyLoaderDialog();
-        String _selectedDate = selectedDate != null ? selectedDate.toString().substring(0, 10) : null;
-        await apiHelper.makeOrder(_selectedDate, _selectedTimeSlot).then((result) async {
+        String _selectedDate = selectedDate != null
+            ? selectedDate.toString().substring(0, 10)
+            : null;
+        await apiHelper
+            .makeOrder(_selectedDate, _selectedTimeSlot)
+            .then((result) async {
           if (result != null) {
             if (result.status == "1") {
               _order = result.data;
@@ -1110,7 +1380,8 @@ class _CheckoutScreenState extends BaseRouteState {
               _isSuccessfull = true;
             } else {
               hideLoader();
-              showSnackBar(key: _scaffoldKey, snackBarMessage: '${result.message}');
+              showSnackBar(
+                  key: _scaffoldKey, snackBarMessage: '${result.message}');
             }
           }
         });
@@ -1183,7 +1454,9 @@ class _CheckoutScreenState extends BaseRouteState {
                   style: Theme.of(context).primaryTextTheme.overline,
                 ),
                 Text(
-                  selectedDate != null ? "${selectedDate.toString().substring(0, 10)}" : 'instant',
+                  selectedDate != null
+                      ? "${selectedDate.toString().substring(0, 10)}"
+                      : 'instant',
                   style: Theme.of(context).primaryTextTheme.overline,
                 ),
               ],
@@ -1242,7 +1515,10 @@ class _CheckoutScreenState extends BaseRouteState {
                   ),
                   Text(
                     " - ${global.appInfo.currencySign} ${_order.discountonmrp}",
-                    style: Theme.of(context).primaryTextTheme.headline2.copyWith(color: Colors.blue),
+                    style: Theme.of(context)
+                        .primaryTextTheme
+                        .headline2
+                        .copyWith(color: Colors.blue),
                   ),
                 ],
               ),
@@ -1259,11 +1535,15 @@ class _CheckoutScreenState extends BaseRouteState {
                   ),
                   _order.couponDiscount != null && _order.couponDiscount > 0
                       ? FittedBox(
-                        child: Text(
+                          child: Text(
                             " - ${_order.couponDiscount}",
-                            style: Theme.of(context).primaryTextTheme.overline.copyWith(color: Theme.of(context).primaryColorLight),
+                            style: Theme.of(context)
+                                .primaryTextTheme
+                                .overline
+                                .copyWith(
+                                    color: Theme.of(context).primaryColorLight),
                           ),
-                      )
+                        )
                       : InkWell(
                           onTap: () {
                             Navigator.of(context)
@@ -1285,7 +1565,11 @@ class _CheckoutScreenState extends BaseRouteState {
                           },
                           child: Text(
                             "${AppLocalizations.of(context).txt_apply_coupon}",
-                            style: Theme.of(context).primaryTextTheme.overline.copyWith(color: Theme.of(context).primaryColorLight),
+                            style: Theme.of(context)
+                                .primaryTextTheme
+                                .overline
+                                .copyWith(
+                                    color: Theme.of(context).primaryColorLight),
                           ),
                         ),
                 ],
@@ -1317,7 +1601,10 @@ class _CheckoutScreenState extends BaseRouteState {
                   ),
                   Text(
                     "${global.appInfo.currencySign} ${_order.deliveryCharge}",
-                    style: Theme.of(context).primaryTextTheme.overline.copyWith(color: Colors.blue),
+                    style: Theme.of(context)
+                        .primaryTextTheme
+                        .overline
+                        .copyWith(color: Colors.blue),
                   )
                 ],
               ),
@@ -1335,7 +1622,10 @@ class _CheckoutScreenState extends BaseRouteState {
                         ),
                         Text(
                           "${global.appInfo.currencySign} ${_order.totaltaxprice}",
-                          style: Theme.of(context).primaryTextTheme.headline2.copyWith(color: Colors.blue),
+                          style: Theme.of(context)
+                              .primaryTextTheme
+                              .headline2
+                              .copyWith(color: Colors.blue),
                         ),
                       ],
                     ),
@@ -1349,11 +1639,17 @@ class _CheckoutScreenState extends BaseRouteState {
               contentPadding: EdgeInsets.all(0),
               leading: Text(
                 "${AppLocalizations.of(context).lbl_total_amount}",
-                style: Theme.of(context).primaryTextTheme.bodyText1.copyWith(fontWeight: FontWeight.w700),
+                style: Theme.of(context)
+                    .primaryTextTheme
+                    .bodyText1
+                    .copyWith(fontWeight: FontWeight.w700),
               ),
               trailing: Text(
                 "${global.appInfo.currencySign} ${_order.remPrice}",
-                style: Theme.of(context).primaryTextTheme.bodyText1.copyWith(fontWeight: FontWeight.w700),
+                style: Theme.of(context)
+                    .primaryTextTheme
+                    .bodyText1
+                    .copyWith(fontWeight: FontWeight.w700),
               ),
             ),
           ],
@@ -1367,7 +1663,9 @@ class _CheckoutScreenState extends BaseRouteState {
       bool isConnected = await br.checkConnectivity();
       if (isConnected) {
         showOnlyLoaderDialog();
-        await apiHelper.removeAddress(_addressList[index].addressId).then((result) async {
+        await apiHelper
+            .removeAddress(_addressList[index].addressId)
+            .then((result) async {
           if (result != null) {
             if (result.status == "1") {
               hideLoader();
@@ -1380,7 +1678,8 @@ class _CheckoutScreenState extends BaseRouteState {
         showNetworkErrorSnackBar(_scaffoldKey);
       }
     } catch (e) {
-      print("Exception - checkOutScreen.dart - _removeAddress():" + e.toString());
+      print(
+          "Exception - checkOutScreen.dart - _removeAddress():" + e.toString());
     }
   }
 
@@ -1389,7 +1688,9 @@ class _CheckoutScreenState extends BaseRouteState {
       bool isConnected = await br.checkConnectivity();
       if (isConnected) {
         showOnlyLoaderDialog();
-        await apiHelper.selectAddress(_addressList[_selectedAddress].addressId).then((result) async {
+        await apiHelper
+            .selectAddress(_addressList[_selectedAddress].addressId)
+            .then((result) async {
           if (result != null) {
             if (result.status == "1") {
               hideLoader();
@@ -1400,7 +1701,8 @@ class _CheckoutScreenState extends BaseRouteState {
         showNetworkErrorSnackBar(_scaffoldKey);
       }
     } catch (e) {
-      print("Exception - checkOutScreen.dart - _selectAddress(): " + e.toString());
+      print("Exception - checkOutScreen.dart - _selectAddress(): " +
+          e.toString());
     }
   }
 
@@ -1585,7 +1887,8 @@ class _CheckoutScreenState extends BaseRouteState {
         ),
       );
     } catch (e) {
-      print("Exception - checkOutScreen.dart - _shimmerWidget():" + e.toString());
+      print(
+          "Exception - checkOutScreen.dart - _shimmerWidget():" + e.toString());
       return SizedBox();
     }
   }
@@ -1603,7 +1906,10 @@ class _CheckoutScreenState extends BaseRouteState {
                 width: MediaQuery.of(context).size.width / 2 - 20,
                 decoration: BoxDecoration(
                   color: global.isDarkModeEnable ? Colors.black : Colors.white,
-                  border: Border.all(color: global.isDarkModeEnable ? Colors.transparent : Colors.blue),
+                  border: Border.all(
+                      color: global.isDarkModeEnable
+                          ? Colors.transparent
+                          : Colors.blue),
                   borderRadius: BorderRadius.all(
                     Radius.circular(10),
                   ),
@@ -1613,7 +1919,10 @@ class _CheckoutScreenState extends BaseRouteState {
                 child: FittedBox(
                   child: Text(
                     "${_timeSlot[i].timeslot}",
-                    style: Theme.of(context).primaryTextTheme.headline2.copyWith(fontWeight: FontWeight.w600),
+                    style: Theme.of(context)
+                        .primaryTextTheme
+                        .headline2
+                        .copyWith(fontWeight: FontWeight.w600),
                   ),
                 ),
               ),
@@ -1651,7 +1960,9 @@ class _CheckoutScreenState extends BaseRouteState {
               height: 50,
               width: MediaQuery.of(context).size.width / 2 - 20,
               decoration: BoxDecoration(
-                color: _timeSlot[i].availibility ? Theme.of(context).cardTheme.color : Theme.of(context).primaryColorLight.withOpacity(0.2),
+                color: _timeSlot[i].availibility
+                    ? Theme.of(context).cardTheme.color
+                    : Theme.of(context).primaryColorLight.withOpacity(0.2),
                 borderRadius: BorderRadius.all(
                   Radius.circular(10),
                 ),
@@ -1669,7 +1980,8 @@ class _CheckoutScreenState extends BaseRouteState {
       return _widgetList;
     } catch (e) {
       _widgetList.add(SizedBox());
-      print("Exception - checkOutScreen.dart - _timeSlotWidget():" + e.toString());
+      print("Exception - checkOutScreen.dart - _timeSlotWidget():" +
+          e.toString());
       return _widgetList;
     }
   }
@@ -1709,7 +2021,9 @@ class _CheckoutScreenState extends BaseRouteState {
                         lastDay: DateTime.now().add(Duration(days: 10)),
                         focusedDay: _focusedDay,
                         calendarFormat: CalendarFormat.month,
-                        availableCalendarFormats: {CalendarFormat.month: 'Month'},
+                        availableCalendarFormats: {
+                          CalendarFormat.month: 'Month'
+                        },
                         daysOfWeekHeight: 40,
                         daysOfWeekStyle: DaysOfWeekStyle(
                           weekdayStyle: TextStyle(color: Colors.white60),
@@ -1726,16 +2040,19 @@ class _CheckoutScreenState extends BaseRouteState {
                               color: Colors.blue,
                               shape: BoxShape.circle,
                             ),
-                            rangeStartTextStyle: TextStyle(color: Colors.white60),
+                            rangeStartTextStyle:
+                                TextStyle(color: Colors.white60),
                             rangeEndTextStyle: TextStyle(color: Colors.white60),
                             disabledTextStyle: TextStyle(color: Colors.red),
                             defaultTextStyle: TextStyle(color: Colors.white60),
                             outsideTextStyle: TextStyle(color: Colors.white60),
                             holidayTextStyle: TextStyle(color: Colors.white60),
-                            withinRangeTextStyle: TextStyle(color: Colors.white60),
+                            withinRangeTextStyle:
+                                TextStyle(color: Colors.white60),
                             weekendTextStyle: TextStyle(color: Colors.white60)),
                         headerStyle: HeaderStyle(
-                          formatButtonTextStyle: TextStyle(color: Colors.white60),
+                          formatButtonTextStyle:
+                              TextStyle(color: Colors.white60),
                           titleCentered: true,
                           titleTextStyle: TextStyle(
                             color: Colors.white,
@@ -1779,7 +2096,9 @@ class _CheckoutScreenState extends BaseRouteState {
                         lastDay: DateTime.now().add(Duration(days: 10)),
                         focusedDay: _focusedDay,
                         calendarFormat: CalendarFormat.month,
-                        availableCalendarFormats: {CalendarFormat.month: 'Month'},
+                        availableCalendarFormats: {
+                          CalendarFormat.month: 'Month'
+                        },
                         daysOfWeekHeight: 40,
                         daysOfWeekStyle: DaysOfWeekStyle(
                           weekdayStyle: TextStyle(color: Colors.black87),
@@ -1796,16 +2115,19 @@ class _CheckoutScreenState extends BaseRouteState {
                               color: Colors.blue,
                               shape: BoxShape.circle,
                             ),
-                            rangeStartTextStyle: TextStyle(color: Colors.black87),
+                            rangeStartTextStyle:
+                                TextStyle(color: Colors.black87),
                             rangeEndTextStyle: TextStyle(color: Colors.black87),
                             disabledTextStyle: TextStyle(color: Colors.red),
                             defaultTextStyle: TextStyle(color: Colors.black87),
                             outsideTextStyle: TextStyle(color: Colors.black87),
                             holidayTextStyle: TextStyle(color: Colors.black87),
-                            withinRangeTextStyle: TextStyle(color: Colors.black87),
+                            withinRangeTextStyle:
+                                TextStyle(color: Colors.black87),
                             weekendTextStyle: TextStyle(color: Colors.black87)),
                         headerStyle: HeaderStyle(
-                          formatButtonTextStyle: TextStyle(color: Colors.black87),
+                          formatButtonTextStyle:
+                              TextStyle(color: Colors.black87),
                           titleCentered: true,
                           titleTextStyle: TextStyle(
                             color: Colors.white,
@@ -1847,7 +2169,9 @@ class _CheckoutScreenState extends BaseRouteState {
                       ),
                     )
               : SizedBox(),
-          _timeSlot.length > 0 && _membershipStatus != null && _membershipStatus.status != 'running'
+          _timeSlot.length > 0 &&
+                  _membershipStatus != null &&
+                  _membershipStatus.status != 'running'
               ? Padding(
                   padding: EdgeInsets.only(
                     top: 5,

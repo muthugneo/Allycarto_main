@@ -16,23 +16,26 @@ import 'package:shimmer/shimmer.dart';
 class ProductDetailScreen extends BaseRoute {
   final int productId;
   final int varientId;
+  final int storeId;
   final ProductDetail productDetail;
   ProductDetailScreen(
-      {a, o, this.productDetail, this.productId, this.varientId})
+      {a, o, this.productDetail, this.productId, this.varientId, this.storeId})
       : super(a: a, o: o, r: 'ProductDetailScreen');
   @override
   _ProductDetailScreenState createState() => new _ProductDetailScreenState(
-      this.productId, this.varientId, this.productDetail);
+      this.productId, this.varientId, this.productDetail, this.storeId);
 }
 
 class _ProductDetailScreenState extends BaseRouteState {
   int productId;
   int varientId;
+  int storeId;
   GlobalKey<ScaffoldState> _scaffoldKey;
   bool _isDataLoaded = false;
   ProductDetail productDetail;
   ProductDetail _productDetail = new ProductDetail();
-  _ProductDetailScreenState(this.productId, this.varientId, this.productDetail)
+  _ProductDetailScreenState(
+      this.productId, this.varientId, this.productDetail, this.storeId)
       : super();
   PageController pageController = new PageController(initialPage: 0);
   int currentIndex = 0;
@@ -40,7 +43,7 @@ class _ProductDetailScreenState extends BaseRouteState {
   List<String> choseeList = ["10 MI", "50 MI", "100 Mi"];
   bool howToUse = false;
   bool productDes = false;
-List<String> produDes=["Product Description","Benefits"];
+  List<String> produDes = ["Product Description", "Benefits"];
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -200,8 +203,10 @@ List<String> produDes=["Product Description","Benefits"];
                                                   child: Stack(
                                                     children: [
                                                       Container(
-                                                        child: CachedNetworkImage(
-                                                          imageUrl: global.appInfo
+                                                        child:
+                                                            CachedNetworkImage(
+                                                          imageUrl: global
+                                                                  .appInfo
                                                                   .imageUrl +
                                                               _productDetail
                                                                   .productDetail
@@ -221,8 +226,8 @@ List<String> produDes=["Product Description","Benefits"];
                                                                   fit: BoxFit
                                                                       .cover),
                                                             ),
-                                                            alignment:
-                                                                Alignment.center,
+                                                            alignment: Alignment
+                                                                .center,
                                                             child: Visibility(
                                                               visible: _productDetail
                                                                           .productDetail
@@ -241,10 +246,10 @@ List<String> produDes=["Product Description","Benefits"];
                                                                         .withOpacity(
                                                                             0.5),
                                                                     borderRadius:
-                                                                        BorderRadius
-                                                                            .circular(
-                                                                                15)),
-                                                                child: Container(
+                                                                        BorderRadius.circular(
+                                                                            15)),
+                                                                child:
+                                                                    Container(
                                                                   decoration: BoxDecoration(
                                                                       color: Colors
                                                                           .white,
@@ -294,10 +299,10 @@ List<String> produDes=["Product Description","Benefits"];
                                                                         .withOpacity(
                                                                             0.5),
                                                                     borderRadius:
-                                                                        BorderRadius
-                                                                            .circular(
-                                                                                15)),
-                                                                child: Container(
+                                                                        BorderRadius.circular(
+                                                                            15)),
+                                                                child:
+                                                                    Container(
                                                                   decoration: BoxDecoration(
                                                                       color: Colors
                                                                           .white,
@@ -320,8 +325,8 @@ List<String> produDes=["Product Description","Benefits"];
                                                                 ),
                                                               ),
                                                             ),
-                                                            alignment:
-                                                                Alignment.center,
+                                                            alignment: Alignment
+                                                                .center,
                                                             decoration:
                                                                 BoxDecoration(
                                                               borderRadius:
@@ -332,16 +337,17 @@ List<String> produDes=["Product Description","Benefits"];
                                                                   DecorationImage(
                                                                 image: AssetImage(
                                                                     '${global.defaultImage}'),
-                                                                fit: BoxFit.cover,
+                                                                fit: BoxFit
+                                                                    .cover,
                                                               ),
                                                             ),
                                                           ),
                                                         ),
                                                         height: 160,
-                                                        width:
-                                                            MediaQuery.of(context)
-                                                                .size
-                                                                .width,
+                                                        width: MediaQuery.of(
+                                                                context)
+                                                            .size
+                                                            .width,
                                                       ),
                                                       if (_productDetail
                                                                   .productDetail
@@ -359,20 +365,24 @@ List<String> produDes=["Product Description","Benefits"];
                                                             width: 70,
                                                             decoration:
                                                                 BoxDecoration(
-                                                              color: Colors.green,
+                                                              color:
+                                                                  Colors.green,
                                                               borderRadius:
                                                                   BorderRadius
                                                                       .only(
                                                                 topRight: Radius
-                                                                    .circular(10),
+                                                                    .circular(
+                                                                        10),
                                                                 bottomLeft: Radius
-                                                                    .circular(10),
+                                                                    .circular(
+                                                                        10),
                                                               ),
                                                             ),
                                                             child: Text(
                                                               "${_productDetail.productDetail.discount}% ${AppLocalizations.of(context).txt_off}",
-                                                              textAlign: TextAlign
-                                                                  .center,
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
                                                               style: Theme.of(
                                                                       context)
                                                                   .primaryTextTheme
@@ -388,14 +398,21 @@ List<String> produDes=["Product Description","Benefits"];
                                                 ),
                                                 Container(
                                                   height: 50,
-                                                  width: MediaQuery.of(context).size.width,
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
                                                   child: ListView.builder(
-                                                    scrollDirection: Axis.horizontal,
-                                                    itemCount: _productDetail
-                                                          .productDetail.images.length??0,
-                                                    itemBuilder: (context, imIndex){
-                                                    return InkWell(
-                                                        onTap: () {
+                                                      scrollDirection:
+                                                          Axis.horizontal,
+                                                      itemCount: _productDetail
+                                                              .productDetail
+                                                              .images
+                                                              .length ??
+                                                          0,
+                                                      itemBuilder:
+                                                          (context, imIndex) {
+                                                        return InkWell(
+                                                          onTap: () {
                                                             if (_productDetail
                                                                         .productDetail
                                                                         .images !=
@@ -414,43 +431,43 @@ List<String> produDes=["Product Description","Benefits"];
                                                                   imIndex);
                                                             }
                                                           },
-                                                      child: Container(
-                                                        height: 50,
-                                                        width: 50,
-                                                        child: CachedNetworkImage(
-                                                          imageUrl:"${global.appInfo
-                                                                    .imageUrl}${_productDetail
-                                                                  .productDetail
-                                                                  .images[imIndex].image}",
-                                                                // ${_productDetail
-                                                                //   .productDetail
-                                                                //   .images[imIndex].image}',
-                                                          progressIndicatorBuilder: (context,
-                                                                  url,
-                                                                  downloadProgress) =>
-                                                              Container(
+                                                          child: Container(
+                                                            height: 50,
+                                                            width: 50,
+                                                            child:
+                                                                CachedNetworkImage(
+                                                              imageUrl:
+                                                                  "${global.appInfo.imageUrl}${_productDetail.productDetail.images[imIndex].image}",
+                                                              // ${_productDetail
+                                                              //   .productDetail
+                                                              //   .images[imIndex].image}',
+                                                              progressIndicatorBuilder:
+                                                                  (context, url,
+                                                                          downloadProgress) =>
+                                                                      Container(
                                                                 height: 20,
                                                                 width: 20,
                                                                 child: CircularProgressIndicator(
-                                                                    value:
-                                                                        downloadProgress
-                                                                            .progress),
+                                                                    value: downloadProgress
+                                                                        .progress),
                                                               ),
-                                                          errorWidget: (context,
-                                                                  url, error) =>
-                                                              Icon(Icons.error),
-                                                        ),
-                                                      ),
-                                                    );
-                                                  }),
+                                                              errorWidget: (context,
+                                                                      url,
+                                                                      error) =>
+                                                                  Icon(Icons
+                                                                      .error),
+                                                            ),
+                                                          ),
+                                                        );
+                                                      }),
                                                 ),
                                                 SizedBox(
                                                   height: 15,
                                                 ),
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsets.symmetric(
-                                                          horizontal: 10),
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 10),
                                                   child: Row(
                                                     children: [
                                                       Text(
@@ -476,9 +493,9 @@ List<String> produDes=["Product Description","Benefits"];
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsets.symmetric(
-                                                          horizontal: 10),
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 10),
                                                   child: Row(
                                                     children: [
                                                       Text(
@@ -499,16 +516,15 @@ List<String> produDes=["Product Description","Benefits"];
                                                       ),
                                                       IconButton(
                                                           onPressed: () async {
-                                                            bool _isAdded =
-                                                                await addRemoveWishList(
-                                                                    _productDetail
-                                                                        .productDetail
-                                                                        .storeId
-                                                                        .toString(),
-                                                                    _productDetail
-                                                                        .productDetail
-                                                                        .varientId,
-                                                                    _scaffoldKey);
+                                                            bool _isAdded = await addRemoveWishList(
+                                                                _productDetail
+                                                                    .productDetail
+                                                                    .storeId
+                                                                    .toString(),
+                                                                _productDetail
+                                                                    .productDetail
+                                                                    .varientId,
+                                                                _scaffoldKey);
                                                             if (_isAdded) {
                                                               _productDetail
                                                                       .productDetail
@@ -524,13 +540,15 @@ List<String> produDes=["Product Description","Benefits"];
                                                                   .productDetail
                                                                   .isFavourite
                                                               ? Icon(
-                                                                  MdiIcons.heart,
+                                                                  MdiIcons
+                                                                      .heart,
                                                                   size: 20,
                                                                   color: Color(
                                                                       0xFFEF5656),
                                                                 )
                                                               : Icon(
-                                                                  MdiIcons.heartOutline,
+                                                                  MdiIcons
+                                                                      .heartOutline,
                                                                   size: 20,
                                                                   color: Color(
                                                                       0xFF4A4352),
@@ -539,10 +557,11 @@ List<String> produDes=["Product Description","Benefits"];
                                                   ),
                                                 ),
                                                 Container(
-                                                  margin:
-                                                      const EdgeInsets.symmetric(
-                                                          horizontal: 10),
-                                                  alignment: Alignment.centerLeft,
+                                                  margin: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 10),
+                                                  alignment:
+                                                      Alignment.centerLeft,
                                                   child: Wrap(
                                                     runSpacing: 0,
                                                     spacing: 10,
@@ -578,14 +597,15 @@ List<String> produDes=["Product Description","Benefits"];
                                                     ),
                                                     Row(children: [
                                                       Container(
-                                                        width:
-                                                            MediaQuery.of(context)
-                                                                    .size
-                                                                    .width *
-                                                                0.40,
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.40,
                                                         child: Text(
                                                           "Product ID",
-                                                          style: Theme.of(context)
+                                                          style: Theme.of(
+                                                                  context)
                                                               .primaryTextTheme
                                                               .button
                                                               .copyWith(
@@ -608,41 +628,43 @@ List<String> produDes=["Product Description","Benefits"];
                                                       height: 10,
                                                     ),
                                                     Row(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: [
-                                                      Container(
-                                                        width:
-                                                            MediaQuery.of(context)
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Container(
+                                                            width: MediaQuery.of(
+                                                                        context)
                                                                     .size
                                                                     .width *
                                                                 0.40,
-                                                        child: Text(
-                                                            "Available Variants",
-                                                            style: Theme.of(
-                                                                    context)
-                                                                .primaryTextTheme
-                                                                .button
-                                                                .copyWith(
-                                                                    fontSize:
-                                                                        13)),
-                                                      ),
-                                                      Container(
-                                                          width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width *
-                                                            0.45,
-                                                        child: Text(
-                                                            getVarientsString(),
-                                                            style: Theme.of(
-                                                                    context)
-                                                                .primaryTextTheme
-                                                                .button
-                                                                .copyWith(
-                                                                    fontSize:
-                                                                        13)),
-                                                      )
-                                                    ]),
+                                                            child: Text(
+                                                                "Available Variants",
+                                                                style: Theme.of(
+                                                                        context)
+                                                                    .primaryTextTheme
+                                                                    .button
+                                                                    .copyWith(
+                                                                        fontSize:
+                                                                            13)),
+                                                          ),
+                                                          Container(
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.45,
+                                                            child: Text(
+                                                                getVarientsString(),
+                                                                style: Theme.of(
+                                                                        context)
+                                                                    .primaryTextTheme
+                                                                    .button
+                                                                    .copyWith(
+                                                                        fontSize:
+                                                                            13)),
+                                                          )
+                                                        ]),
                                                     SizedBox(
                                                       height: 15,
                                                     )
@@ -656,68 +678,91 @@ List<String> produDes=["Product Description","Benefits"];
                                             color: Colors.white,
                                             child: Column(children: [
                                               Row(
-                                                children: produDes.map((e) => InkWell(
-                                                  onTap: (){
-                                                    setState(() {
-                                                      productDes=false;
-                                                      chosingIndex=e;
-                                                    });
-                                                  },
-                                                  child: Container(
-                                                    width: MediaQuery.of(context).size.width*0.47,
-                                                    height: 40,
-                                                    color: chosingIndex==e?Colors.white:Colors.grey[300],
-                                                    child: Center(child: Text(e,
-                                                            style: Theme.of(
-                                                                    context)
-                                                                .primaryTextTheme
-                                                                .bodyText1
-                                                                .copyWith(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    fontSize:
-                                                                        13)),)
-                                                                                            ),
-                                                )).toList(),
+                                                children: produDes
+                                                    .map((e) => InkWell(
+                                                          onTap: () {
+                                                            setState(() {
+                                                              productDes =
+                                                                  false;
+                                                              chosingIndex = e;
+                                                            });
+                                                          },
+                                                          child: Container(
+                                                              width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.47,
+                                                              height: 40,
+                                                              color: chosingIndex ==
+                                                                      e
+                                                                  ? Colors.white
+                                                                  : Colors.grey[
+                                                                      300],
+                                                              child: Center(
+                                                                child: Text(e,
+                                                                    style: Theme.of(
+                                                                            context)
+                                                                        .primaryTextTheme
+                                                                        .bodyText1
+                                                                        .copyWith(
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
+                                                                            fontSize: 13)),
+                                                              )),
+                                                        ))
+                                                    .toList(),
                                               ),
                                               Container(
-                                                margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                                                margin:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10,
+                                                        vertical: 10),
                                                 child: Text(
-                                                       chosingIndex=="Product Description"?( _productDetail
-                                                                .productDetail
-                                                                .product_description
-                                                                .isNotEmpty
-                                                            ? "${_productDetail.productDetail.product_description.substring(0, productDes ? _productDetail.productDetail.product_description.length : _productDetail.productDetail.product_description.length < 80 ? _productDetail.productDetail.product_description.length : 80)}${productDes ? '' : _productDetail.productDetail.product_description.length < 80 ? '' : '...'}"
-                                                            : ''): (_productDetail
+                                                  chosingIndex ==
+                                                          "Product Description"
+                                                      ? (_productDetail
+                                                              .productDetail
+                                                              .product_description
+                                                              .isNotEmpty
+                                                          ? "${_productDetail.productDetail.product_description.substring(0, productDes ? _productDetail.productDetail.product_description.length : _productDetail.productDetail.product_description.length < 80 ? _productDetail.productDetail.product_description.length : 80)}${productDes ? '' : _productDetail.productDetail.product_description.length < 80 ? '' : '...'}"
+                                                          : '')
+                                                      : (_productDetail
                                                               .productDetail
                                                               .benifits
                                                               .isNotEmpty
                                                           ? "${_productDetail.productDetail.benifits.substring(0, productDes ? _productDetail.productDetail.benifits.length : _productDetail.productDetail.benifits.length < 80 ? _productDetail.productDetail.benifits.length : 80)}${productDes ? '' : _productDetail.productDetail.benifits.length < 80 ? '' : '...'}"
                                                           : ''),
-                                                        style: Theme.of(context)
-                                                            .primaryTextTheme
-                                                            .button
-                                                            .copyWith(fontSize: 13),
-                                                      ),
+                                                  style: Theme.of(context)
+                                                      .primaryTextTheme
+                                                      .button
+                                                      .copyWith(fontSize: 13),
+                                                ),
                                               ),
-                                              if (chosingIndex=="Product Description"&&_productDetail
-                                                      .productDetail
-                                                      .product_description
-                                                      .length >
-                                                  80)
-                                              Row(
+                                              if (chosingIndex ==
+                                                      "Product Description" &&
+                                                  _productDetail
+                                                          .productDetail
+                                                          .product_description
+                                                          .length >
+                                                      80)
+                                                Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                   children: [
                                                     InkWell(
                                                       onTap: () {
                                                         setState(() {
-                                                          productDes = !productDes;
+                                                          productDes =
+                                                              !productDes;
                                                         });
                                                       },
-                                                      child: Text(productDes?"Less":"More",
-                                                          style: Theme.of(context)
+                                                      child: Text(
+                                                          productDes
+                                                              ? "Less"
+                                                              : "More",
+                                                          style: Theme.of(
+                                                                  context)
                                                               .primaryTextTheme
                                                               .button
                                                               .copyWith(
@@ -727,8 +772,7 @@ List<String> produDes=["Product Description","Benefits"];
                                                     ),
                                                   ],
                                                 ),
-                                              if (chosingIndex ==
-                                                      "Benefits" &&
+                                              if (chosingIndex == "Benefits" &&
                                                   _productDetail.productDetail
                                                           .benifits.length >
                                                       80)
@@ -747,7 +791,8 @@ List<String> produDes=["Product Description","Benefits"];
                                                           productDes
                                                               ? "Less"
                                                               : "More",
-                                                          style: Theme.of(context)
+                                                          style: Theme.of(
+                                                                  context)
                                                               .primaryTextTheme
                                                               .button
                                                               .copyWith(
@@ -799,41 +844,42 @@ List<String> produDes=["Product Description","Benefits"];
                                                       style: Theme.of(context)
                                                           .primaryTextTheme
                                                           .button
-                                                          .copyWith(fontSize: 13),
+                                                          .copyWith(
+                                                              fontSize: 13),
                                                     ),
-                                                    if(_productDetail
+                                                    if (_productDetail
                                                             .productDetail
                                                             .how_to_use
                                                             .length >
                                                         80)
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        InkWell(
-                                                          onTap: () {
-                                                            setState(() {
-                                                              howToUse =
-                                                                  !howToUse;
-                                                            });
-                                                          },
-                                                          child: Text(
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          InkWell(
+                                                            onTap: () {
+                                                              setState(() {
+                                                                howToUse =
+                                                                    !howToUse;
+                                                              });
+                                                            },
+                                                            child: Text(
                                                                 howToUse
                                                                     ? "Less"
                                                                     : "More",
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .primaryTextTheme
-                                                                  .button
-                                                                  .copyWith(
-                                                                      fontSize:
-                                                                          14,
-                                                                      color: Colors
-                                                                          .blue)),
-                                                        ),
-                                                      ],
-                                                    ),
+                                                                style: Theme.of(
+                                                                        context)
+                                                                    .primaryTextTheme
+                                                                    .button
+                                                                    .copyWith(
+                                                                        fontSize:
+                                                                            14,
+                                                                        color: Colors
+                                                                            .blue)),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     SizedBox(
                                                       height: 10,
                                                     )
@@ -1148,8 +1194,8 @@ List<String> produDes=["Product Description","Benefits"];
                                                   top: 0, left: 16, right: 16),
                                               child: Text(
                                                 '${_productDetail.productDetail.shop_name}',
-                                                style:
-                                                    TextStyle(color: Colors.red),
+                                                style: TextStyle(
+                                                    color: Colors.red),
                                                 textAlign: TextAlign.center,
                                               ),
                                             ),
@@ -1172,9 +1218,11 @@ List<String> produDes=["Product Description","Benefits"];
                                                         borderRadius:
                                                             BorderRadius.only(
                                                           bottomRight:
-                                                              Radius.circular(10),
+                                                              Radius.circular(
+                                                                  10),
                                                           topLeft:
-                                                              Radius.circular(10),
+                                                              Radius.circular(
+                                                                  10),
                                                         ),
                                                       ),
                                                       child: FlatButton(
@@ -1377,7 +1425,8 @@ List<String> produDes=["Product Description","Benefits"];
                           ),
 
 // Similar products
-                    _isDataLoaded &&_productDetail!=null&&
+                    _isDataLoaded &&
+                            _productDetail != null &&
                             _productDetail.similarProductList != null &&
                             _productDetail.similarProductList.length > 0
                         ? Padding(
@@ -1386,14 +1435,16 @@ List<String> produDes=["Product Description","Benefits"];
                               contentPadding: EdgeInsets.all(0),
                               title: Text(
                                 "${AppLocalizations.of(context).lbl_similar_products}",
-                                style:
-                                    Theme.of(context).primaryTextTheme.headline5,
+                                style: Theme.of(context)
+                                    .primaryTextTheme
+                                    .headline5,
                               ),
                             ),
                           )
                         : SizedBox(),
                     _isDataLoaded
-                        ?_productDetail!=null&& _productDetail.similarProductList != null &&
+                        ? _productDetail != null &&
+                                _productDetail.similarProductList != null &&
                                 _productDetail.similarProductList.length > 0
                             ? ListView.builder(
                                 itemCount:
@@ -1401,7 +1452,8 @@ List<String> produDes=["Product Description","Benefits"];
                                 shrinkWrap: true,
                                 itemBuilder: (context, index) {
                                   return Container(
-                                    margin: EdgeInsets.only(top: 10, bottom: 10),
+                                    margin:
+                                        EdgeInsets.only(top: 10, bottom: 10),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.all(
                                         Radius.circular(10),
@@ -1414,7 +1466,8 @@ List<String> produDes=["Product Description","Benefits"];
                                             builder: (context) =>
                                                 ProductDetailScreen(
                                                     productId: _productDetail
-                                                        .similarProductList[index]
+                                                        .similarProductList[
+                                                            index]
                                                         .productId,
                                                     a: widget.analytics,
                                                     o: widget.observer),
@@ -1430,8 +1483,9 @@ List<String> produDes=["Product Description","Benefits"];
                                         children: [
                                           Container(
                                             height: 110,
-                                            width:
-                                                MediaQuery.of(context).size.width,
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
                                             child: Container(
                                               decoration: BoxDecoration(
                                                 color: Theme.of(context)
@@ -1445,12 +1499,15 @@ List<String> produDes=["Product Description","Benefits"];
                                                 padding: const EdgeInsets.only(
                                                     top: 15, left: 130),
                                                 child: Column(
-                                                  mainAxisSize: MainAxisSize.min,
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.start,
-                                                  crossAxisAlignment: global.isRTL
+                                                  crossAxisAlignment: global
+                                                          .isRTL
                                                       ? CrossAxisAlignment.end
-                                                      : CrossAxisAlignment.start,
+                                                      : CrossAxisAlignment
+                                                          .start,
                                                   children: [
                                                     Text(
                                                       '${_productDetail.similarProductList[index].productName}',
@@ -1524,7 +1581,8 @@ List<String> produDes=["Product Description","Benefits"];
                                                                       .primaryColorLight,
                                                                 ),
                                                                 RichText(
-                                                                  text: TextSpan(
+                                                                  text:
+                                                                      TextSpan(
                                                                     text:
                                                                         "${_productDetail.productDetail.rating} ",
                                                                     style: Theme.of(
@@ -1533,17 +1591,16 @@ List<String> produDes=["Product Description","Benefits"];
                                                                         .bodyText1,
                                                                     children: [
                                                                       TextSpan(
-                                                                        text: '|',
-                                                                        style: Theme.of(
-                                                                                context)
+                                                                        text:
+                                                                            '|',
+                                                                        style: Theme.of(context)
                                                                             .primaryTextTheme
                                                                             .headline2,
                                                                       ),
                                                                       TextSpan(
                                                                         text:
                                                                             ' ${_productDetail.productDetail.ratingCount} ${AppLocalizations.of(context).txt_ratings}',
-                                                                        style: Theme.of(
-                                                                                context)
+                                                                        style: Theme.of(context)
                                                                             .primaryTextTheme
                                                                             .headline1,
                                                                       )
@@ -1582,7 +1639,8 @@ List<String> produDes=["Product Description","Benefits"];
                                                     ? Container(
                                                         height: 20,
                                                         width: 70,
-                                                        decoration: BoxDecoration(
+                                                        decoration:
+                                                            BoxDecoration(
                                                           color: Colors.green,
                                                           borderRadius:
                                                               BorderRadius.only(
@@ -1598,7 +1656,8 @@ List<String> produDes=["Product Description","Benefits"];
                                                           "${_productDetail.similarProductList[index].discount}% ${AppLocalizations.of(context).txt_off}",
                                                           textAlign:
                                                               TextAlign.center,
-                                                          style: Theme.of(context)
+                                                          style: Theme.of(
+                                                                  context)
                                                               .primaryTextTheme
                                                               .caption,
                                                         ),
@@ -1641,19 +1700,20 @@ List<String> produDes=["Product Description","Benefits"];
                                                         ? Icon(
                                                             MdiIcons.heart,
                                                             size: 20,
-                                                            color:
-                                                                Color(0xFFEF5656),
+                                                            color: Color(
+                                                                0xFFEF5656),
                                                           )
                                                         : Icon(
                                                             MdiIcons.heart,
                                                             size: 20,
-                                                            color:
-                                                                Color(0xFF4A4352),
+                                                            color: Color(
+                                                                0xFF4A4352),
                                                           ))
                                               ],
                                             ),
                                           ),
-                                          _productDetail.similarProductList[index]
+                                          _productDetail
+                                                      .similarProductList[index]
                                                       .stock >
                                                   0
                                               ? Positioned(
@@ -1676,9 +1736,11 @@ List<String> produDes=["Product Description","Benefits"];
                                                       child: Text(
                                                         'ADD',
                                                         style: TextStyle(
-                                                            color: Colors.white),
+                                                            color:
+                                                                Colors.white),
                                                       ),
-                                                      padding: EdgeInsets.all(0),
+                                                      padding:
+                                                          EdgeInsets.all(0),
                                                       visualDensity:
                                                           VisualDensity(
                                                               vertical: -4,
@@ -1711,17 +1773,19 @@ List<String> produDes=["Product Description","Benefits"];
                                             child: Container(
                                               padding: EdgeInsets.only(left: 6),
                                               child: CachedNetworkImage(
-                                                imageUrl: global
-                                                        .appInfo.imageUrl +
-                                                    _productDetail
-                                                        .similarProductList[index]
-                                                        .productImage,
+                                                imageUrl:
+                                                    global.appInfo.imageUrl +
+                                                        _productDetail
+                                                            .similarProductList[
+                                                                index]
+                                                            .productImage,
                                                 imageBuilder:
                                                     (context, imageProvider) =>
                                                         Container(
                                                   decoration: BoxDecoration(
                                                     borderRadius:
-                                                        BorderRadius.circular(15),
+                                                        BorderRadius.circular(
+                                                            15),
                                                     image: DecorationImage(
                                                         image: imageProvider,
                                                         fit: BoxFit.cover),
@@ -1736,27 +1800,33 @@ List<String> produDes=["Product Description","Benefits"];
                                                         ? false
                                                         : true,
                                                     child: Container(
-                                                      alignment: Alignment.center,
+                                                      alignment:
+                                                          Alignment.center,
                                                       decoration: BoxDecoration(
-                                                          color: Theme.of(context)
+                                                          color: Theme.of(
+                                                                  context)
                                                               .primaryColorLight
                                                               .withOpacity(0.5),
                                                           borderRadius:
                                                               BorderRadius
-                                                                  .circular(15)),
+                                                                  .circular(
+                                                                      15)),
                                                       child: Container(
                                                         decoration: BoxDecoration(
                                                             color: Colors.white,
                                                             borderRadius:
                                                                 BorderRadius
-                                                                    .circular(5)),
-                                                        padding: const EdgeInsets
-                                                                .symmetric(
-                                                            horizontal: 10,
-                                                            vertical: 5),
+                                                                    .circular(
+                                                                        5)),
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal: 10,
+                                                                vertical: 5),
                                                         child: Text(
                                                           '${AppLocalizations.of(context).txt_out_of_stock}',
-                                                          style: Theme.of(context)
+                                                          style: Theme.of(
+                                                                  context)
                                                               .primaryTextTheme
                                                               .headline2,
                                                         ),
@@ -1764,9 +1834,10 @@ List<String> produDes=["Product Description","Benefits"];
                                                     ),
                                                   ),
                                                 ),
-                                                placeholder: (context, url) => Center(
-                                                    child:
-                                                        CircularProgressIndicator()),
+                                                placeholder: (context, url) =>
+                                                    Center(
+                                                        child:
+                                                            CircularProgressIndicator()),
                                                 errorWidget:
                                                     (context, url, error) =>
                                                         Container(
@@ -1779,27 +1850,33 @@ List<String> produDes=["Product Description","Benefits"];
                                                         ? false
                                                         : true,
                                                     child: Container(
-                                                      alignment: Alignment.center,
+                                                      alignment:
+                                                          Alignment.center,
                                                       decoration: BoxDecoration(
-                                                          color: Theme.of(context)
+                                                          color: Theme.of(
+                                                                  context)
                                                               .primaryColorLight
                                                               .withOpacity(0.5),
                                                           borderRadius:
                                                               BorderRadius
-                                                                  .circular(15)),
+                                                                  .circular(
+                                                                      15)),
                                                       child: Container(
                                                         decoration: BoxDecoration(
                                                             color: Colors.white,
                                                             borderRadius:
                                                                 BorderRadius
-                                                                    .circular(5)),
-                                                        padding: const EdgeInsets
-                                                                .symmetric(
-                                                            horizontal: 10,
-                                                            vertical: 5),
+                                                                    .circular(
+                                                                        5)),
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal: 10,
+                                                                vertical: 5),
                                                         child: Text(
                                                           '${AppLocalizations.of(context).txt_out_of_stock}',
-                                                          style: Theme.of(context)
+                                                          style: Theme.of(
+                                                                  context)
                                                               .primaryTextTheme
                                                               .headline2,
                                                         ),
@@ -1809,7 +1886,8 @@ List<String> produDes=["Product Description","Benefits"];
                                                   alignment: Alignment.center,
                                                   decoration: BoxDecoration(
                                                     borderRadius:
-                                                        BorderRadius.circular(15),
+                                                        BorderRadius.circular(
+                                                            15),
                                                     image: DecorationImage(
                                                       image: AssetImage(
                                                           '${global.defaultImage}'),
@@ -1854,7 +1932,9 @@ List<String> produDes=["Product Description","Benefits"];
       bool isConnected = await br.checkConnectivity();
       if (isConnected) {
         if (varientId != null) {
-          await apiHelper.getBannerVarient(varientId).then((result) async {
+          await apiHelper
+              .getBannerVarient(varientId, storeId)
+              .then((result) async {
             if (result != null) {
               if (result.status == "1") {
                 _productDetail = result.data;

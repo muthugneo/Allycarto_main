@@ -5,11 +5,15 @@ import 'package:gomeat/widgets/bottomNavigationWidget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
+import 'orderListScreen.dart';
+
 class OrderSuccessScreen extends BaseRoute {
   final String cartId;
-  OrderSuccessScreen(this.cartId, {a, o}) : super(a: a, o: o, r: 'OrderSuccessScreen');
+  OrderSuccessScreen(this.cartId, {a, o})
+      : super(a: a, o: o, r: 'OrderSuccessScreen');
   @override
-  _OrderSuccessScreenState createState() => new _OrderSuccessScreenState(this.cartId);
+  _OrderSuccessScreenState createState() =>
+      new _OrderSuccessScreenState(this.cartId);
 }
 
 class _OrderSuccessScreenState extends BaseRouteState {
@@ -20,7 +24,9 @@ class _OrderSuccessScreenState extends BaseRouteState {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => BottomNavigationWidget(a: widget.analytics, o: widget.observer)));
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => BottomNavigationWidget(
+                a: widget.analytics, o: widget.observer)));
         return null;
       },
       child: Scaffold(
@@ -45,14 +51,20 @@ class _OrderSuccessScreenState extends BaseRouteState {
                 ),
                 Text(
                   "${AppLocalizations.of(context).tle_congrates}",
-                  style: Theme.of(context).primaryTextTheme.headline3.copyWith(color: Colors.white),
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .headline3
+                      .copyWith(color: Colors.white),
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 20, right: 20, top: 10),
                   child: Text(
                     "${AppLocalizations.of(context).txt_order_success_description}",
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).primaryTextTheme.overline.copyWith(color: Colors.white, letterSpacing: 0.0),
+                    style: Theme.of(context)
+                        .primaryTextTheme
+                        .overline
+                        .copyWith(color: Colors.white, letterSpacing: 0.0),
                   ),
                 ),
                 Container(
@@ -65,19 +77,34 @@ class _OrderSuccessScreenState extends BaseRouteState {
                   width: MediaQuery.of(context).size.width,
                   child: TextButton(
                       onPressed: () {
+                        Navigator.pop(context);
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => TrackOrderScreen(cartId, 0,a: widget.analytics, o: widget.observer),
+                            builder: (context) => OrderListScreen(
+                                a: widget.analytics, o: widget.observer),
                           ),
                         );
+                        // Navigator.of(context).push(
+                        //   MaterialPageRoute(
+                        //     builder: (context) => TrackOrderScreen(cartId, 0,a: widget.analytics, o: widget.observer),
+                        //   ),
+                        // );
                       },
-                      child: Text('${AppLocalizations.of(context).btn_track_order}', style: TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.bold))),
+                      child: Text('My Orders',
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold))),
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.15),
                 TextButton(
-                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.transparent)),
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.transparent)),
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => BottomNavigationWidget(a: widget.analytics, o: widget.observer)));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => BottomNavigationWidget(
+                            a: widget.analytics, o: widget.observer)));
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,

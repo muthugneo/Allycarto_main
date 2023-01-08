@@ -28,7 +28,10 @@ class _PaymentSuccessScreenState extends BaseRouteState {
     return WillPopScope(
       onWillPop: () async {
         if (popCount > 0) {
-          Navigator.pop(context);
+          for (var i = 0; i < popCount; i++) {
+            Navigator.pop(context);
+          }
+
           return true;
         } else {
           Navigator.of(context).push(MaterialPageRoute(
@@ -109,37 +112,37 @@ class _PaymentSuccessScreenState extends BaseRouteState {
                   ],
                 ),
               ),
-              TextButton(
-                style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(Colors.transparent)),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Done',
-                      style: TextStyle(
-                        color: Colors.white,
-                        letterSpacing: 2.0,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Icon(
-                        MdiIcons.check,
-                        color: Colors.white,
-                        size: 20,
-                      ),
-                    )
-                  ],
-                ),
-              ),
+              // TextButton(
+              //   style: ButtonStyle(
+              //       backgroundColor:
+              //           MaterialStateProperty.all(Colors.transparent)),
+              //   onPressed: () {
+              //     Navigator.pop(context);
+              //   },
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     crossAxisAlignment: CrossAxisAlignment.center,
+              //     children: [
+              //       Text(
+              //         'Done',
+              //         style: TextStyle(
+              //           color: Colors.white,
+              //           letterSpacing: 2.0,
+              //           fontSize: 16,
+              //           fontWeight: FontWeight.w600,
+              //         ),
+              //       ),
+              //       Padding(
+              //         padding: const EdgeInsets.all(4.0),
+              //         child: Icon(
+              //           MdiIcons.check,
+              //           color: Colors.white,
+              //           size: 20,
+              //         ),
+              //       )
+              //     ],
+              //   ),
+              // ),
             ],
           ),
         ),

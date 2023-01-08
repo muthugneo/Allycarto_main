@@ -13,9 +13,11 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 
 class OrderDetailScreen extends BaseRoute {
   final Order order;
-  OrderDetailScreen(this.order, {a, o}) : super(a: a, o: o, r: 'OrderDetailScreen');
+  OrderDetailScreen(this.order, {a, o})
+      : super(a: a, o: o, r: 'OrderDetailScreen');
   @override
-  _OrderDetailScreenState createState() => new _OrderDetailScreenState(this.order);
+  _OrderDetailScreenState createState() =>
+      new _OrderDetailScreenState(this.order);
 }
 
 class _OrderDetailScreenState extends BaseRouteState {
@@ -43,7 +45,8 @@ class _OrderDetailScreenState extends BaseRouteState {
               child: Icon(MdiIcons.arrowLeft),
             ),
           ),
-          title: Text("#${order.cartId} - ${AppLocalizations.of(context).tle_order_details}"),
+          title: Text(
+              "#${order.cartId} - ${AppLocalizations.of(context).tle_order_details}"),
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -68,7 +71,14 @@ class _OrderDetailScreenState extends BaseRouteState {
                           onTap: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) => ProductDetailScreen(varientId: order.productList[index].varientId, a: widget.analytics, o: widget.observer),
+                                builder: (context) => ProductDetailScreen(
+                                    // varientId:
+                                    //     order.productList[index].varientId,
+                                    // storeId: order.productList[index].storeId,
+                                    productId:
+                                        order.productList[index].productId,
+                                    a: widget.analytics,
+                                    o: widget.observer),
                               ),
                             );
                           },
@@ -90,62 +100,101 @@ class _OrderDetailScreenState extends BaseRouteState {
                                     ),
                                   ),
                                   child: Padding(
-                                    padding: const EdgeInsets.only(top: 20, left: 130),
+                                    padding: const EdgeInsets.only(
+                                        top: 20, left: 130),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: global.isRTL ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment: global.isRTL
+                                          ? CrossAxisAlignment.end
+                                          : CrossAxisAlignment.start,
                                       children: [
                                         SizedBox(
                                           width: 150,
                                           child: Text(
                                             '${order.productList[index].productName}',
-                                            style: Theme.of(context).primaryTextTheme.bodyText1,
+                                            style: Theme.of(context)
+                                                .primaryTextTheme
+                                                .bodyText1,
                                             softWrap: true,
                                             overflow: TextOverflow.ellipsis,
                                           ),
                                         ),
                                         Text(
                                           '${order.productList[index].type}',
-                                          style: Theme.of(context).primaryTextTheme.headline2,
+                                          style: Theme.of(context)
+                                              .primaryTextTheme
+                                              .headline2,
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                         RichText(
-                                            text: TextSpan(text: "${global.appInfo.currencySign} ", style: Theme.of(context).primaryTextTheme.headline2, children: [
-                                          TextSpan(
-                                            text: '${order.productList[index].price}',
-                                            style: Theme.of(context).primaryTextTheme.bodyText1,
-                                          ),
-                                          TextSpan(
-                                            text: ' / ${order.productList[index].quantity} ${order.productList[index].unit}',
-                                            style: Theme.of(context).primaryTextTheme.headline2,
-                                          )
-                                        ])),
-                                        order.productList[index].rating != null && order.productList[index].rating > 0
+                                            text: TextSpan(
+                                                text:
+                                                    "${global.appInfo.currencySign} ",
+                                                style: Theme.of(context)
+                                                    .primaryTextTheme
+                                                    .headline2,
+                                                children: [
+                                              TextSpan(
+                                                text:
+                                                    '${order.productList[index].price}',
+                                                style: Theme.of(context)
+                                                    .primaryTextTheme
+                                                    .bodyText1,
+                                              ),
+                                              TextSpan(
+                                                text:
+                                                    ' / ${order.productList[index].quantity} ${order.productList[index].unit}',
+                                                style: Theme.of(context)
+                                                    .primaryTextTheme
+                                                    .headline2,
+                                              )
+                                            ])),
+                                        order.productList[index].rating !=
+                                                    null &&
+                                                order.productList[index]
+                                                        .rating >
+                                                    0
                                             ? Padding(
-                                                padding: EdgeInsets.only(top: 4.0),
+                                                padding:
+                                                    EdgeInsets.only(top: 4.0),
                                                 child: Row(
-                                                  mainAxisSize: MainAxisSize.min,
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
                                                   children: [
                                                     Icon(
                                                       Icons.star,
                                                       size: 18,
-                                                      color: Theme.of(context).primaryColorLight,
+                                                      color: Theme.of(context)
+                                                          .primaryColorLight,
                                                     ),
                                                     RichText(
                                                       text: TextSpan(
-                                                        text: "${order.productList[index].rating} ",
-                                                        style: Theme.of(context).primaryTextTheme.bodyText1,
+                                                        text:
+                                                            "${order.productList[index].rating} ",
+                                                        style: Theme.of(context)
+                                                            .primaryTextTheme
+                                                            .bodyText1,
                                                         children: [
                                                           TextSpan(
                                                             text: '|',
-                                                            style: Theme.of(context).primaryTextTheme.headline2,
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .primaryTextTheme
+                                                                .headline2,
                                                           ),
                                                           TextSpan(
-                                                            text: ' ${order.productList[index].ratingCount} ${AppLocalizations.of(context).txt_ratings}',
-                                                            style: Theme.of(context).primaryTextTheme.headline1,
+                                                            text:
+                                                                ' ${order.productList[index].ratingCount} ${AppLocalizations.of(context).txt_ratings}',
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .primaryTextTheme
+                                                                .headline1,
                                                           )
                                                         ],
                                                       ),
@@ -169,7 +218,11 @@ class _OrderDetailScreenState extends BaseRouteState {
                                             onTap: () {
                                               Navigator.of(context).push(
                                                 MaterialPageRoute(
-                                                  builder: (context) => RateOrderScreen(order, index, a: widget.analytics, o: widget.observer),
+                                                  builder: (context) =>
+                                                      RateOrderScreen(
+                                                          order, index,
+                                                          a: widget.analytics,
+                                                          o: widget.observer),
                                                 ),
                                               );
                                             },
@@ -179,42 +232,84 @@ class _OrderDetailScreenState extends BaseRouteState {
                                               height: 25,
                                               decoration: BoxDecoration(
                                                 gradient: LinearGradient(
-                                                  colors: [Color(0xFFe03337), Color(0xFFb73537)],
+                                                  colors: [
+                                                    Color(0xFFe03337),
+                                                    Color(0xFFb73537)
+                                                  ],
                                                   begin: Alignment.topLeft,
                                                   end: Alignment.bottomRight,
                                                 ),
-                                                borderRadius: BorderRadius.circular(7),
+                                                borderRadius:
+                                                    BorderRadius.circular(7),
                                               ),
                                               child: Container(
                                                   decoration: BoxDecoration(
-                                                    color: global.isDarkModeEnable ? Colors.black : Colors.white,
-                                                    borderRadius: BorderRadius.circular(7),
+                                                    color:
+                                                        global.isDarkModeEnable
+                                                            ? Colors.black
+                                                            : Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            7),
                                                   ),
                                                   // width: 60,
                                                   height: 25,
                                                   alignment: Alignment.center,
                                                   child: Padding(
-                                                    padding: const EdgeInsets.only(left: 5, right: 5),
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 5, right: 5),
                                                     child: Text(
-                                                      order.productList[index].userRating != null && order.productList[index].userRating.toDouble() > 0.0 ? "Edit Rating" : "Add Rating",
-                                                      style: TextStyle(fontSize: 13, color: global.isDarkModeEnable ? Theme.of(context).primaryColorLight : Theme.of(context).primaryColor, fontWeight: FontWeight.w400),
+                                                      order.productList[index]
+                                                                      .userRating !=
+                                                                  null &&
+                                                              order
+                                                                      .productList[
+                                                                          index]
+                                                                      .userRating
+                                                                      .toDouble() >
+                                                                  0.0
+                                                          ? "Edit Rating"
+                                                          : "Add Rating",
+                                                      style: TextStyle(
+                                                          fontSize: 13,
+                                                          color: global
+                                                                  .isDarkModeEnable
+                                                              ? Theme.of(
+                                                                      context)
+                                                                  .primaryColorLight
+                                                              : Theme.of(
+                                                                      context)
+                                                                  .primaryColor,
+                                                          fontWeight:
+                                                              FontWeight.w400),
                                                     ),
                                                   )),
                                             ),
                                           ),
-                                          order.productList[index].userRating != null && order.productList[index].userRating.toDouble() > 0.0
+                                          order.productList[index].userRating !=
+                                                      null &&
+                                                  order.productList[index]
+                                                          .userRating
+                                                          .toDouble() >
+                                                      0.0
                                               ? Row(
-                                                  mainAxisSize: MainAxisSize.min,
-                                                  mainAxisAlignment: MainAxisAlignment.end,
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
                                                   children: [
                                                     Icon(
                                                       Icons.star,
                                                       size: 18,
-                                                      color: Theme.of(context).primaryColorLight,
+                                                      color: Theme.of(context)
+                                                          .primaryColorLight,
                                                     ),
                                                     Text(
                                                       "${order.productList[index].userRating} ",
-                                                      style: Theme.of(context).primaryTextTheme.bodyText1,
+                                                      style: Theme.of(context)
+                                                          .primaryTextTheme
+                                                          .bodyText1,
                                                     ),
                                                   ],
                                                 )
@@ -226,13 +321,19 @@ class _OrderDetailScreenState extends BaseRouteState {
                               Positioned(
                                 left: 0,
                                 top: -10,
-                                child: order.productList[index].varientImage != null
+                                child: order.productList[index].varientImage !=
+                                        null
                                     ? Container(
                                         child: CachedNetworkImage(
-                                          imageUrl: global.appInfo.imageUrl + order.productList[index].varientImage,
-                                          imageBuilder: (context, imageProvider) => Container(
+                                          imageUrl: global.appInfo.imageUrl +
+                                              order.productList[index]
+                                                  .varientImage,
+                                          imageBuilder:
+                                              (context, imageProvider) =>
+                                                  Container(
                                             decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(15),
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
                                               image: DecorationImage(
                                                 image: imageProvider,
                                                 fit: BoxFit.cover,
@@ -243,40 +344,75 @@ class _OrderDetailScreenState extends BaseRouteState {
                                               visible: false,
                                               child: Container(
                                                 alignment: Alignment.center,
-                                                decoration: BoxDecoration(color: Theme.of(context).primaryColorLight.withOpacity(0.5), borderRadius: BorderRadius.circular(15)),
+                                                decoration: BoxDecoration(
+                                                    color: Theme.of(context)
+                                                        .primaryColorLight
+                                                        .withOpacity(0.5),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15)),
                                                 child: Container(
-                                                  decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5)),
-                                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5)),
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 5),
                                                   child: Text(
                                                     '${AppLocalizations.of(context).txt_out_of_stock}',
-                                                    style: Theme.of(context).primaryTextTheme.headline2,
+                                                    style: Theme.of(context)
+                                                        .primaryTextTheme
+                                                        .headline2,
                                                   ),
                                                 ),
                                               ),
                                             ),
                                           ),
-                                          placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-                                          errorWidget: (context, url, error) => Container(
+                                          placeholder: (context, url) => Center(
+                                              child:
+                                                  CircularProgressIndicator()),
+                                          errorWidget: (context, url, error) =>
+                                              Container(
                                             child: Visibility(
                                               visible: false,
                                               child: Container(
                                                 alignment: Alignment.center,
-                                                decoration: BoxDecoration(color: Theme.of(context).primaryColorLight.withOpacity(0.5), borderRadius: BorderRadius.circular(15)),
+                                                decoration: BoxDecoration(
+                                                    color: Theme.of(context)
+                                                        .primaryColorLight
+                                                        .withOpacity(0.5),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15)),
                                                 child: Container(
-                                                  decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5)),
-                                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5)),
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 5),
                                                   child: Text(
                                                     '${AppLocalizations.of(context).txt_out_of_stock}',
-                                                    style: Theme.of(context).primaryTextTheme.headline2,
+                                                    style: Theme.of(context)
+                                                        .primaryTextTheme
+                                                        .headline2,
                                                   ),
                                                 ),
                                               ),
                                             ),
                                             alignment: Alignment.center,
                                             decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(15),
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
                                               image: DecorationImage(
-                                                image: AssetImage('${global.defaultImage}'),
+                                                image: AssetImage(
+                                                    '${global.defaultImage}'),
                                                 fit: BoxFit.cover,
                                               ),
                                             ),
@@ -290,9 +426,11 @@ class _OrderDetailScreenState extends BaseRouteState {
                                         width: 120,
                                         alignment: Alignment.center,
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(15),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
                                           image: DecorationImage(
-                                            image: AssetImage('${global.defaultImage}'),
+                                            image: AssetImage(
+                                                '${global.defaultImage}'),
                                             fit: BoxFit.cover,
                                           ),
                                         ),
@@ -309,7 +447,10 @@ class _OrderDetailScreenState extends BaseRouteState {
                                         stops: [0, .90],
                                         begin: Alignment.centerLeft,
                                         end: Alignment.centerRight,
-                                        colors: [Color(0xFFe03337), Color(0xFFb73537)],
+                                        colors: [
+                                          Color(0xFFe03337),
+                                          Color(0xFFb73537)
+                                        ],
                                       ),
                                       borderRadius: BorderRadius.only(
                                         bottomRight: Radius.circular(10),
@@ -320,7 +461,14 @@ class _OrderDetailScreenState extends BaseRouteState {
                                     child: Text(
                                       '${order.productList[index].cartQty}',
                                       textAlign: TextAlign.center,
-                                      style: Theme.of(context).primaryTextTheme.bodyText1.copyWith(color: Theme.of(context).primaryTextTheme.caption.color),
+                                      style: Theme.of(context)
+                                          .primaryTextTheme
+                                          .bodyText1
+                                          .copyWith(
+                                              color: Theme.of(context)
+                                                  .primaryTextTheme
+                                                  .caption
+                                                  .color),
                                     )),
                               )
                             ],
@@ -428,7 +576,10 @@ class _OrderDetailScreenState extends BaseRouteState {
                       ),
                       Text(
                         " - ${global.appInfo.currencySign} ${order.discountonmrp}",
-                        style: Theme.of(context).primaryTextTheme.headline2.copyWith(color: Colors.blue),
+                        style: Theme.of(context)
+                            .primaryTextTheme
+                            .headline2
+                            .copyWith(color: Colors.blue),
                       ),
                     ],
                   ),
@@ -445,7 +596,11 @@ class _OrderDetailScreenState extends BaseRouteState {
                       ),
                       Text(
                         " - ${order.couponDiscount}",
-                        style: Theme.of(context).primaryTextTheme.overline.copyWith(color: Theme.of(context).primaryColorLight),
+                        style: Theme.of(context)
+                            .primaryTextTheme
+                            .overline
+                            .copyWith(
+                                color: Theme.of(context).primaryColorLight),
                       ),
                     ],
                   ),
@@ -462,7 +617,10 @@ class _OrderDetailScreenState extends BaseRouteState {
                       ),
                       Text(
                         "${global.appInfo.currencySign} ${order.deliveryCharge}",
-                        style: Theme.of(context).primaryTextTheme.overline.copyWith(color: Colors.blue),
+                        style: Theme.of(context)
+                            .primaryTextTheme
+                            .overline
+                            .copyWith(color: Colors.blue),
                       )
                     ],
                   ),
@@ -476,11 +634,15 @@ class _OrderDetailScreenState extends BaseRouteState {
                           children: [
                             Text(
                               "${AppLocalizations.of(context).lbl_paid_by_wallet}",
-                              style: Theme.of(context).primaryTextTheme.overline,
+                              style:
+                                  Theme.of(context).primaryTextTheme.overline,
                             ),
                             Text(
                               "${global.appInfo.currencySign} ${order.paidByWallet}",
-                              style: Theme.of(context).primaryTextTheme.overline.copyWith(color: Colors.blue),
+                              style: Theme.of(context)
+                                  .primaryTextTheme
+                                  .overline
+                                  .copyWith(color: Colors.blue),
                             )
                           ],
                         ),
@@ -498,7 +660,10 @@ class _OrderDetailScreenState extends BaseRouteState {
                       ),
                       Text(
                         "${global.appInfo.currencySign} ${order.totaltaxprice}",
-                        style: Theme.of(context).primaryTextTheme.overline.copyWith(color: Colors.blue),
+                        style: Theme.of(context)
+                            .primaryTextTheme
+                            .overline
+                            .copyWith(color: Colors.blue),
                       )
                     ],
                   ),
@@ -511,11 +676,17 @@ class _OrderDetailScreenState extends BaseRouteState {
                   contentPadding: EdgeInsets.all(0),
                   leading: Text(
                     "${AppLocalizations.of(context).lbl_total_amount}",
-                    style: Theme.of(context).primaryTextTheme.bodyText1.copyWith(fontWeight: FontWeight.w700),
+                    style: Theme.of(context)
+                        .primaryTextTheme
+                        .bodyText1
+                        .copyWith(fontWeight: FontWeight.w700),
                   ),
                   trailing: Text(
                     "${global.appInfo.currencySign} ${order.remPrice}",
-                    style: Theme.of(context).primaryTextTheme.bodyText1.copyWith(fontWeight: FontWeight.w700),
+                    style: Theme.of(context)
+                        .primaryTextTheme
+                        .bodyText1
+                        .copyWith(fontWeight: FontWeight.w700),
                   ),
                 ),
                 Divider(),
@@ -529,7 +700,9 @@ class _OrderDetailScreenState extends BaseRouteState {
                     ),
                     Expanded(child: SizedBox()),
                     Icon(
-                      order.orderStatus == 'Cancelled' ? MdiIcons.closeOctagon : MdiIcons.checkDecagram,
+                      order.orderStatus == 'Cancelled'
+                          ? MdiIcons.closeOctagon
+                          : MdiIcons.checkDecagram,
                       size: 20,
                       color: order.orderStatus == 'Cancelled'
                           ? Colors.red
@@ -648,12 +821,14 @@ class _OrderDetailScreenState extends BaseRouteState {
               hideLoader();
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => CheckoutScreen(a: widget.analytics, o: widget.observer),
+                  builder: (context) =>
+                      CheckoutScreen(a: widget.analytics, o: widget.observer),
                 ),
               );
             } else {
               hideLoader();
-              showSnackBar(key: _scaffoldKey, snackBarMessage: '${result.message}');
+              showSnackBar(
+                  key: _scaffoldKey, snackBarMessage: '${result.message}');
             }
           }
         });
@@ -678,7 +853,8 @@ class _OrderDetailScreenState extends BaseRouteState {
               hideLoader();
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => MapScreen(_tOrder, a: widget.analytics, o: widget.observer),
+                  builder: (context) => MapScreen(_tOrder,
+                      a: widget.analytics, o: widget.observer),
                 ),
               );
             } else {
@@ -691,7 +867,8 @@ class _OrderDetailScreenState extends BaseRouteState {
         showNetworkErrorSnackBar(_scaffoldKey);
       }
     } catch (e) {
-      print("Exception - orderDetailScreen.dart - _trackOrder(): " + e.toString());
+      print("Exception - orderDetailScreen.dart - _trackOrder(): " +
+          e.toString());
     }
   }
 }
