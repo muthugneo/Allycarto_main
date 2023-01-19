@@ -77,14 +77,12 @@ class _HomeScreenState extends BaseRouteState {
   List _mainCategoryData = [];
   List _mainVendorData = [];
 
-
   @override
   void initState() {
     super.initState();
     speech = speechToText.SpeechToText();
     _init();
   }
-
 
   Future<void> listen() async {
     if (!isListen) {
@@ -103,7 +101,9 @@ class _HomeScreenState extends BaseRouteState {
               confidence = value.confidence;
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => ProductListScreen(7, value.recognizedWords, "", a: widget.analytics, o: widget.observer),
+                  builder: (context) => ProductListScreen(
+                      7, value.recognizedWords, "",
+                      a: widget.analytics, o: widget.observer),
                 ),
               );
             }
@@ -119,268 +119,338 @@ class _HomeScreenState extends BaseRouteState {
     }
   }
 
-    @override
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         key: _scaffoldKey,
         resizeToAvoidBottomInset: false,
-          drawer: Drawer(
-            backgroundColor: Colors.white,
-            child: ListView(
-              padding: EdgeInsets.zero,
-              children: <Widget>[
-                UserAccountsDrawerHeader(
-                  accountName: Text(global.currentUser.name ?? "Guest",style: TextStyle(fontSize: 18, color: Colors.white)),
-                  accountEmail: Text(global.currentUser.email ?? ""),
-                  currentAccountPicture: CircleAvatar(
-                    backgroundColor: Colors.orange,
-                    child: global.currentUser.name == null ? Text(
-                      "G",
-                      style: TextStyle(fontSize: 40.0,color: Colors.white),
-                    ) : Text(
-                      global.currentUser.name[0].toString(),
-                      style: TextStyle(fontSize: 40.0,color: Colors.white),
+        drawer: Drawer(
+          backgroundColor: Colors.white,
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              UserAccountsDrawerHeader(
+                accountName: Text(global.currentUser.name ?? "Guest",
+                    style: TextStyle(fontSize: 18, color: Colors.white)),
+                accountEmail: Text(global.currentUser.email ?? ""),
+                currentAccountPicture: CircleAvatar(
+                  backgroundColor: Colors.orange,
+                  child: global.currentUser.name == null
+                      ? Text(
+                          "G",
+                          style: TextStyle(fontSize: 40.0, color: Colors.white),
+                        )
+                      : Text(
+                          global.currentUser.name[0].toString(),
+                          style: TextStyle(fontSize: 40.0, color: Colors.white),
+                        ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 12,
                     ),
-                  ),
+                    Icon(Icons.home),
+                    SizedBox(
+                      width: 12,
+                    ),
+                    Text("Home")
+                  ],
                 ),
-                InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Row(
-                    children: [
-                      SizedBox(width: 12,),
-                      Icon(Icons.home),
-                      SizedBox(width: 12,),
-                      Text("Home")
-                    ],
-                  ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+
+              InkWell(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => MyTeam(),
+                    ),
+                  );
+                },
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 12,
+                    ),
+                    Icon(Icons.supervised_user_circle_outlined),
+                    SizedBox(
+                      width: 12,
+                    ),
+                    Text("My Team")
+                  ],
                 ),
-                SizedBox(height: 15,),
+              ),
 
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => MyTeam(),
-                      ),
-                    );
-                  },
-                  child: Row(
-                    children: [
-                      SizedBox(width: 12,),
-                      Icon(Icons.supervised_user_circle_outlined),
-                      SizedBox(width: 12,),
-                      Text("My Team")
-                    ],
-                  ),
+              SizedBox(
+                height: 15,
+              ),
+
+              InkWell(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => ReferAndEarnScreen(
+                          a: widget.analytics, o: widget.observer),
+                    ),
+                  );
+                },
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 12,
+                    ),
+                    Icon(MdiIcons.accountConvert),
+                    SizedBox(
+                      width: 12,
+                    ),
+                    Text("Refer and Earn")
+                  ],
                 ),
+              ),
 
-                SizedBox(height: 15,),
+              SizedBox(
+                height: 15,
+              ),
 
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => ReferAndEarnScreen(a: widget.analytics, o: widget.observer),
-                      ),
-                    );
-                  },
-                  child: Row(
-                    children: [
-                      SizedBox(width: 12,),
-                      Icon(MdiIcons.accountConvert),
-                      SizedBox(width: 12,),
-                      Text("Refer and Earn")
-                    ],
-                  ),
+              InkWell(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => MyBlogs(),
+                    ),
+                  );
+                },
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 12,
+                    ),
+                    Icon(Icons.newspaper),
+                    SizedBox(
+                      width: 12,
+                    ),
+                    Text("My Blogs")
+                  ],
                 ),
+              ),
 
-                SizedBox(height: 15,),
+              SizedBox(
+                height: 15,
+              ),
 
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => MyBlogs(),
-                      ),
-                    );
-                  },
-                  child: Row(
-                    children: [
-                      SizedBox(width: 12,),
-                      Icon(Icons.newspaper),
-                      SizedBox(width: 12,),
-                      Text("My Blogs")
-                    ],
-                  ),
+              InkWell(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => MyGalley(),
+                    ),
+                  );
+                },
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 12,
+                    ),
+                    Icon(Icons.image),
+                    SizedBox(
+                      width: 12,
+                    ),
+                    Text("Gallery")
+                  ],
                 ),
+              ),
 
-                SizedBox(height: 15,),
+              SizedBox(
+                height: 15,
+              ),
 
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => MyGalley(),
-                      ),
-                    );
-                  },
-                  child: Row(
-                    children: [
-                      SizedBox(width: 12,),
-                      Icon(Icons.image),
-                      SizedBox(width: 12,),
-                      Text("Gallery")
-                    ],
-                  ),
+              InkWell(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => MyPromotionVideos(),
+                    ),
+                  );
+                },
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 12,
+                    ),
+                    Icon(Icons.play_circle_outline),
+                    SizedBox(
+                      width: 12,
+                    ),
+                    Text("Promotional Videos")
+                  ],
                 ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
 
-                SizedBox(height: 15,),
-
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => MyPromotionVideos(),
-                      ),
-                    );
-                  },
-                  child: Row(
-                    children: [
-                      SizedBox(width: 12,),
-                      Icon(Icons.play_circle_outline),
-                      SizedBox(width: 12,),
-                      Text("Promotional Videos")
-                    ],
-                  ),
+              InkWell(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => TicketsPage(),
+                    ),
+                  );
+                },
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 12,
+                    ),
+                    Icon(Icons.question_answer),
+                    SizedBox(
+                      width: 12,
+                    ),
+                    Text("Raise Complaint")
+                  ],
                 ),
-                SizedBox(height: 15,),
+              ),
 
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => TicketsPage(),
-                      ),
-                    );
-                  },
-                  child: Row(
-                    children: [
-                      SizedBox(width: 12,),
-                      Icon(Icons.question_answer),
-                      SizedBox(width: 12,),
-                      Text("Raise Complaint")
-                    ],
-                  ),
+              SizedBox(
+                height: 15,
+              ),
+
+              InkWell(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => MyTicketsPage(),
+                    ),
+                  );
+                },
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 12,
+                    ),
+                    Icon(Icons.question_answer),
+                    SizedBox(
+                      width: 12,
+                    ),
+                    Text("My Complaints")
+                  ],
                 ),
+              ),
 
-                SizedBox(height: 15,),
+              SizedBox(
+                height: 15,
+              ),
 
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => MyTicketsPage(),
-                      ),
-                    );
-                  },
-                  child: Row(
-                    children: [
-                      SizedBox(width: 12,),
-                      Icon(Icons.question_answer),
-                      SizedBox(width: 12,),
-                      Text("My Complaints")
-                    ],
-                  ),
+              InkWell(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => Coverages(),
+                    ),
+                  );
+                },
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 12,
+                    ),
+                    Icon(Icons.map_outlined),
+                    SizedBox(
+                      width: 12,
+                    ),
+                    Text("ALLYCARTO Coverage")
+                  ],
                 ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
 
-                SizedBox(height: 15,),
-
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => Coverages(),
-                      ),
-                    );
-                  },
-                  child: Row(
-                    children: [
-                      SizedBox(width: 12,),
-                      Icon(Icons.map_outlined),
-                      SizedBox(width: 12,),
-                      Text("ALLYCARTO Coverage")
-                    ],
-                  ),
+              InkWell(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => Schems(),
+                    ),
+                  );
+                },
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 12,
+                    ),
+                    Icon(Icons.next_plan_outlined),
+                    SizedBox(
+                      width: 12,
+                    ),
+                    Text("Schems & Plans")
+                  ],
                 ),
-                SizedBox(height: 15,),
+              ),
 
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => Schems(),
-                      ),
-                    );
-                  },
-                  child: Row(
-                    children: [
-                      SizedBox(width: 12,),
-                      Icon(Icons.next_plan_outlined),
-                      SizedBox(width: 12,),
-                      Text("Schems & Plans")
-                    ],
-                  ),
+              SizedBox(
+                height: 15,
+              ),
+
+              InkWell(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => FAQ_CAT(),
+                    ),
+                  );
+                },
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 12,
+                    ),
+                    Icon(Icons.help_outline),
+                    SizedBox(
+                      width: 12,
+                    ),
+                    Text("Help & Support (FAQs)")
+                  ],
                 ),
+              ),
 
-                SizedBox(height: 15,),
+              // SizedBox(height: 15,),
+              // InkWell(
+              //   onTap: () {
+              //     Navigator.of(context).push(
+              //       MaterialPageRoute(
+              //         builder: (context) => AboutUsAndTermsOfServiceScreen(false, a: widget.analytics, o: widget.observer),
+              //       ),
+              //     );
+              //   },
+              //   child: Row(
+              //     children: [
+              //       SizedBox(width: 12,),
+              //       Icon(Icons.verified_user_rounded),
+              //       SizedBox(width: 12,),
+              //       Text("Customer’s Policies")
+              //     ],
+              //   ),
+              // ),
 
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => FAQ_CAT(),
-                      ),
-                    );
-                  },
-                  child: Row(
-                    children: [
-                      SizedBox(width: 12,),
-                      Icon(Icons.help_outline),
-                      SizedBox(width: 12,),
-                      Text("Help & Support (FAQs)")
-                    ],
-                  ),
-                ),
-
-                // SizedBox(height: 15,),
-                // InkWell(
-                //   onTap: () {
-                //     Navigator.of(context).push(
-                //       MaterialPageRoute(
-                //         builder: (context) => AboutUsAndTermsOfServiceScreen(false, a: widget.analytics, o: widget.observer),
-                //       ),
-                //     );
-                //   },
-                //   child: Row(
-                //     children: [
-                //       SizedBox(width: 12,),
-                //       Icon(Icons.verified_user_rounded),
-                //       SizedBox(width: 12,),
-                //       Text("Customer’s Policies")
-                //     ],
-                //   ),
-                // ),
-
-                SizedBox(height: 15,),
-              ],
-            ),
+              SizedBox(
+                height: 15,
+              ),
+            ],
           ),
+        ),
         body: RefreshIndicator(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          color: Theme.of(  context).primaryColor,
+          color: Theme.of(context).primaryColor,
           onRefresh: () async {
             _isDataLoaded = false;
             setState(() {});
@@ -391,255 +461,315 @@ class _HomeScreenState extends BaseRouteState {
             child: Column(
               children: [
                 Container(
-                  color: Color(0xFFe03337),
-                  child:Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              SizedBox(width: 5,),
-                              IconButton(
-                                icon: Icon(Icons.menu,
-                                    color: Colors.white,
-                                    size: 22),
-                                onPressed: () {
-                                  _scaffoldKey.currentState.openDrawer();
-                                },
-                              ),
-                              SizedBox(width: 8,),
-                              Text.rich(
-                                TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: 'Ally ',
-                                      style: TextStyle(fontWeight: FontWeight.bold,fontSize: 26,color: Colors.white),
-                                    ),
-                                    TextSpan(
-                                      text: 'Carto',
-                                      style: TextStyle(fontWeight: FontWeight.bold,fontSize: 26,color: Colors.black),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(width: 8,),
-                              Icon(Icons.shopping_cart,color: Colors.white,size: 26,),
-                            ],
-                          ),
-                          // Row(
-                          //   mainAxisSize: MainAxisSize.min,
-                          //   children: [
-                          //     IconButton(
-                          //         padding: EdgeInsets.all(0),
-                          //         onPressed: () async {
-                          //           await openBarcodeScanner(_scaffoldKey);
-                          //         },
-                          //         icon: Icon(
-                          //           MdiIcons.barcode,
-                          //           color: Colors.white,
-                          //         )),
-                          //     global.currentUser.id != null
-                          //         ? IconButton(
-                          //       padding: EdgeInsets.all(0),
-                          //       onPressed: () {
-                          //         Navigator.of(context).push(
-                          //           MaterialPageRoute(
-                          //             builder: (context) => NotificationScreen(a: widget.analytics, o: widget.observer),
-                          //           ),
-                          //         );
-                          //       },
-                          //       icon: Icon(
-                          //         MdiIcons.bellOutline,
-                          //         color: Theme.of(context).appBarTheme.actionsIconTheme.color,
-                          //       ),
-                          //     )
-                          //         : SizedBox(),
-                          //     global.currentUser.id != null && global.currentUser.wallet > 0
-                          //         ? InkWell(
-                          //       customBorder: RoundedRectangleBorder(
-                          //         borderRadius: BorderRadius.circular(10),
-                          //       ),
-                          //       onTap: () {
-                          //         Navigator.of(context).push(
-                          //           MaterialPageRoute(
-                          //             builder: (context) => WalletScreen(a: widget.analytics, o: widget.observer),
-                          //           ),
-                          //         );
-                          //       },
-                          //       child: Container(
-                          //         decoration: BoxDecoration(color: Color(0xFFF05656), borderRadius: BorderRadius.all(Radius.circular(6))),
-                          //         margin: EdgeInsets.only(right: 10),
-                          //         padding: EdgeInsets.only(left: 5, right: 5),
-                          //         width: 85,
-                          //         height: 25,
-                          //         child: Row(
-                          //           children: [
-                          //             Icon(
-                          //               MdiIcons.walletOutline,
-                          //               color: Colors.white,
-                          //               size: 20,
-                          //             ),
-                          //             Padding(
-                          //               padding: EdgeInsets.only(
-                          //                 left: 5,
-                          //               ),
-                          //               child: Text(
-                          //                 '${global.appInfo.currencySign} ${global.currentUser.wallet}',
-                          //                 style: Theme.of(context).primaryTextTheme.caption,
-                          //               ),
-                          //             ),
-                          //           ],
-                          //         ),
-                          //       ),
-                          //     )
-                          //         : SizedBox()
-                          //   ],
-                          // ),
-                        ],
-                      ),
-
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        child: Row(
-                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    color: Color(0xFFe03337),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.8,
-                              child: InkWell(
-                                onTap: () async {
-                                  if (global.lat != null && global.lng != null) {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => LocationScreen(a: widget.analytics, o: widget.observer),
-                                      ),
-                                    );
-                                  } else {
-                                    await getCurrentPosition().then((_) async {
-                                      if (global.lat != null && global.lng != null) {
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder: (context) => LocationScreen(a: widget.analytics, o: widget.observer),
-                                          ),
-                                        );
-                                      }
-                                    });
-                                  }
-                                },
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width * 0.8,
-                                  child: Row(
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                IconButton(
+                                  icon: Icon(Icons.menu,
+                                      color: Colors.white, size: 22),
+                                  onPressed: () {
+                                    _scaffoldKey.currentState.openDrawer();
+                                  },
+                                ),
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                Text.rich(
+                                  TextSpan(
                                     children: [
-                                      Icon(Icons.location_on,color: Colors.white,size: 26,),
-                                      SizedBox(width: 5,),
-                                      Expanded(
-                                        child: Text.rich(
-                                          TextSpan(
-                                            children: [
-                                              TextSpan(
-                                                text: '${AppLocalizations.of(context).txt_deliver} @ \n',
-                                                style: TextStyle(color: Colors.white),
-                                              ),
-                                              TextSpan(
-                                                text: '${global.currentLocation}, ${global.sp.getString('myPincode') ?? ""}',
-                                                style:TextStyle(color: Colors.white),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
+                                      TextSpan(
+                                        text: 'Ally ',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 26,
+                                            color: Colors.white),
+                                      ),
+                                      TextSpan(
+                                        text: 'Carto',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 26,
+                                            color: Colors.black),
                                       ),
                                     ],
                                   ),
                                 ),
-                              ),
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.2,
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => const MyScanner(),
-                                  ));
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.only(right: 12.0),
-                                  child: Icon(Icons.qr_code_scanner_outlined,color: Colors.white,size: 32,),
+                                SizedBox(
+                                  width: 8,
                                 ),
-                              ),
+                                Icon(
+                                  Icons.shopping_cart,
+                                  color: Colors.white,
+                                  size: 26,
+                                ),
+                              ],
                             ),
+                            // Row(
+                            //   mainAxisSize: MainAxisSize.min,
+                            //   children: [
+                            //     IconButton(
+                            //         padding: EdgeInsets.all(0),
+                            //         onPressed: () async {
+                            //           await openBarcodeScanner(_scaffoldKey);
+                            //         },
+                            //         icon: Icon(
+                            //           MdiIcons.barcode,
+                            //           color: Colors.white,
+                            //         )),
+                            //     global.currentUser.id != null
+                            //         ? IconButton(
+                            //       padding: EdgeInsets.all(0),
+                            //       onPressed: () {
+                            //         Navigator.of(context).push(
+                            //           MaterialPageRoute(
+                            //             builder: (context) => NotificationScreen(a: widget.analytics, o: widget.observer),
+                            //           ),
+                            //         );
+                            //       },
+                            //       icon: Icon(
+                            //         MdiIcons.bellOutline,
+                            //         color: Theme.of(context).appBarTheme.actionsIconTheme.color,
+                            //       ),
+                            //     )
+                            //         : SizedBox(),
+                            //     global.currentUser.id != null && global.currentUser.wallet > 0
+                            //         ? InkWell(
+                            //       customBorder: RoundedRectangleBorder(
+                            //         borderRadius: BorderRadius.circular(10),
+                            //       ),
+                            //       onTap: () {
+                            //         Navigator.of(context).push(
+                            //           MaterialPageRoute(
+                            //             builder: (context) => WalletScreen(a: widget.analytics, o: widget.observer),
+                            //           ),
+                            //         );
+                            //       },
+                            //       child: Container(
+                            //         decoration: BoxDecoration(color: Color(0xFFF05656), borderRadius: BorderRadius.all(Radius.circular(6))),
+                            //         margin: EdgeInsets.only(right: 10),
+                            //         padding: EdgeInsets.only(left: 5, right: 5),
+                            //         width: 85,
+                            //         height: 25,
+                            //         child: Row(
+                            //           children: [
+                            //             Icon(
+                            //               MdiIcons.walletOutline,
+                            //               color: Colors.white,
+                            //               size: 20,
+                            //             ),
+                            //             Padding(
+                            //               padding: EdgeInsets.only(
+                            //                 left: 5,
+                            //               ),
+                            //               child: Text(
+                            //                 '${global.appInfo.currencySign} ${global.currentUser.wallet}',
+                            //                 style: Theme.of(context).primaryTextTheme.caption,
+                            //               ),
+                            //             ),
+                            //           ],
+                            //         ),
+                            //       ),
+                            //     )
+                            //         : SizedBox()
+                            //   ],
+                            // ),
                           ],
                         ),
-                      ),
-
-                      SizedBox(height: 6,),
-
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10.0,right: 10),
-                        child: Container(
-                          width: double.infinity,
-                          height: 40,
-                          decoration: BoxDecoration(
-                              color: Colors.white, borderRadius: BorderRadius.circular(10)),
-                          child: Center(
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: MediaQuery.of(context).size.width * 0.8,
-                                  child: TextField(
-                                    controller: searchController,
-                                    style: Theme.of(context).primaryTextTheme.bodyText1,
-                                    decoration: InputDecoration(
-                                        contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 7),
-                                        prefixIcon: Icon(Icons.search,color: Colors.grey,),
-                                        suffixIcon: IconButton(
-                                          onPressed: () => searchController.clear(),
-                                          icon: Icon(Icons.clear,color: Colors.grey,size: 20,),
-                                        ),
-                                        hintText: 'Search here...',
-                                        border: InputBorder.none),
-                                    onSubmitted: (val) {
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          child: Row(
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.8,
+                                child: InkWell(
+                                  onTap: () async {
+                                    if (global.lat != null &&
+                                        global.lng != null) {
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
-                                          builder: (context) => ProductListScreen(7, val, "", a: widget.analytics, o: widget.observer),
+                                          builder: (context) => LocationScreen(
+                                              a: widget.analytics,
+                                              o: widget.observer),
                                         ),
                                       );
-                                    },
+                                    } else {
+                                      await getCurrentPosition()
+                                          .then((_) async {
+                                        if (global.lat != null &&
+                                            global.lng != null) {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  LocationScreen(
+                                                      a: widget.analytics,
+                                                      o: widget.observer),
+                                            ),
+                                          );
+                                        }
+                                      });
+                                    }
+                                  },
+                                  child: Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.8,
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.location_on,
+                                          color: Colors.white,
+                                          size: 26,
+                                        ),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Expanded(
+                                          child: Text.rich(
+                                            TextSpan(
+                                              children: [
+                                                TextSpan(
+                                                  text:
+                                                      '${AppLocalizations.of(context).txt_deliver} @ \n',
+                                                  style: TextStyle(
+                                                      color: Colors.white),
+                                                ),
+                                                TextSpan(
+                                                  text:
+                                                      '${global.currentLocation}, ${global.sp.getString('myPincode') ?? ""}',
+                                                  style: TextStyle(
+                                                      color: Colors.white),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                                SizedBox(
-                                  width: MediaQuery.of(context).size.width * 0.13,
-                                  child: AvatarGlow(
-                                    animate: isListen,
-                                    glowColor: Colors.red,
-                                    endRadius: 65.0,
-                                    duration: Duration(milliseconds: 2000),
-                                    repeatPauseDuration: Duration(milliseconds: 100),
-                                    repeat: true,
-                                    child: IconButton(
-                                      icon: Icon(isListen ? Icons.mic : Icons.mic_none),
-                                      onPressed: () {
-                                        listen();
-                                        // Navigator.of(context).push(
-                                        //   MaterialPageRoute(
-                                        //     builder: (context) => SeachAppBar(),
-                                        //   ),
-                                        // );
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.2,
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) => const MyScanner(),
+                                    ));
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(right: 12.0),
+                                    child: Icon(
+                                      Icons.qr_code_scanner_outlined,
+                                      color: Colors.white,
+                                      size: 32,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 6,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10.0, right: 10),
+                          child: Container(
+                            width: double.infinity,
+                            height: 40,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Center(
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.8,
+                                    child: TextField(
+                                      controller: searchController,
+                                      style: Theme.of(context)
+                                          .primaryTextTheme
+                                          .bodyText1,
+                                      decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.symmetric(
+                                              horizontal: 0, vertical: 7),
+                                          prefixIcon: Icon(
+                                            Icons.search,
+                                            color: Colors.grey,
+                                          ),
+                                          suffixIcon: IconButton(
+                                            onPressed: () =>
+                                                searchController.clear(),
+                                            icon: Icon(
+                                              Icons.clear,
+                                              color: Colors.grey,
+                                              size: 20,
+                                            ),
+                                          ),
+                                          hintText: 'Search here...',
+                                          border: InputBorder.none),
+                                      onSubmitted: (val) {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                ProductListScreen(7, val, "",
+                                                    a: widget.analytics,
+                                                    o: widget.observer),
+                                          ),
+                                        );
                                       },
                                     ),
                                   ),
-                                )
-                              ],
+                                  SizedBox(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.13,
+                                    child: AvatarGlow(
+                                      animate: isListen,
+                                      glowColor: Colors.red,
+                                      endRadius: 65.0,
+                                      duration: Duration(milliseconds: 2000),
+                                      repeatPauseDuration:
+                                          Duration(milliseconds: 100),
+                                      repeat: true,
+                                      child: IconButton(
+                                        icon: Icon(isListen
+                                            ? Icons.mic
+                                            : Icons.mic_none),
+                                        onPressed: () {
+                                          listen();
+                                          // Navigator.of(context).push(
+                                          //   MaterialPageRoute(
+                                          //     builder: (context) => SeachAppBar(),
+                                          //   ),
+                                          // );
+                                        },
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
+                        SizedBox(
+                          height: 4,
+                        ),
+                      ],
+                    )),
 
-                      SizedBox(height: 4,),
-                    ],
-                  )
+                SizedBox(
+                  height: 6,
                 ),
-
-                SizedBox(height: 6,),
 
                 SingleChildScrollView(
                   child: Padding(
@@ -649,187 +779,229 @@ class _HomeScreenState extends BaseRouteState {
                       children: [
                         _isDataLoaded
                             ? _bannerData.length > 0
-                            ? Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height * 0.15,
-                            child: CarouselSlider(
-                                items: _bannerItems(),
-                                carouselController: _carouselController,
-                                options: CarouselOptions(
-                                    viewportFraction: 0.99,
-                                    initialPage: _currentIndex,
-                                    enableInfiniteScroll: true,
-                                    reverse: false,
-                                    autoPlay: true,
-                                    autoPlayInterval: Duration(seconds: 3),
-                                    autoPlayAnimationDuration: Duration(milliseconds: 800),
-                                    autoPlayCurve: Curves.fastOutSlowIn,
-                                    enlargeCenterPage: true,
-                                    scrollDirection: Axis.horizontal,
-                                    onPageChanged: (index, _) {
-                                      _currentIndex = index;
-                                      setState(() {});
-                                    })))
-                            : SizedBox()
+                                ? Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.15,
+                                    child: CarouselSlider(
+                                        items: _bannerItems(),
+                                        carouselController: _carouselController,
+                                        options: CarouselOptions(
+                                            viewportFraction: 0.99,
+                                            initialPage: _currentIndex,
+                                            enableInfiniteScroll: true,
+                                            reverse: false,
+                                            autoPlay: true,
+                                            autoPlayInterval:
+                                                Duration(seconds: 3),
+                                            autoPlayAnimationDuration:
+                                                Duration(milliseconds: 800),
+                                            autoPlayCurve: Curves.fastOutSlowIn,
+                                            enlargeCenterPage: true,
+                                            scrollDirection: Axis.horizontal,
+                                            onPageChanged: (index, _) {
+                                              _currentIndex = index;
+                                              setState(() {});
+                                            })))
+                                : SizedBox()
                             : _bannerShimmer(),
                         _isDataLoaded && _bannerData.length > 0
                             ? DotsIndicator(
-                          dotsCount: _isDataLoaded && _bannerData.length > 0 ? _bannerData.length : 1,
-                          position: _currentIndex.toDouble(),
-                          onTap: (i) {
-                            _currentIndex = i.toInt();
-                            _carouselController.animateToPage(_currentIndex, duration: Duration(microseconds: 1), curve: Curves.easeInOut);
-                          },
-                          decorator: DotsDecorator(
-                            activeSize: const Size(6, 6),
-                            size: const Size(6, 6),
-                            activeShape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(50.0),
-                              ),
-                            ),
-                            activeColor: Theme.of(context).primaryColor,
-                            color: global.isDarkModeEnable ? Colors.white : Colors.grey,
-                          ),
-                        )
+                                dotsCount:
+                                    _isDataLoaded && _bannerData.length > 0
+                                        ? _bannerData.length
+                                        : 1,
+                                position: _currentIndex.toDouble(),
+                                onTap: (i) {
+                                  _currentIndex = i.toInt();
+                                  _carouselController.animateToPage(
+                                      _currentIndex,
+                                      duration: Duration(microseconds: 1),
+                                      curve: Curves.easeInOut);
+                                },
+                                decorator: DotsDecorator(
+                                  activeSize: const Size(6, 6),
+                                  size: const Size(6, 6),
+                                  activeShape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(50.0),
+                                    ),
+                                  ),
+                                  activeColor: Theme.of(context).primaryColor,
+                                  color: global.isDarkModeEnable
+                                      ? Colors.white
+                                      : Colors.grey,
+                                ),
+                              )
                             : SizedBox(),
 
                         ////////////// offline
 
-
-                        !_isDataLoaded || (_isDataLoaded && _mainVendorData.length > 0)
+                        !_isDataLoaded ||
+                                (_isDataLoaded && _mainVendorData.length > 0)
                             ? Padding(
-                          padding: EdgeInsets.only(top: 5, left: 10, right: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Local Shops',
-                                style: Theme.of(context).primaryTextTheme.headline5,
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => VendorListScreen(a: widget.analytics, o: widget.observer),
+                                padding: EdgeInsets.only(
+                                    top: 5, left: 10, right: 10),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Local Shops',
+                                      style: Theme.of(context)
+                                          .primaryTextTheme
+                                          .headline5,
                                     ),
-                                  );
-                                },
-                                child: Text(
-                                  '${AppLocalizations.of(context).btn_explore_all}',
-                                  style: Theme.of(context).primaryTextTheme.headline1,
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                VendorListScreen(
+                                                    a: widget.analytics,
+                                                    o: widget.observer),
+                                          ),
+                                        );
+                                      },
+                                      child: Text(
+                                        '${AppLocalizations.of(context).btn_explore_all}',
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .headline1,
+                                      ),
+                                    )
+                                  ],
                                 ),
                               )
-                            ],
-                          ),
-                        )
                             : SizedBox(),
 
                         _isDataLoaded
                             ? _mainVendorData.length > 0
-                            ? Container(
-                          height: 185,
-                          child: ListView(
-                            shrinkWrap: true,
-                            scrollDirection: Axis.horizontal,
-                            children: _allVendorsWidgetList(),
-                          ),
-                        )
-                            : SizedBox()
+                                ? Container(
+                                    height: 185,
+                                    child: ListView(
+                                      shrinkWrap: true,
+                                      scrollDirection: Axis.horizontal,
+                                      children: _allVendorsWidgetList(),
+                                    ),
+                                  )
+                                : SizedBox()
                             : Container(
-                          height: 216,
-                          child: _allCategoryShimmer(),
-                        ),
+                                height: 216,
+                                child: _allCategoryShimmer(),
+                              ),
 
                         ////////////// offline
 
-                        !_isDataLoaded || (_isDataLoaded && _mainCategoryData.length > 0)
+                        !_isDataLoaded ||
+                                (_isDataLoaded && _mainCategoryData.length > 0)
                             ? Padding(
-                          padding: EdgeInsets.only(top: 5, left: 10, right: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Online Shops',
-                                style: Theme.of(context).primaryTextTheme.headline5,
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => CategoryListScreen(a: widget.analytics, o: widget.observer),
+                                padding: EdgeInsets.only(
+                                    top: 5, left: 10, right: 10),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Online Shops',
+                                      style: Theme.of(context)
+                                          .primaryTextTheme
+                                          .headline5,
                                     ),
-                                  );
-                                },
-                                child: Text(
-                                  '${AppLocalizations.of(context).btn_explore_all}',
-                                  style: Theme.of(context).primaryTextTheme.headline1,
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                CategoryListScreen(
+                                                    a: widget.analytics,
+                                                    o: widget.observer),
+                                          ),
+                                        );
+                                      },
+                                      child: Text(
+                                        '${AppLocalizations.of(context).btn_explore_all}',
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .headline1,
+                                      ),
+                                    )
+                                  ],
                                 ),
                               )
-                            ],
-                          ),
-                        )
                             : SizedBox(),
 
                         _isDataLoaded
                             ? _mainCategoryData.length > 0
-                            ? Container(
-                          height: 165,
-                          child: ListView(
-                            shrinkWrap: true,
-                            scrollDirection: Axis.horizontal,
-                            children: _allCategoryWidgetList(),
-                          ),
-                        )
-                            : SizedBox()
-                            : Container(
-                          height: 216,
-                          child: _allCategoryShimmer(),
-                        ),
-
-
-
-
-                        !_isDataLoaded || (_isDataLoaded && _homeModel.topSellingProductList.length > 0)
-                            ? Padding(
-                          padding: EdgeInsets.only(top: 15, left: 10, right: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                '${AppLocalizations.of(context).lbl_top_selling}',
-                                style: Theme.of(context).primaryTextTheme.headline5,
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => ProductListScreen(2, AppLocalizations.of(context).lbl_top_selling, "", a: widget.analytics, o: widget.observer),
+                                ? Container(
+                                    height: 165,
+                                    child: ListView(
+                                      shrinkWrap: true,
+                                      scrollDirection: Axis.horizontal,
+                                      children: _allCategoryWidgetList(),
                                     ),
-                                  );
-                                },
-                                child: Text(
-                                  '${AppLocalizations.of(context).btn_explore_all}',
-                                  style: Theme.of(context).primaryTextTheme.headline1,
+                                  )
+                                : SizedBox()
+                            : Container(
+                                height: 216,
+                                child: _allCategoryShimmer(),
+                              ),
+
+                        !_isDataLoaded ||
+                                (_isDataLoaded &&
+                                    _homeModel.topSellingProductList.length > 0)
+                            ? Padding(
+                                padding: EdgeInsets.only(
+                                    top: 15, left: 10, right: 10),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      '${AppLocalizations.of(context).lbl_top_selling}',
+                                      style: Theme.of(context)
+                                          .primaryTextTheme
+                                          .headline5,
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                ProductListScreen(
+                                                    2,
+                                                    AppLocalizations.of(context)
+                                                        .lbl_top_selling,
+                                                    "",
+                                                    a: widget.analytics,
+                                                    o: widget.observer),
+                                          ),
+                                        );
+                                      },
+                                      child: Text(
+                                        '${AppLocalizations.of(context).btn_explore_all}',
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .headline1,
+                                      ),
+                                    )
+                                  ],
                                 ),
                               )
-                            ],
-                          ),
-                        )
                             : SizedBox(),
-
 
                         _isDataLoaded
                             ? _homeModel.topSellingProductList.length > 0
-                            ? Container(
-                          height: 210,
-                          child: ListView(
-                            scrollDirection: Axis.horizontal,
-                            children: _topSellingWidgetList(),
-                          ),
-                        )
-                            : SizedBox()
-                            : Container(height: 210, child: _topSellingShimmer()),
+                                ? Container(
+                                    height: 210,
+                                    child: ListView(
+                                      scrollDirection: Axis.horizontal,
+                                      children: _topSellingWidgetList(),
+                                    ),
+                                  )
+                                : SizedBox()
+                            : Container(
+                                height: 210, child: _topSellingShimmer()),
 
                         // !_isDataLoaded || (_isDataLoaded && _homeModel.spotLightProductList.length > 0)
                         //     ? Padding(
@@ -985,15 +1157,16 @@ class _HomeScreenState extends BaseRouteState {
 
                         _isDataLoaded
                             ? _homeModel.whatsnewProductList.length > 0
-                            ? Container(
-                          height: 210,
-                          child: ListView(
-                            scrollDirection: Axis.horizontal,
-                            children: _whatsNewProductWidgetList(),
-                          ),
-                        )
-                            : SizedBox()
-                            : Container(height: 210, child: _topSellingShimmer()),
+                                ? Container(
+                                    height: 210,
+                                    child: ListView(
+                                      scrollDirection: Axis.horizontal,
+                                      children: _whatsNewProductWidgetList(),
+                                    ),
+                                  )
+                                : SizedBox()
+                            : Container(
+                                height: 210, child: _topSellingShimmer()),
 
                         // !_isDataLoaded || (_isDataLoaded && _homeModel.dealProductList.length > 0)
                         //     ? Padding(
@@ -1389,65 +1562,67 @@ class _HomeScreenState extends BaseRouteState {
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-        floatingActionButton: global.currentUser != null && global.currentUser.id != null && global.nearStoreModel.id != null
+        floatingActionButton: global.currentUser != null &&
+                global.currentUser.id != null &&
+                global.nearStoreModel.id != null
             ? SpeedDial(
-          icon: Icons.menu,
-          activeIcon: Icons.menu,
-          spacing: 3,
-          // openCloseDial: false,
-          childPadding: const EdgeInsets.all(5),
-          spaceBetweenChildren: 4,
-          overlayOpacity: 0.8,
-          gradientBoxShape: BoxShape.circle,
-          // dialRoot: (ctx, open, toggleChildren) {
-          //   return FloatingActionButton(
-          //     backgroundColor: Theme.of(context).primaryColor,
-          //     onPressed: toggleChildren,
-          //     heroTag: "1",
-          //     child: Icon(Icons.menu),
-          //   );
-          // },
+                icon: Icons.menu,
+                activeIcon: Icons.menu,
+                spacing: 3,
+                // openCloseDial: false,
+                childPadding: const EdgeInsets.all(5),
+                spaceBetweenChildren: 4,
+                overlayOpacity: 0.8,
+                gradientBoxShape: BoxShape.circle,
+                // dialRoot: (ctx, open, toggleChildren) {
+                //   return FloatingActionButton(
+                //     backgroundColor: Theme.of(context).primaryColor,
+                //     onPressed: toggleChildren,
+                //     heroTag: "1",
+                //     child: Icon(Icons.menu),
+                //   );
+                // },
 
-          // The label of the main button.
-          /// The active label of the main button, Defaults to label if not specified.
+                // The label of the main button.
+                /// The active label of the main button, Defaults to label if not specified.
 
-          direction: SpeedDialDirection.up,
+                direction: SpeedDialDirection.up,
 
-          backgroundColor: Theme.of(context).primaryColor,
+                backgroundColor: Theme.of(context).primaryColor,
 
-          onOpen: () => debugPrint('OPENING DIAL'),
-          onClose: () => debugPrint('DIAL CLOSED'),
-          // useRotationAnimation: useRAnimation,
-          tooltip: 'Open Speed Dial',
-          heroTag: 'speed-dial-hero-tag',
+                onOpen: () => debugPrint('OPENING DIAL'),
+                onClose: () => debugPrint('DIAL CLOSED'),
+                // useRotationAnimation: useRAnimation,
+                tooltip: 'Open Speed Dial',
+                heroTag: 'speed-dial-hero-tag',
 
-          elevation: 8.0,
-          isOpenOnStart: false,
-          animationSpeed: 200,
-          //  shape: const RoundedRectangleBorder(),
-          children: _speedDialWidget(),
-          // children: [
-          //   SpeedDialChild(
-          //     child: const Icon(Icons.share),
-          //     backgroundColor: Theme.of(context).primaryColor,
-          //     foregroundColor: Colors.white,
-          //     onTap: () {},
-          //   ),
-          //   SpeedDialChild(
-          //     child: const Icon(MdiIcons.messageDraw),
-          //     backgroundColor: Theme.of(context).primaryColor,
-          //     foregroundColor: Colors.white,
-          //     onTap: () {},
-          //   ),
-          //   SpeedDialChild(
-          //     child: const Icon(MdiIcons.comment),
-          //     backgroundColor: Theme.of(context).primaryColor,
-          //     foregroundColor: Colors.white,
-          //     visible: true,
-          //     onTap: () {},
-          //   ),
-          // ],
-        )
+                elevation: 8.0,
+                isOpenOnStart: false,
+                animationSpeed: 200,
+                //  shape: const RoundedRectangleBorder(),
+                children: _speedDialWidget(),
+                // children: [
+                //   SpeedDialChild(
+                //     child: const Icon(Icons.share),
+                //     backgroundColor: Theme.of(context).primaryColor,
+                //     foregroundColor: Colors.white,
+                //     onTap: () {},
+                //   ),
+                //   SpeedDialChild(
+                //     child: const Icon(MdiIcons.messageDraw),
+                //     backgroundColor: Theme.of(context).primaryColor,
+                //     foregroundColor: Colors.white,
+                //     onTap: () {},
+                //   ),
+                //   SpeedDialChild(
+                //     child: const Icon(MdiIcons.comment),
+                //     backgroundColor: Theme.of(context).primaryColor,
+                //     foregroundColor: Colors.white,
+                //     visible: true,
+                //     onTap: () {},
+                //   ),
+                // ],
+              )
             : null,
       ),
     );
@@ -1468,7 +1643,9 @@ class _HomeScreenState extends BaseRouteState {
       );
     }
 
-    if (global.currentUser != null && global.currentUser.id != null && global.nearStoreModel.id != null) {
+    if (global.currentUser != null &&
+        global.currentUser.id != null &&
+        global.nearStoreModel.id != null) {
       _widgetList.add(
         SpeedDialChild(
           child: const Icon(MdiIcons.messageDraw),
@@ -1477,7 +1654,8 @@ class _HomeScreenState extends BaseRouteState {
           onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => ProductRequestScreen(a: widget.analytics, o: widget.observer),
+                builder: (context) => ProductRequestScreen(
+                    a: widget.analytics, o: widget.observer),
               ),
             );
           },
@@ -1485,7 +1663,11 @@ class _HomeScreenState extends BaseRouteState {
       );
     }
 
-    if (global.currentUser != null && global.currentUser.id != null && global.nearStoreModel.id != null && global.appInfo.liveChat != null && global.appInfo.liveChat == 1) {
+    if (global.currentUser != null &&
+        global.currentUser.id != null &&
+        global.nearStoreModel.id != null &&
+        global.appInfo.liveChat != null &&
+        global.appInfo.liveChat == 1) {
       // chat Option
       _widgetList.add(
         SpeedDialChild(
@@ -1515,7 +1697,6 @@ class _HomeScreenState extends BaseRouteState {
     // controller.dispose();
     super.dispose();
   }
-
 
   Widget _allCategoryShimmer() {
     return Padding(
@@ -1549,16 +1730,35 @@ class _HomeScreenState extends BaseRouteState {
               //     builder: (context) => ShopProductListScreen(1, _mainVendorData[i]["name"], _mainVendorData[i]["id"].toString(), subcategoryId: _mainVendorData[i]["id"], a: widget.analytics, o: widget.observer),
               //   ),
               // );
-
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => VendorDetails(_mainVendorData[i]["id"].toString(), _mainVendorData[i]["name"], _mainVendorData[i]["image"], _mainVendorData[i]["address"],
-                      _mainVendorData[i]["latitude"].toString(), _mainVendorData[i]["longitude"].toString(), _mainVendorData[i]["description"] ?? "", a: widget.analytics, o: widget.observer),
-                ),
-              );
+              if (_mainVendorData[i]["status"] == "open") {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => VendorDetails(
+                        _mainVendorData[i]["id"].toString(),
+                        _mainVendorData[i]["name"],
+                        _mainVendorData[i]["image"],
+                        _mainVendorData[i]["address"],
+                        _mainVendorData[i]["latitude"].toString(),
+                        _mainVendorData[i]["longitude"].toString(),
+                        _mainVendorData[i]["description"] ?? "",
+                        a: widget.analytics,
+                        o: widget.observer),
+                  ),
+                );
+              } else {
+                showSnackBar(
+                    key: _scaffoldKey,
+                    snackBarMessage: 'This shop currently closed.');
+              }
             },
             child: Container(
               height: 172,
+              foregroundDecoration: _mainVendorData[i]["status"] == "open"
+                  ? BoxDecoration()
+                  : BoxDecoration(
+                      color: Colors.grey,
+                      backgroundBlendMode: BlendMode.saturation,
+                    ),
               margin: EdgeInsets.only(top: 40, left: 10),
               child: Stack(
                 clipBehavior: Clip.none,
@@ -1581,7 +1781,8 @@ class _HomeScreenState extends BaseRouteState {
                           children: [
                             Text(
                               '${_mainVendorData[i]["name"]}',
-                              style: TextStyle(fontSize: 12,fontWeight: FontWeight.w600),
+                              style: TextStyle(
+                                  fontSize: 12, fontWeight: FontWeight.w600),
                               maxLines: 2,
                             ),
                             Row(
@@ -1589,7 +1790,13 @@ class _HomeScreenState extends BaseRouteState {
                               children: [
                                 Text(
                                   '${_mainVendorData[i]["status"]}',
-                                  style: TextStyle(fontSize: 12,fontWeight: FontWeight.w600, color: _mainVendorData[i]["status"] == "open" ? Colors.green : Colors.red),
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                      color:
+                                          _mainVendorData[i]["status"] == "open"
+                                              ? Colors.green
+                                              : Colors.red),
                                   maxLines: 1,
                                 ),
                               ],
@@ -1604,21 +1811,33 @@ class _HomeScreenState extends BaseRouteState {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 5),
                       child: Container(
+                        foregroundDecoration:
+                            _mainVendorData[i]["status"] == "open"
+                                ? BoxDecoration()
+                                : BoxDecoration(
+                                    color: Colors.grey,
+                                    backgroundBlendMode: BlendMode.saturation,
+                                  ),
                         alignment: Alignment.center,
                         child: CachedNetworkImage(
-                          imageUrl: global.appInfo.imageUrl + _mainVendorData[i]["image"],
+                          imageUrl: global.appInfo.imageUrl +
+                              _mainVendorData[i]["image"],
                           imageBuilder: (context, imageProvider) => Container(
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
+                              image: DecorationImage(
+                                  image: imageProvider, fit: BoxFit.cover),
                             ),
                           ),
-                          placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                          placeholder: (context, url) =>
+                              Center(child: CircularProgressIndicator()),
                           errorWidget: (context, url, error) => Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              image: DecorationImage(image: AssetImage('${global.defaultImage}'), fit: BoxFit.cover),
+                              image: DecorationImage(
+                                  image: AssetImage('${global.defaultImage}'),
+                                  fit: BoxFit.cover),
                             ),
                           ),
                         ),
@@ -1636,7 +1855,8 @@ class _HomeScreenState extends BaseRouteState {
       return _widgetList;
     } catch (e) {
       _widgetList.add(SizedBox());
-      print("Exception - homeScreen.dart - _allCategoryWidgetList():" + e.toString());
+      print("Exception - homeScreen.dart - _allCategoryWidgetList():" +
+          e.toString());
       return _widgetList;
     }
   }
@@ -1650,7 +1870,11 @@ class _HomeScreenState extends BaseRouteState {
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => MainCategoryScreen( _mainCategoryData[i]["cat_id"].toString(), _mainCategoryData[i]["title"], a: widget.analytics, o: widget.observer),
+                  builder: (context) => MainCategoryScreen(
+                      _mainCategoryData[i]["cat_id"].toString(),
+                      _mainCategoryData[i]["title"],
+                      a: widget.analytics,
+                      o: widget.observer),
                 ),
               );
             },
@@ -1678,7 +1902,8 @@ class _HomeScreenState extends BaseRouteState {
                           children: [
                             Text(
                               '${_mainCategoryData[i]["title"]}',
-                              style: TextStyle(fontSize: 12,fontWeight: FontWeight.w600),
+                              style: TextStyle(
+                                  fontSize: 12, fontWeight: FontWeight.w600),
                               maxLines: 2,
                             ),
                           ],
@@ -1693,19 +1918,24 @@ class _HomeScreenState extends BaseRouteState {
                       child: Container(
                         alignment: Alignment.center,
                         child: CachedNetworkImage(
-                          imageUrl: global.appInfo.imageUrl + _mainCategoryData[i]["image"],
+                          imageUrl: global.appInfo.imageUrl +
+                              _mainCategoryData[i]["image"],
                           imageBuilder: (context, imageProvider) => Container(
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
+                              image: DecorationImage(
+                                  image: imageProvider, fit: BoxFit.cover),
                             ),
                           ),
-                          placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                          placeholder: (context, url) =>
+                              Center(child: CircularProgressIndicator()),
                           errorWidget: (context, url, error) => Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              image: DecorationImage(image: AssetImage('${global.defaultImage}'), fit: BoxFit.cover),
+                              image: DecorationImage(
+                                  image: AssetImage('${global.defaultImage}'),
+                                  fit: BoxFit.cover),
                             ),
                           ),
                         ),
@@ -1723,7 +1953,8 @@ class _HomeScreenState extends BaseRouteState {
       return _widgetList;
     } catch (e) {
       _widgetList.add(SizedBox());
-      print("Exception - homeScreen.dart - _allCategoryWidgetList():" + e.toString());
+      print("Exception - homeScreen.dart - _allCategoryWidgetList():" +
+          e.toString());
       return _widgetList;
     }
   }
@@ -1750,21 +1981,25 @@ class _HomeScreenState extends BaseRouteState {
           //     ),
           //   ),
           // );
-
         },
         child: CachedNetworkImage(
-          imageUrl: global.appInfo.imageUrl + _bannerData[i]["imgname"],
+          imageUrl: global.appInfo.imageUrl != null
+              ? global.appInfo.imageUrl + _bannerData[i]["imgname"]
+              : "",
           imageBuilder: (context, imageProvider) => Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
             ),
           ),
-          placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+          placeholder: (context, url) =>
+              Center(child: CircularProgressIndicator()),
           errorWidget: (context, url, error) => Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              image: DecorationImage(image: AssetImage('${global.defaultImage}'), fit: BoxFit.cover),
+              image: DecorationImage(
+                  image: AssetImage('${global.defaultImage}'),
+                  fit: BoxFit.cover),
             ),
           ),
         ),
@@ -1818,24 +2053,30 @@ class _HomeScreenState extends BaseRouteState {
                       decoration: BoxDecoration(
                         gradient: i % 3 == 1
                             ? LinearGradient(
-                          stops: [0, .90],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [Color(0XFF9EEEFF), Color(0XFFC0F4FF)],
-                        )
+                                stops: [0, .90],
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [Color(0XFF9EEEFF), Color(0XFFC0F4FF)],
+                              )
                             : i % 3 == 2
-                            ? LinearGradient(
-                          stops: [0, .90],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [Color(0XFFFFF1C0), Color(0XFFFFF1C0)],
-                        )
-                            : LinearGradient(
-                          stops: [0, .90],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [Color(0XFFFFD4D7), Color(0XFFFFD4D7)],
-                        ),
+                                ? LinearGradient(
+                                    stops: [0, .90],
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    colors: [
+                                      Color(0XFFFFF1C0),
+                                      Color(0XFFFFF1C0)
+                                    ],
+                                  )
+                                : LinearGradient(
+                                    stops: [0, .90],
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    colors: [
+                                      Color(0XFFFFD4D7),
+                                      Color(0XFFFFD4D7)
+                                    ],
+                                  ),
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(17),
                           bottomLeft: Radius.circular(17),
@@ -1843,19 +2084,22 @@ class _HomeScreenState extends BaseRouteState {
                         ),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 27, left: 10, right: 10),
+                        padding:
+                            const EdgeInsets.only(top: 27, left: 10, right: 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
                               '${_homeModel.dealProductList[i].productName}',
-                              style: Theme.of(context).primaryTextTheme.subtitle1,
+                              style:
+                                  Theme.of(context).primaryTextTheme.subtitle1,
                               overflow: TextOverflow.ellipsis,
                             ),
                             Text(
                               '${_homeModel.dealProductList[i].type}',
-                              style: Theme.of(context).primaryTextTheme.subtitle2,
+                              style:
+                                  Theme.of(context).primaryTextTheme.subtitle2,
                             ),
                             Container(
                               width: 130,
@@ -1869,15 +2113,21 @@ class _HomeScreenState extends BaseRouteState {
                                     children: [
                                       Text(
                                         "${global.appInfo.currencySign} ",
-                                        style: Theme.of(context).primaryTextTheme.subtitle2,
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .subtitle2,
                                       ),
                                       Text(
                                         '${_homeModel.dealProductList[i].price} ',
-                                        style: Theme.of(context).primaryTextTheme.subtitle1,
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .subtitle1,
                                       ),
                                       Text(
                                         '/ ${_homeModel.dealProductList[i].quantity}${_homeModel.dealProductList[i].unit}',
-                                        style: Theme.of(context).primaryTextTheme.subtitle2,
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .subtitle2,
                                       )
                                     ],
                                   ),
@@ -1906,10 +2156,10 @@ class _HomeScreenState extends BaseRouteState {
                         color: global.isDarkModeEnable
                             ? Theme.of(context).scaffoldBackgroundColor
                             : i % 3 == 1
-                            ? Color(0XFF9EEEFF)
-                            : i % 3 == 2
-                            ? Color(0XFFFFF1C0)
-                            : Color(0XFFFFD4D7),
+                                ? Color(0XFF9EEEFF)
+                                : i % 3 == 2
+                                    ? Color(0XFFFFF1C0)
+                                    : Color(0XFFFFD4D7),
                       ),
                     ),
                   ),
@@ -1919,47 +2169,74 @@ class _HomeScreenState extends BaseRouteState {
                       padding: const EdgeInsets.symmetric(horizontal: 5.0),
                       child: Container(
                         child: CachedNetworkImage(
-                          imageUrl: global.appInfo.imageUrl + _homeModel.dealProductList[i].productImage,
+                          imageUrl: global.appInfo.imageUrl +
+                              _homeModel.dealProductList[i].productImage,
                           imageBuilder: (context, imageProvider) => Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
+                              image: DecorationImage(
+                                  image: imageProvider, fit: BoxFit.cover),
                             ),
                             alignment: Alignment.center,
                             child: Visibility(
-                              visible: _homeModel.dealProductList[i].stock > 0 ? false : true,
+                              visible: _homeModel.dealProductList[i].stock > 0
+                                  ? false
+                                  : true,
                               child: Container(
                                 alignment: Alignment.center,
-                                decoration: BoxDecoration(color: Theme.of(context).primaryColorLight.withOpacity(0.5), borderRadius: BorderRadius.circular(15)),
+                                decoration: BoxDecoration(
+                                    color: Theme.of(context)
+                                        .primaryColorLight
+                                        .withOpacity(0.5),
+                                    borderRadius: BorderRadius.circular(15)),
                                 child: Container(
-                                  decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5)),
-                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(5)),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 5),
                                   child: Text(
                                     '${AppLocalizations.of(context).txt_out_of_stock}',
-                                    style: Theme.of(context).primaryTextTheme.headline2,
+                                    style: Theme.of(context)
+                                        .primaryTextTheme
+                                        .headline2,
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                          placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                          placeholder: (context, url) =>
+                              Center(child: CircularProgressIndicator()),
                           errorWidget: (context, url, error) => Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              image: DecorationImage(image: AssetImage('${global.defaultImage}'), fit: BoxFit.cover),
+                              image: DecorationImage(
+                                  image: AssetImage('${global.defaultImage}'),
+                                  fit: BoxFit.cover),
                             ),
                             alignment: Alignment.center,
                             child: Visibility(
-                              visible: _homeModel.dealProductList[i].stock > 0 ? false : true,
+                              visible: _homeModel.dealProductList[i].stock > 0
+                                  ? false
+                                  : true,
                               child: Container(
                                 alignment: Alignment.center,
-                                decoration: BoxDecoration(color: Theme.of(context).primaryColorLight.withOpacity(0.5), borderRadius: BorderRadius.circular(15)),
+                                decoration: BoxDecoration(
+                                    color: Theme.of(context)
+                                        .primaryColorLight
+                                        .withOpacity(0.5),
+                                    borderRadius: BorderRadius.circular(15)),
                                 child: Container(
-                                  decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5)),
-                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(5)),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 5),
                                   child: Text(
                                     '${AppLocalizations.of(context).txt_out_of_stock}',
-                                    style: Theme.of(context).primaryTextTheme.headline2,
+                                    style: Theme.of(context)
+                                        .primaryTextTheme
+                                        .headline2,
                                   ),
                                 ),
                               ),
@@ -1980,7 +2257,8 @@ class _HomeScreenState extends BaseRouteState {
       return _widgetList;
     } catch (e) {
       _widgetList.add(SizedBox());
-      print("Exception - homeScreen.dart - _topSellingWidgetList():" + e.toString());
+      print("Exception - homeScreen.dart - _topSellingWidgetList():" +
+          e.toString());
       return _widgetList;
     }
   }
@@ -2017,30 +2295,32 @@ class _HomeScreenState extends BaseRouteState {
 
   Future<String> getBannerData() async {
     try {
-      final response = await http.get(Uri.parse(global.baseUrl+"banner"),);
+      final response = await http.get(
+        Uri.parse(global.baseUrl + "banner"),
+      );
 
       setState(() {
         var dataConvertedToJSON = json.decode(response.body);
         _bannerData = dataConvertedToJSON['data'] ?? [];
-
       });
       return "Success";
-    }  catch (e) {
+    } catch (e) {
       throw e;
     }
   }
 
   Future<String> getMainCategoryData() async {
     try {
-      final response = await http.get(Uri.parse(global.baseUrl+"verticalcategory"),);
+      final response = await http.get(
+        Uri.parse(global.baseUrl + "verticalcategory"),
+      );
 
       setState(() {
         var dataConvertedToJSON = json.decode(response.body);
         _mainCategoryData = dataConvertedToJSON['data'] ?? [];
-
       });
       return "Success";
-    }  catch (e) {
+    } catch (e) {
       throw e;
     }
   }
@@ -2052,26 +2332,25 @@ class _HomeScreenState extends BaseRouteState {
       final data = {
         "pincode": myPincode,
       };
-      print("aaaaaaaaaaaaaaaaaaaaaa : "+myPincode);
+      print("aaaaaaaaaaaaaaaaaaaaaa : " + myPincode);
       final headers = {
-        'content-type': 'application/json',// 'key=YOUR_SERVER_KEY'
+        'content-type': 'application/json', // 'key=YOUR_SERVER_KEY'
       };
-      final response = await http.post(Uri.parse(global.baseUrl+"pincode_vendor"),
+      final response = await http.post(
+          Uri.parse(global.baseUrl + "pincode_vendor"),
           body: json.encode(data),
           headers: headers);
-      print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa  : "+response.body);
+      print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa  : " + response.body);
 
       var dataConvertedToJSON = json.decode(response.body);
 
-      if(dataConvertedToJSON["status"] == 200)
-      {
+      if (dataConvertedToJSON["status"] == 200) {
         setState(() {
-          _mainVendorData= dataConvertedToJSON['data'] ?? [];
-
+          _mainVendorData = dataConvertedToJSON['data'] ?? [];
         });
       }
       return "Success";
-    }  catch (e) {
+    } catch (e) {
       throw e;
     }
   }
@@ -2125,24 +2404,30 @@ class _HomeScreenState extends BaseRouteState {
                       decoration: BoxDecoration(
                         gradient: i % 3 == 1
                             ? LinearGradient(
-                          stops: [0, .90],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [Color(0XFF9EEEFF), Color(0XFFC0F4FF)],
-                        )
+                                stops: [0, .90],
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [Color(0XFF9EEEFF), Color(0XFFC0F4FF)],
+                              )
                             : i % 3 == 2
-                            ? LinearGradient(
-                          stops: [0, .90],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [Color(0XFFFFF1C0), Color(0XFFFFF1C0)],
-                        )
-                            : LinearGradient(
-                          stops: [0, .90],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [Color(0XFFFFD4D7), Color(0XFFFFD4D7)],
-                        ),
+                                ? LinearGradient(
+                                    stops: [0, .90],
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    colors: [
+                                      Color(0XFFFFF1C0),
+                                      Color(0XFFFFF1C0)
+                                    ],
+                                  )
+                                : LinearGradient(
+                                    stops: [0, .90],
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    colors: [
+                                      Color(0XFFFFD4D7),
+                                      Color(0XFFFFD4D7)
+                                    ],
+                                  ),
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(17),
                           bottomLeft: Radius.circular(17),
@@ -2150,19 +2435,22 @@ class _HomeScreenState extends BaseRouteState {
                         ),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 27, left: 10, right: 10),
+                        padding:
+                            const EdgeInsets.only(top: 27, left: 10, right: 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
                               '${_homeModel.recentSellingProductList[i].productName}',
-                              style: Theme.of(context).primaryTextTheme.subtitle1,
+                              style:
+                                  Theme.of(context).primaryTextTheme.subtitle1,
                               overflow: TextOverflow.ellipsis,
                             ),
                             Text(
                               '${_homeModel.recentSellingProductList[i].type}',
-                              style: Theme.of(context).primaryTextTheme.subtitle2,
+                              style:
+                                  Theme.of(context).primaryTextTheme.subtitle2,
                             ),
                             Container(
                               width: 130,
@@ -2176,15 +2464,21 @@ class _HomeScreenState extends BaseRouteState {
                                     children: [
                                       Text(
                                         "${global.appInfo.currencySign} ",
-                                        style: Theme.of(context).primaryTextTheme.subtitle2,
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .subtitle2,
                                       ),
                                       Text(
                                         '${_homeModel.recentSellingProductList[i].price} ',
-                                        style: Theme.of(context).primaryTextTheme.subtitle1,
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .subtitle1,
                                       ),
                                       Text(
                                         '/ ${_homeModel.recentSellingProductList[i].quantity} ${_homeModel.recentSellingProductList[i].unit}',
-                                        style: Theme.of(context).primaryTextTheme.subtitle2,
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .subtitle2,
                                       )
                                     ],
                                   ),
@@ -2213,10 +2507,10 @@ class _HomeScreenState extends BaseRouteState {
                         color: global.isDarkModeEnable
                             ? Theme.of(context).scaffoldBackgroundColor
                             : i % 3 == 1
-                            ? Color(0XFF9EEEFF)
-                            : i % 3 == 2
-                            ? Color(0XFFFFF1C0)
-                            : Color(0XFFFFD4D7),
+                                ? Color(0XFF9EEEFF)
+                                : i % 3 == 2
+                                    ? Color(0XFFFFF1C0)
+                                    : Color(0XFFFFD4D7),
                       ),
                     ),
                   ),
@@ -2226,47 +2520,79 @@ class _HomeScreenState extends BaseRouteState {
                       padding: const EdgeInsets.symmetric(horizontal: 5.0),
                       child: Container(
                         child: CachedNetworkImage(
-                          imageUrl: global.appInfo.imageUrl + _homeModel.recentSellingProductList[i].productImage,
+                          imageUrl: global.appInfo.imageUrl +
+                              _homeModel
+                                  .recentSellingProductList[i].productImage,
                           imageBuilder: (context, imageProvider) => Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
+                              image: DecorationImage(
+                                  image: imageProvider, fit: BoxFit.cover),
                             ),
                             alignment: Alignment.center,
                             child: Visibility(
-                              visible: _homeModel.recentSellingProductList[i].stock > 0 ? false : true,
+                              visible:
+                                  _homeModel.recentSellingProductList[i].stock >
+                                          0
+                                      ? false
+                                      : true,
                               child: Container(
                                 alignment: Alignment.center,
-                                decoration: BoxDecoration(color: Theme.of(context).primaryColorLight.withOpacity(0.5), borderRadius: BorderRadius.circular(15)),
+                                decoration: BoxDecoration(
+                                    color: Theme.of(context)
+                                        .primaryColorLight
+                                        .withOpacity(0.5),
+                                    borderRadius: BorderRadius.circular(15)),
                                 child: Container(
-                                  decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5)),
-                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(5)),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 5),
                                   child: Text(
                                     '${AppLocalizations.of(context).txt_out_of_stock}',
-                                    style: Theme.of(context).primaryTextTheme.headline2,
+                                    style: Theme.of(context)
+                                        .primaryTextTheme
+                                        .headline2,
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                          placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                          placeholder: (context, url) =>
+                              Center(child: CircularProgressIndicator()),
                           errorWidget: (context, url, error) => Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              image: DecorationImage(image: AssetImage('${global.defaultImage}'), fit: BoxFit.cover),
+                              image: DecorationImage(
+                                  image: AssetImage('${global.defaultImage}'),
+                                  fit: BoxFit.cover),
                             ),
                             alignment: Alignment.center,
                             child: Visibility(
-                              visible: _homeModel.recentSellingProductList[i].stock > 0 ? false : true,
+                              visible:
+                                  _homeModel.recentSellingProductList[i].stock >
+                                          0
+                                      ? false
+                                      : true,
                               child: Container(
                                 alignment: Alignment.center,
-                                decoration: BoxDecoration(color: Theme.of(context).primaryColorLight.withOpacity(0.5), borderRadius: BorderRadius.circular(15)),
+                                decoration: BoxDecoration(
+                                    color: Theme.of(context)
+                                        .primaryColorLight
+                                        .withOpacity(0.5),
+                                    borderRadius: BorderRadius.circular(15)),
                                 child: Container(
-                                  decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5)),
-                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(5)),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 5),
                                   child: Text(
                                     '${AppLocalizations.of(context).txt_out_of_stock}',
-                                    style: Theme.of(context).primaryTextTheme.headline2,
+                                    style: Theme.of(context)
+                                        .primaryTextTheme
+                                        .headline2,
                                   ),
                                 ),
                               ),
@@ -2287,7 +2613,8 @@ class _HomeScreenState extends BaseRouteState {
       return _widgetList;
     } catch (e) {
       _widgetList.add(SizedBox());
-      print("Exception - homeScreen.dart - _recentSellingWidget():" + e.toString());
+      print("Exception - homeScreen.dart - _recentSellingWidget():" +
+          e.toString());
       return _widgetList;
     }
   }
@@ -2300,25 +2627,29 @@ class _HomeScreenState extends BaseRouteState {
           Navigator.of(context).push(
             MaterialPageRoute(
                 builder: (context) => ProductDetailScreen(
-                  varientId: _homeModel.secondBannerList[i].varientId,
-                  a: widget.analytics,
-                  o: widget.observer,
-                )),
+                      varientId: _homeModel.secondBannerList[i].varientId,
+                      a: widget.analytics,
+                      o: widget.observer,
+                    )),
           );
         },
         child: CachedNetworkImage(
-          imageUrl: global.appInfo.imageUrl + _homeModel.secondBannerList[i].bannerImage,
+          imageUrl: global.appInfo.imageUrl +
+              _homeModel.secondBannerList[i].bannerImage,
           imageBuilder: (context, imageProvider) => Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               image: DecorationImage(image: imageProvider, fit: BoxFit.fill),
             ),
           ),
-          placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+          placeholder: (context, url) =>
+              Center(child: CircularProgressIndicator()),
           errorWidget: (context, url, error) => Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              image: DecorationImage(image: AssetImage('${global.defaultImage}'), fit: BoxFit.cover),
+              image: DecorationImage(
+                  image: AssetImage('${global.defaultImage}'),
+                  fit: BoxFit.cover),
             ),
           ),
         ),
@@ -2336,7 +2667,10 @@ class _HomeScreenState extends BaseRouteState {
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => ProductDetailScreen(productId: _homeModel.spotLightProductList[i].productId, a: widget.analytics, o: widget.observer),
+                  builder: (context) => ProductDetailScreen(
+                      productId: _homeModel.spotLightProductList[i].productId,
+                      a: widget.analytics,
+                      o: widget.observer),
                 ),
               );
             },
@@ -2357,7 +2691,8 @@ class _HomeScreenState extends BaseRouteState {
                         ),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 28, left: 10, right: 10),
+                        padding:
+                            const EdgeInsets.only(top: 28, left: 10, right: 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -2366,7 +2701,9 @@ class _HomeScreenState extends BaseRouteState {
                               width: 80,
                               child: Text(
                                 '${_homeModel.spotLightProductList[i].productName}',
-                                style: Theme.of(context).primaryTextTheme.bodyText1,
+                                style: Theme.of(context)
+                                    .primaryTextTheme
+                                    .bodyText1,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                               ),
@@ -2383,11 +2720,15 @@ class _HomeScreenState extends BaseRouteState {
                                     children: [
                                       Text(
                                         "${global.appInfo.currencySign} ",
-                                        style: Theme.of(context).primaryTextTheme.headline2,
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .headline2,
                                       ),
                                       Text(
                                         '${_homeModel.spotLightProductList[i].price} ',
-                                        style: Theme.of(context).primaryTextTheme.headline5,
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .headline5,
                                       ),
                                     ],
                                   ),
@@ -2397,7 +2738,8 @@ class _HomeScreenState extends BaseRouteState {
                             Text(
                               '${_homeModel.spotLightProductList[i].type}',
                               maxLines: 1,
-                              style: Theme.of(context).primaryTextTheme.headline2,
+                              style:
+                                  Theme.of(context).primaryTextTheme.headline2,
                             ),
                           ],
                         ),
@@ -2410,42 +2752,69 @@ class _HomeScreenState extends BaseRouteState {
                     top: 30,
                     child: Container(
                       child: CachedNetworkImage(
-                        imageUrl: global.appInfo.imageUrl + _homeModel.spotLightProductList[i].productImage,
+                        imageUrl: global.appInfo.imageUrl +
+                            _homeModel.spotLightProductList[i].productImage,
                         imageBuilder: (context, imageProvider) => Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
-                            image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
+                            image: DecorationImage(
+                                image: imageProvider, fit: BoxFit.cover),
                           ),
                           alignment: Alignment.center,
                           child: Visibility(
-                            visible: _homeModel.spotLightProductList[i].stock > 0 ? false : true,
+                            visible:
+                                _homeModel.spotLightProductList[i].stock > 0
+                                    ? false
+                                    : true,
                             child: Container(
                               alignment: Alignment.center,
-                              decoration: BoxDecoration(color: Theme.of(context).primaryColorLight.withOpacity(0.5), borderRadius: BorderRadius.circular(15)),
+                              decoration: BoxDecoration(
+                                  color: Theme.of(context)
+                                      .primaryColorLight
+                                      .withOpacity(0.5),
+                                  borderRadius: BorderRadius.circular(15)),
                               child: Container(
-                                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5)),
-                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(5)),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 5),
                                 child: Text(
                                   '${AppLocalizations.of(context).txt_out_of_stock}',
-                                  style: Theme.of(context).primaryTextTheme.headline2,
+                                  style: Theme.of(context)
+                                      .primaryTextTheme
+                                      .headline2,
                                 ),
                               ),
                             ),
                           ),
                         ),
-                        placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                        placeholder: (context, url) =>
+                            Center(child: CircularProgressIndicator()),
                         errorWidget: (context, url, error) => Container(
                           child: Visibility(
-                            visible: _homeModel.spotLightProductList[i].stock > 0 ? false : true,
+                            visible:
+                                _homeModel.spotLightProductList[i].stock > 0
+                                    ? false
+                                    : true,
                             child: Container(
                               alignment: Alignment.center,
-                              decoration: BoxDecoration(color: Theme.of(context).primaryColorLight.withOpacity(0.5), borderRadius: BorderRadius.circular(15)),
+                              decoration: BoxDecoration(
+                                  color: Theme.of(context)
+                                      .primaryColorLight
+                                      .withOpacity(0.5),
+                                  borderRadius: BorderRadius.circular(15)),
                               child: Container(
-                                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5)),
-                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(5)),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 5),
                                 child: Text(
                                   '${AppLocalizations.of(context).txt_out_of_stock}',
-                                  style: Theme.of(context).primaryTextTheme.headline2,
+                                  style: Theme.of(context)
+                                      .primaryTextTheme
+                                      .headline2,
                                 ),
                               ),
                             ),
@@ -2453,7 +2822,9 @@ class _HomeScreenState extends BaseRouteState {
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
-                            image: DecorationImage(image: AssetImage('${global.defaultImage}'), fit: BoxFit.cover),
+                            image: DecorationImage(
+                                image: AssetImage('${global.defaultImage}'),
+                                fit: BoxFit.cover),
                           ),
                         ),
                       ),
@@ -2488,7 +2859,9 @@ class _HomeScreenState extends BaseRouteState {
                       height: 30,
                       width: 30,
                       decoration: BoxDecoration(
-                        color: Theme.of(context).bottomNavigationBarTheme.backgroundColor,
+                        color: Theme.of(context)
+                            .bottomNavigationBarTheme
+                            .backgroundColor,
                         borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(10),
                         ),
@@ -2508,7 +2881,8 @@ class _HomeScreenState extends BaseRouteState {
       return _widgetList;
     } catch (e) {
       _widgetList.add(SizedBox());
-      print("Exception - homeScreen.dart - _spotLightWidgetList():" + e.toString());
+      print("Exception - homeScreen.dart - _spotLightWidgetList():" +
+          e.toString());
       return _widgetList;
     }
   }
@@ -2562,24 +2936,30 @@ class _HomeScreenState extends BaseRouteState {
                       decoration: BoxDecoration(
                         gradient: i % 3 == 1
                             ? LinearGradient(
-                          stops: [0, .90],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [Color(0XFF9EEEFF), Color(0XFFC0F4FF)],
-                        )
+                                stops: [0, .90],
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [Color(0XFF9EEEFF), Color(0XFFC0F4FF)],
+                              )
                             : i % 3 == 2
-                            ? LinearGradient(
-                          stops: [0, .90],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [Color(0XFFFFF1C0), Color(0XFFFFF1C0)],
-                        )
-                            : LinearGradient(
-                          stops: [0, .90],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [Color(0XFFFFD4D7), Color(0XFFFFD4D7)],
-                        ),
+                                ? LinearGradient(
+                                    stops: [0, .90],
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    colors: [
+                                      Color(0XFFFFF1C0),
+                                      Color(0XFFFFF1C0)
+                                    ],
+                                  )
+                                : LinearGradient(
+                                    stops: [0, .90],
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    colors: [
+                                      Color(0XFFFFD4D7),
+                                      Color(0XFFFFD4D7)
+                                    ],
+                                  ),
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(17),
                           bottomLeft: Radius.circular(17),
@@ -2587,19 +2967,22 @@ class _HomeScreenState extends BaseRouteState {
                         ),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 27, left: 10, right: 10),
+                        padding:
+                            const EdgeInsets.only(top: 27, left: 10, right: 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
                               '${_homeModel.topSellingProductList[i].productName}',
-                              style: Theme.of(context).primaryTextTheme.subtitle1,
+                              style:
+                                  Theme.of(context).primaryTextTheme.subtitle1,
                               overflow: TextOverflow.ellipsis,
                             ),
                             Text(
                               '${_homeModel.topSellingProductList[i].type}',
-                              style: Theme.of(context).primaryTextTheme.subtitle2,
+                              style:
+                                  Theme.of(context).primaryTextTheme.subtitle2,
                             ),
                             Container(
                               width: 130,
@@ -2613,15 +2996,21 @@ class _HomeScreenState extends BaseRouteState {
                                     children: [
                                       Text(
                                         "${global.appInfo.currencySign} ",
-                                        style: Theme.of(context).primaryTextTheme.subtitle2,
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .subtitle2,
                                       ),
                                       Text(
                                         '${_homeModel.topSellingProductList[i].price} ',
-                                        style: Theme.of(context).primaryTextTheme.subtitle1,
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .subtitle1,
                                       ),
                                       Text(
                                         '/ ${_homeModel.topSellingProductList[i].quantity}${_homeModel.topSellingProductList[i].unit}',
-                                        style: Theme.of(context).primaryTextTheme.subtitle2,
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .subtitle2,
                                       )
                                     ],
                                   ),
@@ -2650,10 +3039,10 @@ class _HomeScreenState extends BaseRouteState {
                         color: global.isDarkModeEnable
                             ? Theme.of(context).scaffoldBackgroundColor
                             : i % 3 == 1
-                            ? Color(0XFF9EEEFF)
-                            : i % 3 == 2
-                            ? Color(0XFFFFF1C0)
-                            : Color(0XFFFFD4D7),
+                                ? Color(0XFF9EEEFF)
+                                : i % 3 == 2
+                                    ? Color(0XFFFFF1C0)
+                                    : Color(0XFFFFD4D7),
                       ),
                     ),
                   ),
@@ -2663,47 +3052,76 @@ class _HomeScreenState extends BaseRouteState {
                       padding: const EdgeInsets.symmetric(horizontal: 5.0),
                       child: Container(
                         child: CachedNetworkImage(
-                          imageUrl: global.appInfo.imageUrl + _homeModel.topSellingProductList[i].productImage,
+                          imageUrl: global.appInfo.imageUrl +
+                              _homeModel.topSellingProductList[i].productImage,
                           imageBuilder: (context, imageProvider) => Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
+                              image: DecorationImage(
+                                  image: imageProvider, fit: BoxFit.cover),
                             ),
                             alignment: Alignment.center,
                             child: Visibility(
-                              visible: _homeModel.topSellingProductList[i].stock > 0 ? false : true,
+                              visible:
+                                  _homeModel.topSellingProductList[i].stock > 0
+                                      ? false
+                                      : true,
                               child: Container(
                                 alignment: Alignment.center,
-                                decoration: BoxDecoration(color: Theme.of(context).primaryColorLight.withOpacity(0.5), borderRadius: BorderRadius.circular(15)),
+                                decoration: BoxDecoration(
+                                    color: Theme.of(context)
+                                        .primaryColorLight
+                                        .withOpacity(0.5),
+                                    borderRadius: BorderRadius.circular(15)),
                                 child: Container(
-                                  decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5)),
-                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(5)),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 5),
                                   child: Text(
                                     '${AppLocalizations.of(context).txt_out_of_stock}',
-                                    style: Theme.of(context).primaryTextTheme.headline2,
+                                    style: Theme.of(context)
+                                        .primaryTextTheme
+                                        .headline2,
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                          placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                          placeholder: (context, url) =>
+                              Center(child: CircularProgressIndicator()),
                           errorWidget: (context, url, error) => Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              image: DecorationImage(image: AssetImage('${global.defaultImage}'), fit: BoxFit.cover),
+                              image: DecorationImage(
+                                  image: AssetImage('${global.defaultImage}'),
+                                  fit: BoxFit.cover),
                             ),
                             alignment: Alignment.center,
                             child: Visibility(
-                              visible: _homeModel.topSellingProductList[i].stock > 0 ? false : true,
+                              visible:
+                                  _homeModel.topSellingProductList[i].stock > 0
+                                      ? false
+                                      : true,
                               child: Container(
                                 alignment: Alignment.center,
-                                decoration: BoxDecoration(color: Theme.of(context).primaryColorLight.withOpacity(0.5), borderRadius: BorderRadius.circular(15)),
+                                decoration: BoxDecoration(
+                                    color: Theme.of(context)
+                                        .primaryColorLight
+                                        .withOpacity(0.5),
+                                    borderRadius: BorderRadius.circular(15)),
                                 child: Container(
-                                  decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5)),
-                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(5)),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 5),
                                   child: Text(
                                     '${AppLocalizations.of(context).txt_out_of_stock}',
-                                    style: Theme.of(context).primaryTextTheme.headline2,
+                                    style: Theme.of(context)
+                                        .primaryTextTheme
+                                        .headline2,
                                   ),
                                 ),
                               ),
@@ -2724,7 +3142,8 @@ class _HomeScreenState extends BaseRouteState {
       return _widgetList;
     } catch (e) {
       _widgetList.add(SizedBox());
-      print("Exception - homeScreen.dart - _topSellingWidgetList():" + e.toString());
+      print("Exception - homeScreen.dart - _topSellingWidgetList():" +
+          e.toString());
       return _widgetList;
     }
   }
@@ -2758,24 +3177,30 @@ class _HomeScreenState extends BaseRouteState {
                       decoration: BoxDecoration(
                         gradient: i % 3 == 1
                             ? LinearGradient(
-                          stops: [0, .90],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [Color(0XFF9EEEFF), Color(0XFFC0F4FF)],
-                        )
+                                stops: [0, .90],
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [Color(0XFF9EEEFF), Color(0XFFC0F4FF)],
+                              )
                             : i % 3 == 2
-                            ? LinearGradient(
-                          stops: [0, .90],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [Color(0XFFFFF1C0), Color(0XFFFFF1C0)],
-                        )
-                            : LinearGradient(
-                          stops: [0, .90],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [Color(0XFFFFD4D7), Color(0XFFFFD4D7)],
-                        ),
+                                ? LinearGradient(
+                                    stops: [0, .90],
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    colors: [
+                                      Color(0XFFFFF1C0),
+                                      Color(0XFFFFF1C0)
+                                    ],
+                                  )
+                                : LinearGradient(
+                                    stops: [0, .90],
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    colors: [
+                                      Color(0XFFFFD4D7),
+                                      Color(0XFFFFD4D7)
+                                    ],
+                                  ),
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(17),
                           bottomLeft: Radius.circular(17),
@@ -2783,19 +3208,22 @@ class _HomeScreenState extends BaseRouteState {
                         ),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 27, left: 10, right: 10),
+                        padding:
+                            const EdgeInsets.only(top: 27, left: 10, right: 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
                               '${_homeModel.whatsnewProductList[i].productName}',
-                              style: Theme.of(context).primaryTextTheme.subtitle1,
+                              style:
+                                  Theme.of(context).primaryTextTheme.subtitle1,
                               overflow: TextOverflow.ellipsis,
                             ),
                             Text(
                               '${_homeModel.whatsnewProductList[i].type}',
-                              style: Theme.of(context).primaryTextTheme.subtitle2,
+                              style:
+                                  Theme.of(context).primaryTextTheme.subtitle2,
                             ),
                             Container(
                               width: 130,
@@ -2809,15 +3237,21 @@ class _HomeScreenState extends BaseRouteState {
                                     children: [
                                       Text(
                                         "${global.appInfo.currencySign} ",
-                                        style: Theme.of(context).primaryTextTheme.subtitle2,
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .subtitle2,
                                       ),
                                       Text(
                                         '${_homeModel.whatsnewProductList[i].price} ',
-                                        style: Theme.of(context).primaryTextTheme.subtitle1,
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .subtitle1,
                                       ),
                                       Text(
                                         '/ ${_homeModel.whatsnewProductList[i].quantity} ${_homeModel.whatsnewProductList[i].unit}',
-                                        style: Theme.of(context).primaryTextTheme.subtitle2,
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .subtitle2,
                                       )
                                     ],
                                   ),
@@ -2846,10 +3280,10 @@ class _HomeScreenState extends BaseRouteState {
                         color: global.isDarkModeEnable
                             ? Theme.of(context).scaffoldBackgroundColor
                             : i % 3 == 1
-                            ? Color(0XFF9EEEFF)
-                            : i % 3 == 2
-                            ? Color(0XFFFFF1C0)
-                            : Color(0XFFFFD4D7),
+                                ? Color(0XFF9EEEFF)
+                                : i % 3 == 2
+                                    ? Color(0XFFFFF1C0)
+                                    : Color(0XFFFFD4D7),
                       ),
                     ),
                   ),
@@ -2859,47 +3293,76 @@ class _HomeScreenState extends BaseRouteState {
                       padding: const EdgeInsets.symmetric(horizontal: 5.0),
                       child: Container(
                         child: CachedNetworkImage(
-                          imageUrl: global.appInfo.imageUrl + _homeModel.whatsnewProductList[i].productImage,
+                          imageUrl: global.appInfo.imageUrl +
+                              _homeModel.whatsnewProductList[i].productImage,
                           imageBuilder: (context, imageProvider) => Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
+                              image: DecorationImage(
+                                  image: imageProvider, fit: BoxFit.cover),
                             ),
                             alignment: Alignment.center,
                             child: Visibility(
-                              visible: _homeModel.whatsnewProductList[i].stock > 0 ? false : true,
+                              visible:
+                                  _homeModel.whatsnewProductList[i].stock > 0
+                                      ? false
+                                      : true,
                               child: Container(
                                 alignment: Alignment.center,
-                                decoration: BoxDecoration(color: Theme.of(context).primaryColorLight.withOpacity(0.5), borderRadius: BorderRadius.circular(15)),
+                                decoration: BoxDecoration(
+                                    color: Theme.of(context)
+                                        .primaryColorLight
+                                        .withOpacity(0.5),
+                                    borderRadius: BorderRadius.circular(15)),
                                 child: Container(
-                                  decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5)),
-                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(5)),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 5),
                                   child: Text(
                                     '${AppLocalizations.of(context).txt_out_of_stock}',
-                                    style: Theme.of(context).primaryTextTheme.headline2,
+                                    style: Theme.of(context)
+                                        .primaryTextTheme
+                                        .headline2,
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                          placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                          placeholder: (context, url) =>
+                              Center(child: CircularProgressIndicator()),
                           errorWidget: (context, url, error) => Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              image: DecorationImage(image: AssetImage('${global.defaultImage}'), fit: BoxFit.cover),
+                              image: DecorationImage(
+                                  image: AssetImage('${global.defaultImage}'),
+                                  fit: BoxFit.cover),
                             ),
                             alignment: Alignment.center,
                             child: Visibility(
-                              visible: _homeModel.whatsnewProductList[i].stock > 0 ? false : true,
+                              visible:
+                                  _homeModel.whatsnewProductList[i].stock > 0
+                                      ? false
+                                      : true,
                               child: Container(
                                 alignment: Alignment.center,
-                                decoration: BoxDecoration(color: Theme.of(context).primaryColorLight.withOpacity(0.5), borderRadius: BorderRadius.circular(15)),
+                                decoration: BoxDecoration(
+                                    color: Theme.of(context)
+                                        .primaryColorLight
+                                        .withOpacity(0.5),
+                                    borderRadius: BorderRadius.circular(15)),
                                 child: Container(
-                                  decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5)),
-                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(5)),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 5),
                                   child: Text(
                                     '${AppLocalizations.of(context).txt_out_of_stock}',
-                                    style: Theme.of(context).primaryTextTheme.headline2,
+                                    style: Theme.of(context)
+                                        .primaryTextTheme
+                                        .headline2,
                                   ),
                                 ),
                               ),
@@ -2920,7 +3383,8 @@ class _HomeScreenState extends BaseRouteState {
       return _widgetList;
     } catch (e) {
       _widgetList.add(SizedBox());
-      print("Exception - homeScreen.dart - _whatsNewProductWidgetList():" + e.toString());
+      print("Exception - homeScreen.dart - _whatsNewProductWidgetList():" +
+          e.toString());
       return _widgetList;
     }
   }

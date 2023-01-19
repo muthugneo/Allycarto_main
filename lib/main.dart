@@ -25,7 +25,10 @@ void main() async {
   await Firebase.initializeApp();
   HttpOverrides.global = new MyHttpOverrides();
   flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-  await flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()?.createNotificationChannel(channel);
+  await flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
+      ?.createNotificationChannel(channel);
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   runApp(Phoenix(child: MyApp()));
@@ -51,7 +54,8 @@ class MyApp extends StatefulWidget {
 
 class MyAppState extends State<MyApp> {
   static FirebaseAnalytics analytics = FirebaseAnalytics();
-  static FirebaseAnalyticsObserver observer = FirebaseAnalyticsObserver(analytics: analytics);
+  static FirebaseAnalyticsObserver observer =
+      FirebaseAnalyticsObserver(analytics: analytics);
   final String routeName = "main";
 
   @override
@@ -63,7 +67,9 @@ class MyAppState extends State<MyApp> {
               debugShowCheckedModeBanner: false,
               title: 'ALLYCARTO',
               navigatorObservers: <NavigatorObserver>[observer],
-              theme: nativeTheme(isDarkModeEnable: global.isDarkModeEnable), //ThemeData.dark(), //
+              theme: nativeTheme(
+                  isDarkModeEnable:
+                      global.isDarkModeEnable), //ThemeData.dark(), //
 
               locale: provider.locale,
               supportedLocales: L10n.all,
@@ -88,17 +94,19 @@ class MyAppState extends State<MyApp> {
       badge: true,
       sound: true,
     );
-    var initialzationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
-    final IOSInitializationSettings initializationSettingsIOS = IOSInitializationSettings();
+    var initialzationSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+    final IOSInitializationSettings initializationSettingsIOS =
+        IOSInitializationSettings();
     var initializationSettings = InitializationSettings(
       android: initialzationSettingsAndroid,
       iOS: initializationSettingsIOS,
     );
     flutterLocalNotificationsPlugin.initialize(initializationSettings);
-
     FirebaseMessaging.onMessage.listen((var message) async {
       try {
-        LocalNotification _notificationModel = LocalNotification.fromJson(message.data);
+        LocalNotification _notificationModel =
+            LocalNotification.fromJson(message.data);
         global.localNotificationModel = _notificationModel;
         setState(() {
           global.isChatNotTapped = false;
@@ -109,8 +117,10 @@ class MyAppState extends State<MyApp> {
         print('Message data: ${message.data}');
 
         if (message.data != null) {
-          Future<String> _downloadAndSaveFile(String url, String fileName) async {
-            final Directory directory = await getApplicationDocumentsDirectory();
+          Future<String> _downloadAndSaveFile(
+              String url, String fileName) async {
+            final Directory directory =
+                await getApplicationDocumentsDirectory();
             final String filePath = '${directory.path}/$fileName';
             final http.Response response = await http.get(Uri.parse(url));
             final File file = File(filePath);
@@ -119,31 +129,65 @@ class MyAppState extends State<MyApp> {
           }
 
           if (Platform.isAndroid) {
-            final String bigPicturePath = await _downloadAndSaveFile(message.notification.android.imageUrl != null ? message.notification.android.imageUrl : 'https://picsum.photos/200/300', 'bigPicture');
+            final String bigPicturePath = await _downloadAndSaveFile(
+                message.notification.android.imageUrl != null
+                    ? message.notification.android.imageUrl
+                    : 'https://picsum.photos/200/300',
+                'bigPicture');
 
-            final BigPictureStyleInformation bigPictureStyleInformation = BigPictureStyleInformation(
+            final BigPictureStyleInformation bigPictureStyleInformation =
+                BigPictureStyleInformation(
               FilePathAndroidBitmap(bigPicturePath),
             );
-            final AndroidNotificationDetails androidPlatformChannelSpecifics = AndroidNotificationDetails(channel.id, channel.name, channel.description, icon: '@mipmap/ic_notification', styleInformation: bigPictureStyleInformation);
-            final AndroidNotificationDetails androidPlatformChannelSpecifics2 = AndroidNotificationDetails(channel.id, channel.name, channel.description, icon: '@mipmap/ic_notification', styleInformation: BigTextStyleInformation(message.notification.body)
-                // styleInformation:   message.notification.android.imageUrl != null  ? bigPictureStyleInformation : BigPictureStyleInformation
-                );
-            final NotificationDetails platformChannelSpecifics = NotificationDetails(android: message.notification.android.imageUrl != null ? androidPlatformChannelSpecifics : androidPlatformChannelSpecifics2);
+            final AndroidNotificationDetails androidPlatformChannelSpecifics =
+                AndroidNotificationDetails(
+                    channel.id, channel.name, channel.description,
+                    icon: '@mipmap/ic_notification',
+                    styleInformation: bigPictureStyleInformation);
+            final AndroidNotificationDetails androidPlatformChannelSpecifics2 =
+                AndroidNotificationDetails(
+                    channel.id, channel.name, channel.description,
+                    icon: '@mipmap/ic_notification',
+                    styleInformation:
+                        BigTextStyleInformation(message.notification.body)
+                    // styleInformation:   message.notification.android.imageUrl != null  ? bigPictureStyleInformation : BigPictureStyleInformation
+                    );
+            final NotificationDetails platformChannelSpecifics =
+                NotificationDetails(
+                    android: message.notification.android.imageUrl != null
+                        ? androidPlatformChannelSpecifics
+                        : androidPlatformChannelSpecifics2);
 
-            flutterLocalNotificationsPlugin.show(1, message.notification.title, message.notification.body, platformChannelSpecifics);
+            flutterLocalNotificationsPlugin.show(1, message.notification.title,
+                message.notification.body, platformChannelSpecifics);
           } else if (Platform.isIOS) {
-            final String bigPicturePath = await _downloadAndSaveFile(message.notification.apple.imageUrl != null ? message.notification.apple.imageUrl : 'https://picsum.photos/200/300', 'bigPicture.jpg');
-            final IOSNotificationDetails iOSPlatformChannelSpecifics = IOSNotificationDetails(attachments: <IOSNotificationAttachment>[IOSNotificationAttachment(bigPicturePath)]);
-            final IOSNotificationDetails iOSPlatformChannelSpecifics2 = IOSNotificationDetails(badgeNumber: 1);
+            final String bigPicturePath = await _downloadAndSaveFile(
+                message.notification.apple.imageUrl != null
+                    ? message.notification.apple.imageUrl
+                    : 'https://picsum.photos/200/300',
+                'bigPicture.jpg');
+            final IOSNotificationDetails iOSPlatformChannelSpecifics =
+                IOSNotificationDetails(attachments: <IOSNotificationAttachment>[
+              IOSNotificationAttachment(bigPicturePath)
+            ]);
+            final IOSNotificationDetails iOSPlatformChannelSpecifics2 =
+                IOSNotificationDetails(badgeNumber: 1);
             final NotificationDetails notificationDetails = NotificationDetails(
-              iOS: message.notification.apple.imageUrl != null ? iOSPlatformChannelSpecifics : iOSPlatformChannelSpecifics2,
+              iOS: message.notification.apple.imageUrl != null
+                  ? iOSPlatformChannelSpecifics
+                  : iOSPlatformChannelSpecifics2,
             );
-            await flutterLocalNotificationsPlugin.show(1, message.notification.title, message.notification.body, notificationDetails);
+            await flutterLocalNotificationsPlugin.show(
+                1,
+                message.notification.title,
+                message.notification.body,
+                notificationDetails);
           }
         }
 
         if (message.data != null) {
-          print('Message also contained a notification: ${message.notification}');
+          print(
+              'Message also contained a notification: ${message.notification}');
         }
       } catch (e) {
         print('Exception - main.dart - onMessage.listen(): ' + e.toString());
@@ -155,6 +199,8 @@ class MyAppState extends State<MyApp> {
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext context) {
-    return super.createHttpClient(context)..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }

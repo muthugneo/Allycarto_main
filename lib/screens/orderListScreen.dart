@@ -195,116 +195,253 @@ class _OrderListScreenState extends BaseRouteState {
                             );
                           },
                           child: Column(
-                            mainAxisSize: MainAxisSize.min,
                             children: [
                               Padding(
-                                padding: EdgeInsets.only(top: 0.0),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 4),
                                 child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(10.0),
-                                        ),
-                                        color: global.isDarkModeEnable
-                                            ? Color(0xFF373C58)
-                                            : Color(0xFFF2F5F8),
-                                      ),
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 4, horizontal: 8),
-                                      child: Text(
-                                        _allOrderList[index].cartId,
-                                        style: Theme.of(context)
-                                            .primaryTextTheme
-                                            .headline2,
-                                      ),
-                                    ),
-                                    Expanded(child: SizedBox()),
-                                    Icon(
-                                      _allOrderList[index].orderStatus ==
-                                              'Cancelled'
-                                          ? MdiIcons.closeOctagon
-                                          : MdiIcons.checkDecagram,
-                                      size: 20,
-                                      color: _allOrderList[index].orderStatus ==
-                                              'Cancelled'
-                                          ? Colors.red
-                                          : _allOrderList[index].orderStatus ==
-                                                  'Completed'
-                                              ? Colors.greenAccent
-                                              : _allOrderList[index]
-                                                          .orderStatus ==
-                                                      'Confirmed'
-                                                  ? Colors.blue
-                                                  : _allOrderList[index]
-                                                              .orderStatus ==
-                                                          'Pending'
-                                                      ? Colors.yellow
-                                                      : Theme.of(context)
-                                                          .primaryColorLight,
-                                    ),
-                                    Padding(
-                                      padding: global.isRTL
-                                          ? EdgeInsets.only(right: 8)
-                                          : EdgeInsets.only(left: 8.0),
-                                      child: Text(
-                                        _allOrderList[index].orderStatus,
-                                        style: Theme.of(context)
-                                            .primaryTextTheme
-                                            .headline2,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              ListTile(
-                                visualDensity:
-                                    VisualDensity(vertical: -3, horizontal: -4),
-                                contentPadding: EdgeInsets.all(0),
-                                minLeadingWidth: 0,
-                                title: Text(
-                                  _allOrderList[index].userName,
-                                  style: Theme.of(context)
-                                      .primaryTextTheme
-                                      .bodyText1,
-                                ),
-                                // subtitle: Row(
-                                //   children: [
-                                //     Icon(Icons.date_range, size: 15,),
-                                //     SizedBox(width: 4,),
-                                //     Text(
-                                //       _allOrderList[index].timeSlot + ' | ' + _allOrderList[index].deliveryDate,
-                                //       style: Theme.of(context).primaryTextTheme.headline2,
-                                //     ),
-                                //   ],
-                                // ),
-                                trailing: FittedBox(
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        "${global.appInfo.currencySign} ${_allOrderList[index].remPrice > 0 ? _allOrderList[index].remPrice : _allOrderList[index].paidByWallet}",
-                                        style: Theme.of(context)
-                                            .primaryTextTheme
-                                            .bodyText1,
-                                      ),
-                                      Text(
-                                        "${_allOrderList[index].paymentMethod}",
-                                        style: Theme.of(context)
-                                            .primaryTextTheme
-                                            .headline2
-                                            .copyWith(color: Colors.red),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                                      Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.all(
+                                                  Radius.circular(10.0),
+                                                ),
+                                                color: global.isDarkModeEnable
+                                                    ? Color(0xFF373C58)
+                                                    : Color(0xFFF2F5F8),
+                                              ),
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 4, horizontal: 8),
+                                              child: Text(
+                                                _allOrderList[index].cartId,
+                                                style: Theme.of(context)
+                                                    .primaryTextTheme
+                                                    .headline2,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 6,
+                                            ),
+                                            Text(
+                                              _allOrderList[index].userName,
+                                              style: Theme.of(context)
+                                                  .primaryTextTheme
+                                                  .bodyText1,
+                                            )
+                                          ]),
+                                      Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              _allOrderList[index].orderDate,
+                                              style: Theme.of(context)
+                                                  .primaryTextTheme
+                                                  .headline2,
+                                            ),
+                                            SizedBox(
+                                              height: 15,
+                                            ),
+                                            Text(
+                                              "${_allOrderList[index].totalItems} ${_allOrderList[index].totalItems > 1 ? " items" : " item"}",
+                                              style: Theme.of(context)
+                                                  .primaryTextTheme
+                                                  .headline2,
+                                            ),
+                                          ]),
+                                      Column(children: [
+                                        Row(children: [
+                                          Icon(
+                                            _allOrderList[index].orderStatus ==
+                                                    'Cancelled'
+                                                ? MdiIcons.closeOctagon
+                                                : MdiIcons.checkDecagram,
+                                            size: 20,
+                                            color: _allOrderList[index]
+                                                        .orderStatus ==
+                                                    'Cancelled'
+                                                ? Colors.red
+                                                : _allOrderList[index]
+                                                            .orderStatus ==
+                                                        'Completed'
+                                                    ? Colors.greenAccent
+                                                    : _allOrderList[index]
+                                                                .orderStatus ==
+                                                            'Confirmed'
+                                                        ? Colors.blue
+                                                        : _allOrderList[index]
+                                                                    .orderStatus ==
+                                                                'Pending'
+                                                            ? Colors.yellow
+                                                            : Theme.of(context)
+                                                                .primaryColorLight,
+                                          ),
+                                          Padding(
+                                            padding: global.isRTL
+                                                ? EdgeInsets.only(right: 8)
+                                                : EdgeInsets.only(left: 8.0),
+                                            child: Text(
+                                              _allOrderList[index].orderStatus,
+                                              style: Theme.of(context)
+                                                  .primaryTextTheme
+                                                  .headline2,
+                                            ),
+                                          )
+                                        ]),
+                                        SizedBox(
+                                          height: 6,
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 16),
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                "${global.appInfo.currencySign} ${_allOrderList[index].remPrice > 0 ? _allOrderList[index].remPrice : _allOrderList[index].paidByWallet}",
+                                                style: Theme.of(context)
+                                                    .primaryTextTheme
+                                                    .bodyText1,
+                                              ),
+                                              Text(
+                                                "${_allOrderList[index].paymentMethod}",
+                                                style: Theme.of(context)
+                                                    .primaryTextTheme
+                                                    .headline2
+                                                    .copyWith(
+                                                        color: Colors.red),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ])
+                                    ]),
                               ),
+                              // Column(
+                              //   mainAxisSize: MainAxisSize.min,
+                              //   children: [
+                              //     Padding(
+                              //       padding: EdgeInsets.only(top: 0.0),
+                              //       child: Row(
+                              //         mainAxisSize: MainAxisSize.min,
+                              //         mainAxisAlignment:
+                              //             MainAxisAlignment.spaceEvenly,
+                              //         crossAxisAlignment:
+                              //             CrossAxisAlignment.center,
+                              //         children: [
+                              //           Container(
+                              //             decoration: BoxDecoration(
+                              //               borderRadius: BorderRadius.all(
+                              //                 Radius.circular(10.0),
+                              //               ),
+                              //               color: global.isDarkModeEnable
+                              //                   ? Color(0xFF373C58)
+                              //                   : Color(0xFFF2F5F8),
+                              //             ),
+                              //             padding: EdgeInsets.symmetric(
+                              //                 vertical: 4, horizontal: 8),
+                              //             child: Text(
+                              //               _allOrderList[index].cartId,
+                              //               style: Theme.of(context)
+                              //                   .primaryTextTheme
+                              //                   .headline2,
+                              //             ),
+                              //           ),
+                              //           Expanded(child: SizedBox()),
+                              //           Icon(
+                              //             _allOrderList[index].orderStatus ==
+                              //                     'Cancelled'
+                              //                 ? MdiIcons.closeOctagon
+                              //                 : MdiIcons.checkDecagram,
+                              //             size: 20,
+                              //             color: _allOrderList[index]
+                              //                         .orderStatus ==
+                              //                     'Cancelled'
+                              //                 ? Colors.red
+                              //                 : _allOrderList[index]
+                              //                             .orderStatus ==
+                              //                         'Completed'
+                              //                     ? Colors.greenAccent
+                              //                     : _allOrderList[index]
+                              //                                 .orderStatus ==
+                              //                             'Confirmed'
+                              //                         ? Colors.blue
+                              //                         : _allOrderList[index]
+                              //                                     .orderStatus ==
+                              //                                 'Pending'
+                              //                             ? Colors.yellow
+                              //                             : Theme.of(context)
+                              //                                 .primaryColorLight,
+                              //           ),
+                              //           Padding(
+                              //             padding: global.isRTL
+                              //                 ? EdgeInsets.only(right: 8)
+                              //                 : EdgeInsets.only(left: 8.0),
+                              //             child: Text(
+                              //               _allOrderList[index].orderStatus,
+                              //               style: Theme.of(context)
+                              //                   .primaryTextTheme
+                              //                   .headline2,
+                              //             ),
+                              //           )
+                              //         ],
+                              //       ),
+                              //     ),
+                              //     ListTile(
+                              //       visualDensity: VisualDensity(
+                              //           vertical: -3, horizontal: -4),
+                              //       contentPadding: EdgeInsets.all(0),
+                              //       minLeadingWidth: 0,
+                              //       title: Text(
+                              //         _allOrderList[index].userName,
+                              //         style: Theme.of(context)
+                              //             .primaryTextTheme
+                              //             .bodyText1,
+                              //       ),
+                              //       // subtitle: Row(
+                              //       //   children: [
+                              //       //     Icon(Icons.date_range, size: 15,),
+                              //       //     SizedBox(width: 4,),
+                              //       //     Text(
+                              //       //       _allOrderList[index].timeSlot + ' | ' + _allOrderList[index].deliveryDate,
+                              //       //       style: Theme.of(context).primaryTextTheme.headline2,
+                              //       //     ),
+                              //       //   ],
+                              //       // ),
+                              //       trailing: FittedBox(
+                              //         child: Column(
+                              //           mainAxisSize: MainAxisSize.min,
+                              //           mainAxisAlignment:
+                              //               MainAxisAlignment.end,
+                              //           crossAxisAlignment:
+                              //               CrossAxisAlignment.end,
+                              //           children: [
+                              //             Text(
+                              //               "${global.appInfo.currencySign} ${_allOrderList[index].remPrice > 0 ? _allOrderList[index].remPrice : _allOrderList[index].paidByWallet}",
+                              //               style: Theme.of(context)
+                              //                   .primaryTextTheme
+                              //                   .bodyText1,
+                              //             ),
+                              //             Text(
+                              //               "${_allOrderList[index].paymentMethod}",
+                              //               style: Theme.of(context)
+                              //                   .primaryTextTheme
+                              //                   .headline2
+                              //                   .copyWith(color: Colors.red),
+                              //             ),
+                              //           ],
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   ],
+                              // ),
                               Divider(
                                 color: global.isDarkModeEnable
                                     ? Theme.of(context)
@@ -362,113 +499,134 @@ class _OrderListScreenState extends BaseRouteState {
                             );
                           },
                           child: Column(
-                            mainAxisSize: MainAxisSize.min,
                             children: [
                               Padding(
-                                padding: EdgeInsets.only(top: 0.0),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 4),
                                 child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(10.0),
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.all(
+                                                  Radius.circular(10.0),
+                                                ),
+                                                color: global.isDarkModeEnable
+                                                    ? Color(0xFF373C58)
+                                                    : Color(0xFFF2F5F8),
+                                              ),
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 4, horizontal: 8),
+                                              child: Text(
+                                                _allOrderList[index].cartId,
+                                                style: Theme.of(context)
+                                                    .primaryTextTheme
+                                                    .headline2,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 6,
+                                            ),
+                                            Text(
+                                              _allOrderList[index].userName,
+                                              style: Theme.of(context)
+                                                  .primaryTextTheme
+                                                  .bodyText1,
+                                            )
+                                          ]),
+                                      Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              _allOrderList[index].orderDate,
+                                              style: Theme.of(context)
+                                                  .primaryTextTheme
+                                                  .headline2,
+                                            ),
+                                            SizedBox(
+                                              height: 15,
+                                            ),
+                                            Text(
+                                              "${_allOrderList[index].totalItems} ${_allOrderList[index].totalItems > 1 ? " items" : " item"}",
+                                              style: Theme.of(context)
+                                                  .primaryTextTheme
+                                                  .headline2,
+                                            ),
+                                          ]),
+                                      Column(children: [
+                                        Row(children: [
+                                          Icon(
+                                            _allOrderList[index].orderStatus ==
+                                                    'Cancelled'
+                                                ? MdiIcons.closeOctagon
+                                                : MdiIcons.checkDecagram,
+                                            size: 20,
+                                            color: _allOrderList[index]
+                                                        .orderStatus ==
+                                                    'Cancelled'
+                                                ? Colors.red
+                                                : _allOrderList[index]
+                                                            .orderStatus ==
+                                                        'Completed'
+                                                    ? Colors.greenAccent
+                                                    : _allOrderList[index]
+                                                                .orderStatus ==
+                                                            'Confirmed'
+                                                        ? Colors.blue
+                                                        : _allOrderList[index]
+                                                                    .orderStatus ==
+                                                                'Pending'
+                                                            ? Colors.yellow
+                                                            : Theme.of(context)
+                                                                .primaryColorLight,
+                                          ),
+                                          Padding(
+                                            padding: global.isRTL
+                                                ? EdgeInsets.only(right: 8)
+                                                : EdgeInsets.only(left: 8.0),
+                                            child: Text(
+                                              _allOrderList[index].orderStatus,
+                                              style: Theme.of(context)
+                                                  .primaryTextTheme
+                                                  .headline2,
+                                            ),
+                                          )
+                                        ]),
+                                        SizedBox(
+                                          height: 6,
                                         ),
-                                        color: global.isDarkModeEnable
-                                            ? Color(0xFF373C58)
-                                            : Color(0xFFF2F5F8),
-                                      ),
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 4, horizontal: 8),
-                                      child: Text(
-                                        _completedOrdeList[index].cartId,
-                                        style: Theme.of(context)
-                                            .primaryTextTheme
-                                            .headline2,
-                                      ),
-                                    ),
-                                    Expanded(child: SizedBox()),
-                                    Icon(
-                                      _completedOrdeList[index].orderStatus ==
-                                              'Cancelled'
-                                          ? MdiIcons.closeOctagon
-                                          : MdiIcons.checkDecagram,
-                                      size: 20,
-                                      color: _completedOrdeList[index]
-                                                  .orderStatus ==
-                                              'Cancelled'
-                                          ? Colors.red
-                                          : _completedOrdeList[index]
-                                                      .orderStatus ==
-                                                  'Completed'
-                                              ? Colors.greenAccent
-                                              : _completedOrdeList[index]
-                                                          .orderStatus ==
-                                                      'Confirmed'
-                                                  ? Colors.blue
-                                                  : _completedOrdeList[index]
-                                                              .orderStatus ==
-                                                          'Pending'
-                                                      ? Colors.yellow
-                                                      : Theme.of(context)
-                                                          .primaryColorLight,
-                                    ),
-                                    Padding(
-                                      padding: global.isRTL
-                                          ? EdgeInsets.only(right: 8)
-                                          : EdgeInsets.only(left: 8.0),
-                                      child: Text(
-                                        _completedOrdeList[index].orderStatus,
-                                        style: Theme.of(context)
-                                            .primaryTextTheme
-                                            .headline2,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              ListTile(
-                                visualDensity:
-                                    VisualDensity(vertical: -3, horizontal: -4),
-                                contentPadding: EdgeInsets.all(0),
-                                minLeadingWidth: 0,
-                                title: Text(
-                                  _completedOrdeList[index].userName,
-                                  style: Theme.of(context)
-                                      .primaryTextTheme
-                                      .bodyText1,
-                                ),
-                                subtitle: Text(
-                                  _completedOrdeList[index].timeSlot +
-                                      ' | ' +
-                                      _completedOrdeList[index].deliveryDate,
-                                  style: Theme.of(context)
-                                      .primaryTextTheme
-                                      .headline2,
-                                ),
-                                trailing: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      "${global.appInfo.currencySign} ${_completedOrdeList[index].remPrice > 0 ? _completedOrdeList[index].remPrice : _completedOrdeList[index].paidByWallet}",
-                                      style: Theme.of(context)
-                                          .primaryTextTheme
-                                          .bodyText1,
-                                    ),
-                                    Text(
-                                      "${_completedOrdeList[index].paymentMethod}",
-                                      style: Theme.of(context)
-                                          .primaryTextTheme
-                                          .headline2
-                                          .copyWith(color: Colors.red),
-                                    ),
-                                  ],
-                                ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 16),
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                "${global.appInfo.currencySign} ${_allOrderList[index].remPrice > 0 ? _allOrderList[index].remPrice : _allOrderList[index].paidByWallet}",
+                                                style: Theme.of(context)
+                                                    .primaryTextTheme
+                                                    .bodyText1,
+                                              ),
+                                              Text(
+                                                "${_allOrderList[index].paymentMethod}",
+                                                style: Theme.of(context)
+                                                    .primaryTextTheme
+                                                    .headline2
+                                                    .copyWith(
+                                                        color: Colors.red),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ])
+                                    ]),
                               ),
                               Divider(
                                 color: global.isDarkModeEnable
@@ -478,6 +636,125 @@ class _OrderListScreenState extends BaseRouteState {
                                         .withOpacity(0.05)
                                     : Theme.of(context).dividerTheme.color,
                               ),
+                              // Column(
+                              //   mainAxisSize: MainAxisSize.min,
+                              //   children: [
+                              //     Padding(
+                              //       padding: EdgeInsets.only(top: 0.0),
+                              //       child: Row(
+                              //         mainAxisSize: MainAxisSize.min,
+                              //         mainAxisAlignment:
+                              //             MainAxisAlignment.spaceEvenly,
+                              //         crossAxisAlignment: CrossAxisAlignment.center,
+                              //         children: [
+                              //           Container(
+                              //             decoration: BoxDecoration(
+                              //               borderRadius: BorderRadius.all(
+                              //                 Radius.circular(10.0),
+                              //               ),
+                              //               color: global.isDarkModeEnable
+                              //                   ? Color(0xFF373C58)
+                              //                   : Color(0xFFF2F5F8),
+                              //             ),
+                              //             padding: EdgeInsets.symmetric(
+                              //                 vertical: 4, horizontal: 8),
+                              //             child: Text(
+                              //               _completedOrdeList[index].cartId,
+                              //               style: Theme.of(context)
+                              //                   .primaryTextTheme
+                              //                   .headline2,
+                              //             ),
+                              //           ),
+                              //           Expanded(child: SizedBox()),
+                              //           Icon(
+                              //             _completedOrdeList[index].orderStatus ==
+                              //                     'Cancelled'
+                              //                 ? MdiIcons.closeOctagon
+                              //                 : MdiIcons.checkDecagram,
+                              //             size: 20,
+                              //             color: _completedOrdeList[index]
+                              //                         .orderStatus ==
+                              //                     'Cancelled'
+                              //                 ? Colors.red
+                              //                 : _completedOrdeList[index]
+                              //                             .orderStatus ==
+                              //                         'Completed'
+                              //                     ? Colors.greenAccent
+                              //                     : _completedOrdeList[index]
+                              //                                 .orderStatus ==
+                              //                             'Confirmed'
+                              //                         ? Colors.blue
+                              //                         : _completedOrdeList[index]
+                              //                                     .orderStatus ==
+                              //                                 'Pending'
+                              //                             ? Colors.yellow
+                              //                             : Theme.of(context)
+                              //                                 .primaryColorLight,
+                              //           ),
+                              //           Padding(
+                              //             padding: global.isRTL
+                              //                 ? EdgeInsets.only(right: 8)
+                              //                 : EdgeInsets.only(left: 8.0),
+                              //             child: Text(
+                              //               _completedOrdeList[index].orderStatus,
+                              //               style: Theme.of(context)
+                              //                   .primaryTextTheme
+                              //                   .headline2,
+                              //             ),
+                              //           )
+                              //         ],
+                              //       ),
+                              //     ),
+                              //     ListTile(
+                              //       visualDensity:
+                              //           VisualDensity(vertical: -3, horizontal: -4),
+                              //       contentPadding: EdgeInsets.all(0),
+                              //       minLeadingWidth: 0,
+                              //       title: Text(
+                              //         _completedOrdeList[index].userName,
+                              //         style: Theme.of(context)
+                              //             .primaryTextTheme
+                              //             .bodyText1,
+                              //       ),
+                              //       subtitle: Text(
+                              //         _completedOrdeList[index].timeSlot +
+                              //             ' | ' +
+                              //             _completedOrdeList[index].deliveryDate,
+                              //         style: Theme.of(context)
+                              //             .primaryTextTheme
+                              //             .headline2,
+                              //       ),
+                              //       trailing: Column(
+                              //         mainAxisSize: MainAxisSize.min,
+                              //         mainAxisAlignment: MainAxisAlignment.end,
+                              //         crossAxisAlignment: CrossAxisAlignment.end,
+                              //         children: [
+                              //           Text(
+                              //             "${global.appInfo.currencySign} ${_completedOrdeList[index].remPrice > 0 ? _completedOrdeList[index].remPrice : _completedOrdeList[index].paidByWallet}",
+                              //             style: Theme.of(context)
+                              //                 .primaryTextTheme
+                              //                 .bodyText1,
+                              //           ),
+                              //           Text(
+                              //             "${_completedOrdeList[index].paymentMethod}",
+                              //             style: Theme.of(context)
+                              //                 .primaryTextTheme
+                              //                 .headline2
+                              //                 .copyWith(color: Colors.red),
+                              //           ),
+                              //         ],
+                              //       ),
+                              //     ),
+                              //     Divider(
+                              //       color: global.isDarkModeEnable
+                              //           ? Theme.of(context)
+                              //               .dividerTheme
+                              //               .color
+                              //               .withOpacity(0.05)
+                              //           : Theme.of(context).dividerTheme.color,
+                              //     ),
+                              //   ],
+                              // ),
                             ],
                           ),
                         );
@@ -679,119 +956,252 @@ class _OrderListScreenState extends BaseRouteState {
                             );
                           },
                           child: Column(
-                            mainAxisSize: MainAxisSize.min,
                             children: [
                               Padding(
-                                padding: EdgeInsets.only(top: 0.0),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 4),
                                 child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(10.0),
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.all(
+                                                  Radius.circular(10.0),
+                                                ),
+                                                color: global.isDarkModeEnable
+                                                    ? Color(0xFF373C58)
+                                                    : Color(0xFFF2F5F8),
+                                              ),
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 4, horizontal: 8),
+                                              child: Text(
+                                                _allOrderList[index].cartId,
+                                                style: Theme.of(context)
+                                                    .primaryTextTheme
+                                                    .headline2,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 6,
+                                            ),
+                                            Text(
+                                              _allOrderList[index].userName,
+                                              style: Theme.of(context)
+                                                  .primaryTextTheme
+                                                  .bodyText1,
+                                            )
+                                          ]),
+                                      Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              _allOrderList[index].orderDate,
+                                              style: Theme.of(context)
+                                                  .primaryTextTheme
+                                                  .headline2,
+                                            ),
+                                            SizedBox(
+                                              height: 15,
+                                            ),
+                                            Text(
+                                              "${_allOrderList[index].totalItems} ${_allOrderList[index].totalItems > 1 ? " items" : " item"}",
+                                              style: Theme.of(context)
+                                                  .primaryTextTheme
+                                                  .headline2,
+                                            ),
+                                          ]),
+                                      Column(children: [
+                                        Row(children: [
+                                          Icon(
+                                            _allOrderList[index].orderStatus ==
+                                                    'Cancelled'
+                                                ? MdiIcons.closeOctagon
+                                                : MdiIcons.checkDecagram,
+                                            size: 20,
+                                            color: _allOrderList[index]
+                                                        .orderStatus ==
+                                                    'Cancelled'
+                                                ? Colors.red
+                                                : _allOrderList[index]
+                                                            .orderStatus ==
+                                                        'Completed'
+                                                    ? Colors.greenAccent
+                                                    : _allOrderList[index]
+                                                                .orderStatus ==
+                                                            'Confirmed'
+                                                        ? Colors.blue
+                                                        : _allOrderList[index]
+                                                                    .orderStatus ==
+                                                                'Pending'
+                                                            ? Colors.yellow
+                                                            : Theme.of(context)
+                                                                .primaryColorLight,
+                                          ),
+                                          Padding(
+                                            padding: global.isRTL
+                                                ? EdgeInsets.only(right: 8)
+                                                : EdgeInsets.only(left: 8.0),
+                                            child: Text(
+                                              _allOrderList[index].orderStatus,
+                                              style: Theme.of(context)
+                                                  .primaryTextTheme
+                                                  .headline2,
+                                            ),
+                                          )
+                                        ]),
+                                        SizedBox(
+                                          height: 6,
                                         ),
-                                        color: global.isDarkModeEnable
-                                            ? Color(0xFF373C58)
-                                            : Color(0xFFF2F5F8),
-                                      ),
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 4, horizontal: 8),
-                                      child: Text(
-                                        _onGoingOrderList[index].cartId,
-                                        style: Theme.of(context)
-                                            .primaryTextTheme
-                                            .headline2,
-                                      ),
-                                    ),
-                                    Expanded(child: SizedBox()),
-                                    Icon(
-                                      _onGoingOrderList[index].orderStatus ==
-                                              'Cancelled'
-                                          ? MdiIcons.closeOctagon
-                                          : MdiIcons.checkDecagram,
-                                      size: 20,
-                                      color: _onGoingOrderList[index]
-                                                  .orderStatus ==
-                                              'Cancelled'
-                                          ? Colors.red
-                                          : _onGoingOrderList[index]
-                                                      .orderStatus ==
-                                                  'Completed'
-                                              ? Colors.greenAccent
-                                              : _onGoingOrderList[index]
-                                                          .orderStatus ==
-                                                      'Confirmed'
-                                                  ? Colors.blue
-                                                  : _onGoingOrderList[index]
-                                                              .orderStatus ==
-                                                          'Pending'
-                                                      ? Colors.yellow
-                                                      : Theme.of(context)
-                                                          .primaryColorLight,
-                                    ),
-                                    Padding(
-                                      padding: global.isRTL
-                                          ? EdgeInsets.only(right: 8)
-                                          : EdgeInsets.only(left: 8.0),
-                                      child: Text(
-                                        _onGoingOrderList[index].orderStatus,
-                                        style: Theme.of(context)
-                                            .primaryTextTheme
-                                            .headline2,
-                                      ),
-                                    )
-                                  ],
-                                ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 16),
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                "${global.appInfo.currencySign} ${_allOrderList[index].remPrice > 0 ? _allOrderList[index].remPrice : _allOrderList[index].paidByWallet}",
+                                                style: Theme.of(context)
+                                                    .primaryTextTheme
+                                                    .bodyText1,
+                                              ),
+                                              Text(
+                                                "${_allOrderList[index].paymentMethod}",
+                                                style: Theme.of(context)
+                                                    .primaryTextTheme
+                                                    .headline2
+                                                    .copyWith(
+                                                        color: Colors.red),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ])
+                                    ]),
                               ),
-                              ListTile(
-                                visualDensity:
-                                    VisualDensity(vertical: -3, horizontal: -4),
-                                contentPadding: EdgeInsets.all(0),
-                                minLeadingWidth: 0,
-                                title: Text(
-                                  _onGoingOrderList[index].userName,
-                                  style: Theme.of(context)
-                                      .primaryTextTheme
-                                      .bodyText1,
-                                ),
-                                subtitle: Text(
-                                  _onGoingOrderList[index].timeSlot != null
-                                      ? (_onGoingOrderList[index].timeSlot ??
-                                              '') +
-                                          ' | ' +
-                                          (_onGoingOrderList[index]
-                                                  .deliveryDate ??
-                                              '')
-                                      : '',
-                                  style: Theme.of(context)
-                                      .primaryTextTheme
-                                      .headline2,
-                                ),
-                                trailing: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      "${global.appInfo.currencySign} ${_onGoingOrderList[index].remPrice > 0 ? _onGoingOrderList[index].remPrice : _onGoingOrderList[index].paidByWallet}",
-                                      style: Theme.of(context)
-                                          .primaryTextTheme
-                                          .bodyText1,
-                                    ),
-                                    Text(
-                                      "${_onGoingOrderList[index].paymentMethod}",
-                                      style: Theme.of(context)
-                                          .primaryTextTheme
-                                          .headline2
-                                          .copyWith(color: Colors.red),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                              // Column(
+                              //   mainAxisSize: MainAxisSize.min,
+                              //   children: [
+                              //     Padding(
+                              //       padding: EdgeInsets.only(top: 0.0),
+                              //       child: Row(
+                              //         mainAxisSize: MainAxisSize.min,
+                              //         mainAxisAlignment:
+                              //             MainAxisAlignment.spaceEvenly,
+                              //         crossAxisAlignment: CrossAxisAlignment.center,
+                              //         children: [
+                              //           Container(
+                              //             decoration: BoxDecoration(
+                              //               borderRadius: BorderRadius.all(
+                              //                 Radius.circular(10.0),
+                              //               ),
+                              //               color: global.isDarkModeEnable
+                              //                   ? Color(0xFF373C58)
+                              //                   : Color(0xFFF2F5F8),
+                              //             ),
+                              //             padding: EdgeInsets.symmetric(
+                              //                 vertical: 4, horizontal: 8),
+                              //             child: Text(
+                              //               _onGoingOrderList[index].cartId,
+                              //               style: Theme.of(context)
+                              //                   .primaryTextTheme
+                              //                   .headline2,
+                              //             ),
+                              //           ),
+                              //           Expanded(child: SizedBox()),
+                              //           Icon(
+                              //             _onGoingOrderList[index].orderStatus ==
+                              //                     'Cancelled'
+                              //                 ? MdiIcons.closeOctagon
+                              //                 : MdiIcons.checkDecagram,
+                              //             size: 20,
+                              //             color: _onGoingOrderList[index]
+                              //                         .orderStatus ==
+                              //                     'Cancelled'
+                              //                 ? Colors.red
+                              //                 : _onGoingOrderList[index]
+                              //                             .orderStatus ==
+                              //                         'Completed'
+                              //                     ? Colors.greenAccent
+                              //                     : _onGoingOrderList[index]
+                              //                                 .orderStatus ==
+                              //                             'Confirmed'
+                              //                         ? Colors.blue
+                              //                         : _onGoingOrderList[index]
+                              //                                     .orderStatus ==
+                              //                                 'Pending'
+                              //                             ? Colors.yellow
+                              //                             : Theme.of(context)
+                              //                                 .primaryColorLight,
+                              //           ),
+                              //           Padding(
+                              //             padding: global.isRTL
+                              //                 ? EdgeInsets.only(right: 8)
+                              //                 : EdgeInsets.only(left: 8.0),
+                              //             child: Text(
+                              //               _onGoingOrderList[index].orderStatus,
+                              //               style: Theme.of(context)
+                              //                   .primaryTextTheme
+                              //                   .headline2,
+                              //             ),
+                              //           )
+                              //         ],
+                              //       ),
+                              //     ),
+                              //     ListTile(
+                              //       visualDensity:
+                              //           VisualDensity(vertical: -3, horizontal: -4),
+                              //       contentPadding: EdgeInsets.all(0),
+                              //       minLeadingWidth: 0,
+                              //       title: Text(
+                              //         _onGoingOrderList[index].userName,
+                              //         style: Theme.of(context)
+                              //             .primaryTextTheme
+                              //             .bodyText1,
+                              //       ),
+                              //       subtitle: Text(
+                              //         _onGoingOrderList[index].timeSlot != null
+                              //             ? (_onGoingOrderList[index].timeSlot ??
+                              //                     '') +
+                              //                 ' | ' +
+                              //                 (_onGoingOrderList[index]
+                              //                         .deliveryDate ??
+                              //                     '')
+                              //             : '',
+                              //         style: Theme.of(context)
+                              //             .primaryTextTheme
+                              //             .headline2,
+                              //       ),
+                              //       trailing: Column(
+                              //         mainAxisSize: MainAxisSize.min,
+                              //         mainAxisAlignment: MainAxisAlignment.end,
+                              //         crossAxisAlignment: CrossAxisAlignment.end,
+                              //         children: [
+                              //           Text(
+                              //             "${global.appInfo.currencySign} ${_onGoingOrderList[index].remPrice > 0 ? _onGoingOrderList[index].remPrice : _onGoingOrderList[index].paidByWallet}",
+                              //             style: Theme.of(context)
+                              //                 .primaryTextTheme
+                              //                 .bodyText1,
+                              //           ),
+                              //           Text(
+                              //             "${_onGoingOrderList[index].paymentMethod}",
+                              //             style: Theme.of(context)
+                              //                 .primaryTextTheme
+                              //                 .headline2
+                              //                 .copyWith(color: Colors.red),
+                              //           ),
+                              //         ],
+                              //       ),
+                              //     ),
+
+                              //   ],
+                              // ),
                               Divider(
                                 color: global.isDarkModeEnable
                                     ? Theme.of(context)
