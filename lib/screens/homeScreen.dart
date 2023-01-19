@@ -87,13 +87,11 @@ class _HomeScreenState extends BaseRouteState {
   Future<void> listen() async {
     if (!isListen) {
       bool avail = await speech.initialize();
-      // print("aaaaaaaa : "+avail.toString());
       if (avail) {
         setState(() {
           isListen = true;
         });
         speech.listen(onResult: (value) {
-          // print("aaaaaaaa : "+value.toString());
           setState(() {
             isListen = false;
             textString = value.recognizedWords;
