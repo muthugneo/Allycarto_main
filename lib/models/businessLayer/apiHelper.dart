@@ -2134,7 +2134,6 @@ class APIHelper {
           options: Options(
             headers: await global.getApiHeaders(true),
           ));
-      print("aaaaaaaaaa : " + response.data.toString());
       dynamic recordList;
       if (response.statusCode == 200 && response.data["status"] == '1') {
         recordList = List<Order>.from(
@@ -2143,6 +2142,53 @@ class APIHelper {
         recordList = null;
       }
       return getDioResult(response, recordList);
+    } catch (e) {
+      print("Exception - myOrders(): " + e.toString());
+    }
+  }
+
+  Future<dynamic> myOfflineOrders(int page, String search) async {
+    try {
+      Response response;
+      var dio = Dio();
+      var formData = FormData.fromMap(
+          {'user_id': global.currentUser.id, 'search': search});
+      response = await dio.post('${global.baseUrl}my_offline_orders?page=$page',
+          data: formData,
+          options: Options(
+            headers: await global.getApiHeaders(true),
+          ));
+      dynamic recordList;
+      if (response.statusCode == 200 && response.data["status"] == '1') {
+        recordList = List<Order>.from(
+            response.data["data"].map((x) => Order.fromJson(x)));
+      } else {
+        recordList = null;
+      }
+      return getDioResult(response, recordList);
+    } catch (e) {
+      print("Exception - myOrders(): " + e.toString());
+    }
+  }
+
+  Future<dynamic> getOfflineOrderDetails(String cartId) async {
+    try {
+      Response response;
+      var dio = Dio();
+      var formData = FormData.fromMap({'cart_id': cartId});
+      response = await dio.post('${global.baseUrl}offlineorder_detail',
+          data: formData,
+          options: Options(
+            headers: await global.getApiHeaders(true),
+          ));
+      List<Order> recordList;
+      if (response.statusCode == 200 && response.data["status"] == '1') {
+        recordList = List<Order>.from(
+            response.data["data"].map((x) => Order.fromJson(x)));
+      } else {
+        recordList = null;
+      }
+      return getDioResult(response, recordList[0]);
     } catch (e) {
       print("Exception - myOrders(): " + e.toString());
     }

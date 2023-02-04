@@ -80,7 +80,7 @@ class _OrderSuccessScreenState extends BaseRouteState {
                         Navigator.pop(context);
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => OrderListScreen(
+                            builder: (context) => OrderListScreen(true,
                                 a: widget.analytics, o: widget.observer),
                           ),
                         );

@@ -7,13 +7,20 @@ import 'package:gomeat/screens/orderDetailScreen.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:shimmer/shimmer.dart';
 
+import 'homeScreen.dart';
+
 class OrderListScreen extends BaseRoute {
-  OrderListScreen({a, o}) : super(a: a, o: o, r: 'OrderListScreen');
+  final bool orderScreen;
+  OrderListScreen(this.orderScreen, {a, o})
+      : super(a: a, o: o, r: 'OrderListScreen');
   @override
-  _OrderListScreenState createState() => new _OrderListScreenState();
+  _OrderListScreenState createState() =>
+      new _OrderListScreenState(this.orderScreen);
 }
 
 class _OrderListScreenState extends BaseRouteState {
+  bool orderScreen;
+  _OrderListScreenState(this.orderScreen) : super();
   bool _isDataLoaded = false;
 
   List<Order> _allOrderList = [];
@@ -36,123 +43,143 @@ class _OrderListScreenState extends BaseRouteState {
   ScrollController _ongoingScrollController = ScrollController();
   ScrollController _completedScrollController = ScrollController();
 
-  _OrderListScreenState() : super();
+  // _OrderListScreenState() : super();
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: DefaultTabController(
-        length: 3,
-        child: Scaffold(
-          appBar: AppBar(
-            leading: InkWell(
-              customBorder: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
-              ),
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-              child: Align(
-                alignment: Alignment.center,
-                child: Icon(MdiIcons.arrowLeft),
-              ),
-            ),
-            centerTitle: true,
-            title: Text("${AppLocalizations.of(context).tle_my_order}"),
-          ),
-          body: RefreshIndicator(
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-            color: Theme.of(context).primaryColor,
-            onRefresh: () async {
-              _isDataLoaded = false;
-              _isAllOrderPending = true;
-              _isOngoingOrderPending = true;
-              _isCompletedOrderPending = true;
-              setState(() {});
-              _allOrderList.clear();
-              _onGoingOrderList.clear();
-              _completedOrdeList.clear();
+    return WillPopScope(
+      onWillPop: () {
+        if (orderScreen) {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) =>
+                  HomeScreen(a: widget.analytics, o: widget.observer)));
+        } else {
+          Navigator.pop(context);
+        }
 
-              await _init();
-              return null;
-            },
-            child: _isDataLoaded
-                ? Column(
-                    children: [
-                      Container(
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: SizedBox(
-                            height: 50,
-                            child: AppBar(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10.0),
-                                ),
-                              ),
-                              backgroundColor: global.isDarkModeEnable
-                                  ? Color(0xFF435276)
-                                  : Color(0xFFEDF2F6),
-                              bottom: TabBar(
-                                indicator: UnderlineTabIndicator(
-                                  borderSide: BorderSide(
-                                    width: 3.0,
-                                    color: global.isDarkModeEnable
-                                        ? Theme.of(context).primaryColor
-                                        : Color(0xFFEF5656),
+        return null;
+      },
+      child: SafeArea(
+        child: DefaultTabController(
+          length: 3,
+          child: Scaffold(
+            appBar: AppBar(
+              leading: InkWell(
+                customBorder: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                onTap: () {
+                  if (orderScreen) {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => HomeScreen(
+                            a: widget.analytics, o: widget.observer)));
+                  } else {
+                    Navigator.pop(context);
+                  }
+                },
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Icon(MdiIcons.arrowLeft),
+                ),
+              ),
+              centerTitle: true,
+              title: Text("${AppLocalizations.of(context).tle_my_order}"),
+            ),
+            body: RefreshIndicator(
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              color: Theme.of(context).primaryColor,
+              onRefresh: () async {
+                _isDataLoaded = false;
+                _isAllOrderPending = true;
+                _isOngoingOrderPending = true;
+                _isCompletedOrderPending = true;
+                setState(() {});
+                _allOrderList.clear();
+                _onGoingOrderList.clear();
+                _completedOrdeList.clear();
+
+                await _init();
+                return null;
+              },
+              child: _isDataLoaded
+                  ? Column(
+                      children: [
+                        Container(
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: SizedBox(
+                              height: 50,
+                              child: AppBar(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10.0),
                                   ),
-                                  insets: EdgeInsets.symmetric(horizontal: 8.0),
                                 ),
-                                labelColor: global.isDarkModeEnable
-                                    ? Colors.white
-                                    : Colors.black,
-                                indicatorWeight: 4,
-                                unselectedLabelStyle: TextStyle(
-                                    fontSize: 13,
-                                    color: global.isDarkModeEnable
-                                        ? Colors.white
-                                        : Colors.black,
-                                    fontWeight: FontWeight.w400),
-                                labelStyle: TextStyle(
-                                    fontSize: 13,
-                                    color: global.isDarkModeEnable
-                                        ? Colors.white
-                                        : Colors.black,
-                                    fontWeight: FontWeight.bold),
-                                indicatorSize: TabBarIndicatorSize.label,
-                                indicatorColor: global.isDarkModeEnable
-                                    ? Theme.of(context).primaryColor
-                                    : Color(0xFFEF5656),
-                                tabs: [
-                                  Tab(
-                                      child: Text(
-                                    '${AppLocalizations.of(context).lbl_all_orders}',
-                                  )),
-                                  Tab(
-                                      child: Text(
-                                    '${AppLocalizations.of(context).lbl_scheduled}',
-                                  )),
-                                  Tab(
-                                      child: Text(
-                                    '${AppLocalizations.of(context).lbl_previous}',
-                                  )),
-                                ],
+                                backgroundColor: global.isDarkModeEnable
+                                    ? Color(0xFF435276)
+                                    : Color(0xFFEDF2F6),
+                                bottom: TabBar(
+                                  indicator: UnderlineTabIndicator(
+                                    borderSide: BorderSide(
+                                      width: 3.0,
+                                      color: global.isDarkModeEnable
+                                          ? Theme.of(context).primaryColor
+                                          : Color(0xFFEF5656),
+                                    ),
+                                    insets:
+                                        EdgeInsets.symmetric(horizontal: 8.0),
+                                  ),
+                                  labelColor: global.isDarkModeEnable
+                                      ? Colors.white
+                                      : Colors.black,
+                                  indicatorWeight: 4,
+                                  unselectedLabelStyle: TextStyle(
+                                      fontSize: 13,
+                                      color: global.isDarkModeEnable
+                                          ? Colors.white
+                                          : Colors.black,
+                                      fontWeight: FontWeight.w400),
+                                  labelStyle: TextStyle(
+                                      fontSize: 13,
+                                      color: global.isDarkModeEnable
+                                          ? Colors.white
+                                          : Colors.black,
+                                      fontWeight: FontWeight.bold),
+                                  indicatorSize: TabBarIndicatorSize.label,
+                                  indicatorColor: global.isDarkModeEnable
+                                      ? Theme.of(context).primaryColor
+                                      : Color(0xFFEF5656),
+                                  tabs: [
+                                    Tab(
+                                        child: Text(
+                                      '${AppLocalizations.of(context).lbl_all_orders}',
+                                    )),
+                                    Tab(
+                                        child: Text(
+                                      '${AppLocalizations.of(context).lbl_scheduled}',
+                                    )),
+                                    Tab(
+                                        child: Text(
+                                      '${AppLocalizations.of(context).lbl_previous}',
+                                    )),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        child: TabBarView(
-                          children: [
-                            _allOrders(),
-                            _onGoingOrder(),
-                            _completedOrder(),
-                          ],
+                        Expanded(
+                          child: TabBarView(
+                            children: [
+                              _allOrders(),
+                              _onGoingOrder(),
+                              _completedOrder(),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  )
-                : _shimmerWidget(),
+                      ],
+                    )
+                  : _shimmerWidget(),
+            ),
           ),
         ),
       ),

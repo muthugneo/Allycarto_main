@@ -88,12 +88,14 @@ class _ProductDetailScreenState extends BaseRouteState {
                       ),
                       mini: true,
                       onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => CheckoutScreen(
-                                a: widget.analytics, o: widget.observer),
-                          ),
-                        );
+                        Navigator.of(context)
+                            .push(
+                              MaterialPageRoute(
+                                builder: (context) => CheckoutScreen(
+                                    a: widget.analytics, o: widget.observer),
+                              ),
+                            )
+                            .then((value) => setState(() {}));
                       },
                     )
                   : FloatingActionButton(

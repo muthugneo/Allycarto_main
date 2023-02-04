@@ -29,6 +29,8 @@ import 'package:gomeat/screens/wishListScreen.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:shimmer/shimmer.dart';
 
+import 'offlineOrderList.dart';
+
 class ProfileScreen extends BaseRoute {
   ProfileScreen({a, o}) : super(a: a, o: o, r: 'ProfileScreen');
   @override
@@ -82,13 +84,18 @@ class _ProfileScreenState extends BaseRouteState {
                                 backgroundColor: Colors.white,
                                 child: global.currentUser.userImage != null
                                     ? CachedNetworkImage(
-                                        imageUrl: global.appInfo.imageUrl + global.currentUser.userImage,
-                                        imageBuilder: (context, imageProvider) => Container(
+                                        imageUrl: global.appInfo.imageUrl +
+                                            global.currentUser.userImage,
+                                        imageBuilder:
+                                            (context, imageProvider) =>
+                                                Container(
                                           height: 106,
                                           width: 106,
                                           alignment: Alignment.center,
                                           decoration: BoxDecoration(
-                                            color: Theme.of(context).cardTheme.color,
+                                            color: Theme.of(context)
+                                                .cardTheme
+                                                .color,
                                             borderRadius: new BorderRadius.all(
                                               new Radius.circular(106),
                                             ),
@@ -98,8 +105,10 @@ class _ProfileScreenState extends BaseRouteState {
                                             ),
                                           ),
                                         ),
-                                        placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-                                        errorWidget: (context, url, error) => Icon(Icons.error),
+                                        placeholder: (context, url) => Center(
+                                            child: CircularProgressIndicator()),
+                                        errorWidget: (context, url, error) =>
+                                            Icon(Icons.error),
                                       )
                                     : CircleAvatar(
                                         radius: 53,
@@ -117,14 +126,20 @@ class _ProfileScreenState extends BaseRouteState {
                           bottom: 45,
                           child: Text(
                             "${global.currentUser.name}",
-                            style: Theme.of(context).primaryTextTheme.headline6.copyWith(color: Colors.white),
+                            style: Theme.of(context)
+                                .primaryTextTheme
+                                .headline6
+                                .copyWith(color: Colors.white),
                           ),
                         ),
                         Positioned(
                           bottom: 25,
                           child: Text(
                             "+${global.appInfo.countryCode} ${global.currentUser.userPhone} | ${global.currentUser.email}",
-                            style: Theme.of(context).primaryTextTheme.headline2.copyWith(color: Colors.white),
+                            style: Theme.of(context)
+                                .primaryTextTheme
+                                .headline2
+                                .copyWith(color: Colors.white),
                           ),
                         ),
                         Positioned(
@@ -134,11 +149,15 @@ class _ProfileScreenState extends BaseRouteState {
                               Radius.circular(40),
                             ),
                             onTap: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => ProfileEditScreen(a: widget.analytics, o: widget.observer),
-                                ),
-                              ).then((value) => _init());
+                              Navigator.of(context)
+                                  .push(
+                                    MaterialPageRoute(
+                                      builder: (context) => ProfileEditScreen(
+                                          a: widget.analytics,
+                                          o: widget.observer),
+                                    ),
+                                  )
+                                  .then((value) => _init());
                             },
                             child: Container(
                               height: 40,
@@ -151,7 +170,8 @@ class _ProfileScreenState extends BaseRouteState {
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(40),
                                 ),
-                                color: Theme.of(context).scaffoldBackgroundColor,
+                                color:
+                                    Theme.of(context).scaffoldBackgroundColor,
                               ),
                               child: Image.asset('assets/edit.png'),
                             ),
@@ -184,170 +204,260 @@ class _ProfileScreenState extends BaseRouteState {
                             onTap: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (context) => OrderListScreen(a: widget.analytics, o: widget.observer),
+                                  builder: (context) => OrderListScreen(false,
+                                      a: widget.analytics, o: widget.observer),
                                 ),
                               );
                             },
-                            visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                            visualDensity:
+                                VisualDensity(horizontal: -4, vertical: -4),
                             minLeadingWidth: 30,
                             contentPadding: EdgeInsets.symmetric(horizontal: 0),
                             leading: Icon(
                               MdiIcons.shoppingOutline,
-                              color: Theme.of(context).primaryIconTheme.color.withOpacity(0.7),
+                              color: Theme.of(context)
+                                  .primaryIconTheme
+                                  .color
+                                  .withOpacity(0.7),
                               size: 20,
                             ),
                             title: Text(
                               "${AppLocalizations.of(context).btn_my_orders}",
-                              style: Theme.of(context).primaryTextTheme.bodyText1,
+                              style:
+                                  Theme.of(context).primaryTextTheme.bodyText1,
                             ),
                           ),
                           ListTile(
                             onTap: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (context) => AddressListScreen(a: widget.analytics, o: widget.observer),
+                                  builder: (context) => OfflineOrderListScreen(
+                                      a: widget.analytics, o: widget.observer),
                                 ),
                               );
                             },
-                            visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                            visualDensity:
+                                VisualDensity(horizontal: -4, vertical: -4),
+                            minLeadingWidth: 30,
+                            contentPadding: EdgeInsets.symmetric(horizontal: 0),
+                            leading: Icon(
+                              MdiIcons.shoppingOutline,
+                              color: Theme.of(context)
+                                  .primaryIconTheme
+                                  .color
+                                  .withOpacity(0.7),
+                              size: 20,
+                            ),
+                            title: Text(
+                              "Local Orders",
+                              style:
+                                  Theme.of(context).primaryTextTheme.bodyText1,
+                            ),
+                          ),
+                          ListTile(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => AddressListScreen(
+                                      a: widget.analytics, o: widget.observer),
+                                ),
+                              );
+                            },
+                            visualDensity:
+                                VisualDensity(horizontal: -4, vertical: -4),
                             minLeadingWidth: 30,
                             contentPadding: EdgeInsets.symmetric(horizontal: 0),
                             leading: Icon(
                               MdiIcons.mapMarkerOutline,
-                              color: Theme.of(context).primaryIconTheme.color.withOpacity(0.7),
+                              color: Theme.of(context)
+                                  .primaryIconTheme
+                                  .color
+                                  .withOpacity(0.7),
                               size: 20,
                             ),
                             title: Text(
                               "${AppLocalizations.of(context).btn_manage_orders}",
-                              style: Theme.of(context).primaryTextTheme.bodyText1,
+                              style:
+                                  Theme.of(context).primaryTextTheme.bodyText1,
                             ),
                           ),
                           ListTile(
                             onTap: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (context) => BankListScreen(a: widget.analytics, o: widget.observer),
+                                  builder: (context) => BankListScreen(
+                                      a: widget.analytics, o: widget.observer),
                                 ),
                               );
                             },
-                            visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                            visualDensity:
+                                VisualDensity(horizontal: -4, vertical: -4),
                             minLeadingWidth: 30,
                             contentPadding: EdgeInsets.symmetric(horizontal: 0),
                             leading: Icon(
                               MdiIcons.bank,
-                              color: Theme.of(context).primaryIconTheme.color.withOpacity(0.7),
+                              color: Theme.of(context)
+                                  .primaryIconTheme
+                                  .color
+                                  .withOpacity(0.7),
                               size: 20,
                             ),
                             title: Text(
                               "Manage Bank Details",
-                              style: Theme.of(context).primaryTextTheme.bodyText1,
+                              style:
+                                  Theme.of(context).primaryTextTheme.bodyText1,
                             ),
                           ),
                           ListTile(
                             onTap: () {
-                              setState(() { walletSts = !walletSts;});
+                              setState(() {
+                                walletSts = !walletSts;
+                              });
                             },
-                            visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                            visualDensity:
+                                VisualDensity(horizontal: -4, vertical: -4),
                             minLeadingWidth: 30,
                             contentPadding: EdgeInsets.symmetric(horizontal: 0),
                             leading: Icon(
                               MdiIcons.walletOutline,
-                              color: Theme.of(context).primaryIconTheme.color.withOpacity(0.7),
+                              color: Theme.of(context)
+                                  .primaryIconTheme
+                                  .color
+                                  .withOpacity(0.7),
                               size: 20,
                             ),
-                            trailing:  Icon(
+                            trailing: Icon(
                               MdiIcons.arrowDown,
-                              color: Theme.of(context).primaryIconTheme.color.withOpacity(0.7),
+                              color: Theme.of(context)
+                                  .primaryIconTheme
+                                  .color
+                                  .withOpacity(0.7),
                               size: 20,
                             ),
                             title: Text(
                               "My Wallet",
-                              style: Theme.of(context).primaryTextTheme.bodyText1,
+                              style:
+                                  Theme.of(context).primaryTextTheme.bodyText1,
                             ),
                           ),
 
-                          walletSts ? ListTile(
-                            onTap: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => WalletScreen(a: widget.analytics, o: widget.observer),
-                                ),
-                              );
-                            },
-                            visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-                            minLeadingWidth: 30,
-                            contentPadding: EdgeInsets.symmetric(horizontal: 35),
-                            leading: Icon(
-                              MdiIcons.walletOutline,
-                              color: Theme.of(context).primaryIconTheme.color.withOpacity(0.7),
-                              size: 20,
-                            ),
-                            title: Text(
-                              "ARX Token Wallet",
-                              style: Theme.of(context).primaryTextTheme.bodyText1,
-                            ),
-                          ) : SizedBox.shrink(),
-                          walletSts ? ListTile(
-                            onTap: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => IncentiveWalletScreen(a: widget.analytics, o: widget.observer),
-                                ),
-                              );
-                            },
-                            visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-                            minLeadingWidth: 30,
-                            contentPadding: EdgeInsets.symmetric(horizontal: 35),
-                            leading: Icon(
-                              MdiIcons.walletOutline,
-                              color: Theme.of(context).primaryIconTheme.color.withOpacity(0.7),
-                              size: 20,
-                            ),
-                            title: Text(
-                              "Incentive Wallet",
-                              style: Theme.of(context).primaryTextTheme.bodyText1,
-                            ),
-                          ) : SizedBox.shrink(),
+                          walletSts
+                              ? ListTile(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => WalletScreen(
+                                            a: widget.analytics,
+                                            o: widget.observer),
+                                      ),
+                                    );
+                                  },
+                                  visualDensity: VisualDensity(
+                                      horizontal: -4, vertical: -4),
+                                  minLeadingWidth: 30,
+                                  contentPadding:
+                                      EdgeInsets.symmetric(horizontal: 35),
+                                  leading: Icon(
+                                    MdiIcons.walletOutline,
+                                    color: Theme.of(context)
+                                        .primaryIconTheme
+                                        .color
+                                        .withOpacity(0.7),
+                                    size: 20,
+                                  ),
+                                  title: Text(
+                                    "ARX Token Wallet",
+                                    style: Theme.of(context)
+                                        .primaryTextTheme
+                                        .bodyText1,
+                                  ),
+                                )
+                              : SizedBox.shrink(),
+                          walletSts
+                              ? ListTile(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            IncentiveWalletScreen(
+                                                a: widget.analytics,
+                                                o: widget.observer),
+                                      ),
+                                    );
+                                  },
+                                  visualDensity: VisualDensity(
+                                      horizontal: -4, vertical: -4),
+                                  minLeadingWidth: 30,
+                                  contentPadding:
+                                      EdgeInsets.symmetric(horizontal: 35),
+                                  leading: Icon(
+                                    MdiIcons.walletOutline,
+                                    color: Theme.of(context)
+                                        .primaryIconTheme
+                                        .color
+                                        .withOpacity(0.7),
+                                    size: 20,
+                                  ),
+                                  title: Text(
+                                    "Incentive Wallet",
+                                    style: Theme.of(context)
+                                        .primaryTextTheme
+                                        .bodyText1,
+                                  ),
+                                )
+                              : SizedBox.shrink(),
                           ListTile(
                             onTap: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (context) => WishListScreen(a: widget.analytics, o: widget.observer),
+                                  builder: (context) => WishListScreen(
+                                      a: widget.analytics, o: widget.observer),
                                 ),
                               );
                             },
-                            visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                            visualDensity:
+                                VisualDensity(horizontal: -4, vertical: -4),
                             minLeadingWidth: 30,
                             contentPadding: EdgeInsets.symmetric(horizontal: 0),
                             leading: Icon(
                               MdiIcons.heartOutline,
-                              color: Theme.of(context).primaryIconTheme.color.withOpacity(0.7),
+                              color: Theme.of(context)
+                                  .primaryIconTheme
+                                  .color
+                                  .withOpacity(0.7),
                               size: 20,
                             ),
                             title: Text(
                               "${AppLocalizations.of(context).btn_wishlist}",
-                              style: Theme.of(context).primaryTextTheme.bodyText1,
+                              style:
+                                  Theme.of(context).primaryTextTheme.bodyText1,
                             ),
                           ),
                           ListTile(
                             onTap: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (context) => NotificationScreen(a: widget.analytics, o: widget.observer),
+                                  builder: (context) => NotificationScreen(
+                                      a: widget.analytics, o: widget.observer),
                                 ),
                               );
                             },
-                            visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                            visualDensity:
+                                VisualDensity(horizontal: -4, vertical: -4),
                             minLeadingWidth: 30,
                             contentPadding: EdgeInsets.symmetric(horizontal: 0),
                             leading: Icon(
                               MdiIcons.bellOutline,
-                              color: Theme.of(context).primaryIconTheme.color.withOpacity(0.7),
+                              color: Theme.of(context)
+                                  .primaryIconTheme
+                                  .color
+                                  .withOpacity(0.7),
                               size: 20,
                             ),
                             title: Text(
                               "${AppLocalizations.of(context).btn_notification}",
-                              style: Theme.of(context).primaryTextTheme.bodyText1,
+                              style:
+                                  Theme.of(context).primaryTextTheme.bodyText1,
                             ),
                           ),
                           // ListTile(
@@ -396,21 +506,27 @@ class _ProfileScreenState extends BaseRouteState {
                             onTap: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (context) => ReferAndEarnScreen(a: widget.analytics, o: widget.observer),
+                                  builder: (context) => ReferAndEarnScreen(
+                                      a: widget.analytics, o: widget.observer),
                                 ),
                               );
                             },
-                            visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                            visualDensity:
+                                VisualDensity(horizontal: -4, vertical: -4),
                             minLeadingWidth: 30,
                             contentPadding: EdgeInsets.symmetric(horizontal: 0),
                             leading: Icon(
                               MdiIcons.accountConvert,
                               size: 20,
-                              color: Theme.of(context).primaryIconTheme.color.withOpacity(0.7),
+                              color: Theme.of(context)
+                                  .primaryIconTheme
+                                  .color
+                                  .withOpacity(0.7),
                             ),
                             title: Text(
                               "${AppLocalizations.of(context).btn_refer_earn}",
-                              style: Theme.of(context).primaryTextTheme.bodyText1,
+                              style:
+                                  Theme.of(context).primaryTextTheme.bodyText1,
                             ),
                           ),
                           // ListTile(
@@ -508,63 +624,85 @@ class _ProfileScreenState extends BaseRouteState {
                             onTap: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (context) => ContactUsScreen(a: widget.analytics, o: widget.observer),
+                                  builder: (context) => ContactUsScreen(
+                                      a: widget.analytics, o: widget.observer),
                                 ),
                               );
                             },
-                            visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                            visualDensity:
+                                VisualDensity(horizontal: -4, vertical: -4),
                             minLeadingWidth: 30,
                             contentPadding: EdgeInsets.symmetric(horizontal: 0),
                             leading: Icon(
                               Icons.feedback_outlined,
                               size: 20,
-                              color: Theme.of(context).primaryIconTheme.color.withOpacity(0.7),
+                              color: Theme.of(context)
+                                  .primaryIconTheme
+                                  .color
+                                  .withOpacity(0.7),
                             ),
                             title: Text(
                               "${AppLocalizations.of(context).tle_contact_us}",
-                              style: Theme.of(context).primaryTextTheme.bodyText1,
+                              style:
+                                  Theme.of(context).primaryTextTheme.bodyText1,
                             ),
                           ),
                           ListTile(
                             onTap: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (context) => AboutUsAndTermsOfServiceScreen(true, a: widget.analytics, o: widget.observer),
+                                  builder: (context) =>
+                                      AboutUsAndTermsOfServiceScreen(true,
+                                          a: widget.analytics,
+                                          o: widget.observer),
                                 ),
                               );
                             },
-                            visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                            visualDensity:
+                                VisualDensity(horizontal: -4, vertical: -4),
                             minLeadingWidth: 30,
                             contentPadding: EdgeInsets.symmetric(horizontal: 0),
                             leading: Icon(
                               MdiIcons.textBox,
                               size: 20,
-                              color: Theme.of(context).primaryIconTheme.color.withOpacity(0.7),
+                              color: Theme.of(context)
+                                  .primaryIconTheme
+                                  .color
+                                  .withOpacity(0.7),
                             ),
                             title: Text(
                               "${AppLocalizations.of(context).btn_about_app}",
-                              style: Theme.of(context).primaryTextTheme.bodyText1,
+                              style:
+                                  Theme.of(context).primaryTextTheme.bodyText1,
                             ),
                           ),
                           ListTile(
                             onTap: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (context) => AboutUsAndTermsOfServiceScreen(false, a: widget.analytics, o: widget.observer),
+                                  builder: (context) =>
+                                      AboutUsAndTermsOfServiceScreen(false,
+                                          a: widget.analytics,
+                                          o: widget.observer),
                                 ),
                               );
                             },
-                            visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                            visualDensity:
+                                VisualDensity(horizontal: -4, vertical: -4),
                             minLeadingWidth: 30,
                             contentPadding: EdgeInsets.symmetric(horizontal: 0),
                             leading: Icon(
                               MdiIcons.textBox,
                               size: 20,
-                              color: Theme.of(context).primaryIconTheme.color.withOpacity(0.7),
+                              color: Theme.of(context)
+                                  .primaryIconTheme
+                                  .color
+                                  .withOpacity(0.7),
                             ),
                             title: Text(
                               "Customer Policy",
-                              style: Theme.of(context).primaryTextTheme.bodyText1,
+                              style:
+                                  Theme.of(context).primaryTextTheme.bodyText1,
                             ),
                           ),
                           // ListTile(
@@ -590,22 +728,24 @@ class _ProfileScreenState extends BaseRouteState {
                           // ),
                           ListTile(
                             onTap: () {
-
                               logoutAppDialog();
-
-
                             },
-                            visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                            visualDensity:
+                                VisualDensity(horizontal: -4, vertical: -4),
                             minLeadingWidth: 30,
                             contentPadding: EdgeInsets.symmetric(horizontal: 0),
                             leading: Icon(
                               MdiIcons.logout,
                               size: 20,
-                              color: Theme.of(context).primaryIconTheme.color.withOpacity(0.7),
+                              color: Theme.of(context)
+                                  .primaryIconTheme
+                                  .color
+                                  .withOpacity(0.7),
                             ),
                             title: Text(
                               "${AppLocalizations.of(context).btn_logout}",
-                              style: Theme.of(context).primaryTextTheme.bodyText1,
+                              style:
+                                  Theme.of(context).primaryTextTheme.bodyText1,
                             ),
                           ),
                           SizedBox(
@@ -617,8 +757,7 @@ class _ProfileScreenState extends BaseRouteState {
                   : _similarProductShimmer(),
             ))
           ],
-        )
-    );
+        ));
   }
 
   Future logoutAppDialog() async {
@@ -654,7 +793,8 @@ class _ProfileScreenState extends BaseRouteState {
                       global.currentUser = new CurrentUser();
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => LoginScreen(true,a: widget.analytics, o: widget.observer),
+                          builder: (context) => LoginScreen(true,
+                              a: widget.analytics, o: widget.observer),
                         ),
                       );
                     },
@@ -703,7 +843,8 @@ class _ProfileScreenState extends BaseRouteState {
         },
       );
     } catch (e) {
-      print("Exception - profileScreen.dart - _similarProductShimmer():" + e.toString());
+      print("Exception - profileScreen.dart - _similarProductShimmer():" +
+          e.toString());
       return SizedBox();
     }
   }
@@ -720,7 +861,7 @@ class _ProfileScreenState extends BaseRouteState {
         Navigator.of(context).push(
           MaterialPageRoute(
               builder: (context) => LoginScreen(
-                false,
+                    false,
                     a: widget.analytics,
                     o: widget.observer,
                   )),
@@ -738,7 +879,8 @@ class _ProfileScreenState extends BaseRouteState {
           if (result != null) {
             if (result.status == "1") {
               global.currentUser = result.data;
-              global.sp.setString('currentUser', json.encode(global.currentUser.toJson()));
+              global.sp.setString(
+                  'currentUser', json.encode(global.currentUser.toJson()));
             }
           }
         });

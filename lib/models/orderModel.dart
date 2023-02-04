@@ -11,6 +11,8 @@ class Order {
   String orderStatus;
   String deliveryDate;
   String timeSlot;
+  String otp;
+  String description;
   String paymentMethod;
   String paymentStatus;
   int paidByWallet;
@@ -66,6 +68,8 @@ class Order {
           json["store_address"] != null ? json["store_address"] : null;
       orderStatus = json["order_status"] != null ? json["order_status"] : null;
       timeSlot = json["time_slot"] != null ? json["time_slot"] : null;
+      otp = json["otp"] != null ? json["otp"] : '';
+      description = json["description"] != null ? json["description"] : "";
       paymentMethod =
           json["payment_method"] != null ? json["payment_method"] : null;
       paymentStatus =

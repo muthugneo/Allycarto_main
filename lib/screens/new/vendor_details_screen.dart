@@ -263,7 +263,7 @@ class _VendorDetailsScreenState extends BaseRouteState {
                     Padding(
                       padding: const EdgeInsets.only(left: 6.0),
                       child: Text(
-                        "Needed Productst List",
+                        "Needed Products List",
                         style:  Theme.of(context)
                                       .primaryTextTheme
                                       .bodyText1
