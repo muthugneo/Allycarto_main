@@ -76,6 +76,7 @@ class _HomeScreenState extends BaseRouteState {
   List _bannerData = [];
   List _mainCategoryData = [];
   List _mainVendorData = [];
+  List _onlineVendorData = [];
 
   @override
   void initState() {
@@ -855,7 +856,7 @@ class _HomeScreenState extends BaseRouteState {
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                VendorListScreen(
+                                                VendorListScreen(false,
                                                     a: widget.analytics,
                                                     o: widget.observer),
                                           ),
@@ -880,7 +881,8 @@ class _HomeScreenState extends BaseRouteState {
                                     child: ListView(
                                       shrinkWrap: true,
                                       scrollDirection: Axis.horizontal,
-                                      children: _allVendorsWidgetList(),
+                                      children: _allVendorsWidgetList(
+                                          _mainVendorData),
                                     ),
                                   )
                                 : SizedBox()
@@ -889,7 +891,61 @@ class _HomeScreenState extends BaseRouteState {
                                 child: _allCategoryShimmer(),
                               ),
 
-                        ////////////// offline
+                        ////////////// Online
+                        !_isDataLoaded ||
+                                (_isDataLoaded && _onlineVendorData.length > 0)
+                            ? Padding(
+                                padding: EdgeInsets.only(
+                                    top: 5, left: 10, right: 10),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Online Shops',
+                                      style: Theme.of(context)
+                                          .primaryTextTheme
+                                          .headline5,
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                VendorListScreen(true,
+                                                    a: widget.analytics,
+                                                    o: widget.observer),
+                                          ),
+                                        );
+                                      },
+                                      child: Text(
+                                        '${AppLocalizations.of(context).btn_explore_all}',
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .headline1,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+                            : SizedBox(),
+
+                        _isDataLoaded
+                            ? _onlineVendorData.length > 0
+                                ? Container(
+                                    height: 185,
+                                    child: ListView(
+                                      shrinkWrap: true,
+                                      scrollDirection: Axis.horizontal,
+                                      children: _allVendorsWidgetList(
+                                          _onlineVendorData),
+                                    ),
+                                  )
+                                : SizedBox()
+                            : Container(
+                                height: 216,
+                                child: _allCategoryShimmer(),
+                              ),
 
                         !_isDataLoaded ||
                                 (_isDataLoaded && _mainCategoryData.length > 0)
@@ -901,7 +957,7 @@ class _HomeScreenState extends BaseRouteState {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'Online Shops',
+                                      'Categories',
                                       style: Theme.of(context)
                                           .primaryTextTheme
                                           .headline5,
@@ -1716,29 +1772,24 @@ class _HomeScreenState extends BaseRouteState {
                 })));
   }
 
-  List<Widget> _allVendorsWidgetList() {
+  List<Widget> _allVendorsWidgetList(dynamic data) {
     List<Widget> _widgetList = [];
     try {
-      for (int i = 0; i < _mainVendorData.length; i++) {
+      for (int i = 0; i < data.length; i++) {
         _widgetList.add(
           InkWell(
             onTap: () {
-              // Navigator.of(context).push(
-              //   MaterialPageRoute(
-              //     builder: (context) => ShopProductListScreen(1, _mainVendorData[i]["name"], _mainVendorData[i]["id"].toString(), subcategoryId: _mainVendorData[i]["id"], a: widget.analytics, o: widget.observer),
-              //   ),
-              // );
-              if (_mainVendorData[i]["status"] == "open") {
+              if (data[i]["status"] == "open") {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => VendorDetails(
-                        _mainVendorData[i]["id"].toString(),
-                        _mainVendorData[i]["name"],
-                        _mainVendorData[i]["image"],
-                        _mainVendorData[i]["address"],
-                        _mainVendorData[i]["latitude"].toString(),
-                        _mainVendorData[i]["longitude"].toString(),
-                        _mainVendorData[i]["description"] ?? "",
+                        data[i]["id"].toString(),
+                        data[i]["name"],
+                        data[i]["image"],
+                        data[i]["address"],
+                        data[i]["latitude"].toString(),
+                        data[i]["longitude"].toString(),
+                        data[i]["description"] ?? "",
                         a: widget.analytics,
                         o: widget.observer),
                   ),
@@ -1751,7 +1802,7 @@ class _HomeScreenState extends BaseRouteState {
             },
             child: Container(
               height: 172,
-              foregroundDecoration: _mainVendorData[i]["status"] == "open"
+              foregroundDecoration: data[i]["status"] == "open"
                   ? BoxDecoration()
                   : BoxDecoration(
                       color: Colors.grey,
@@ -1778,7 +1829,7 @@ class _HomeScreenState extends BaseRouteState {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '${_mainVendorData[i]["name"]}',
+                              '${data[i]["name"]}',
                               style: TextStyle(
                                   fontSize: 12, fontWeight: FontWeight.w600),
                               maxLines: 2,
@@ -1787,14 +1838,13 @@ class _HomeScreenState extends BaseRouteState {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 Text(
-                                  '${_mainVendorData[i]["status"]}',
+                                  '${data[i]["status"]}',
                                   style: TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w600,
-                                      color:
-                                          _mainVendorData[i]["status"] == "open"
-                                              ? Colors.green
-                                              : Colors.red),
+                                      color: data[i]["status"] == "open"
+                                          ? Colors.green
+                                          : Colors.red),
                                   maxLines: 1,
                                 ),
                               ],
@@ -1809,17 +1859,15 @@ class _HomeScreenState extends BaseRouteState {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 5),
                       child: Container(
-                        foregroundDecoration:
-                            _mainVendorData[i]["status"] == "open"
-                                ? BoxDecoration()
-                                : BoxDecoration(
-                                    color: Colors.grey,
-                                    backgroundBlendMode: BlendMode.saturation,
-                                  ),
+                        foregroundDecoration: data[i]["status"] == "open"
+                            ? BoxDecoration()
+                            : BoxDecoration(
+                                color: Colors.grey,
+                                backgroundBlendMode: BlendMode.saturation,
+                              ),
                         alignment: Alignment.center,
                         child: CachedNetworkImage(
-                          imageUrl: global.appInfo.imageUrl +
-                              _mainVendorData[i]["image"],
+                          imageUrl: global.appInfo.imageUrl + data[i]["image"],
                           imageBuilder: (context, imageProvider) => Container(
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
@@ -2330,6 +2378,9 @@ class _HomeScreenState extends BaseRouteState {
       final data = {
         "pincode": myPincode,
       };
+      final data1 = {
+        "search": "",
+      };
       print("aaaaaaaaaaaaaaaaaaaaaa : " + myPincode);
       final headers = {
         'content-type': 'application/json', // 'key=YOUR_SERVER_KEY'
@@ -2338,13 +2389,19 @@ class _HomeScreenState extends BaseRouteState {
           Uri.parse(global.baseUrl + "pincode_vendor"),
           body: json.encode(data),
           headers: headers);
+      final response1 = await http.post(
+          Uri.parse(global.baseUrl + "online_vendor"),
+          body: json.encode(data1),
+          headers: headers);
       print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa  : " + response.body);
 
       var dataConvertedToJSON = json.decode(response.body);
+      var dataConvertedToJSON1 = json.decode(response1.body);
 
       if (dataConvertedToJSON["status"] == 200) {
         setState(() {
           _mainVendorData = dataConvertedToJSON['data'] ?? [];
+          _onlineVendorData = dataConvertedToJSON1['data'] ?? [];
         });
       }
       return "Success";
