@@ -45,7 +45,8 @@ class Base extends StatefulWidget {
   BaseState createState() => BaseState();
 }
 
-class BaseState extends State<Base> with TickerProviderStateMixin, WidgetsBindingObserver {
+class BaseState extends State<Base>
+    with TickerProviderStateMixin, WidgetsBindingObserver {
   bool bannerAdLoaded = false;
 
   APIHelper apiHelper;
@@ -62,11 +63,14 @@ class BaseState extends State<Base> with TickerProviderStateMixin, WidgetsBindin
     br = new BusinessRule(apiHelper);
   }
 
-  Future<bool> addRemoveWishList(String storeId, int varientId, GlobalKey<ScaffoldState> scaffoldKey) async {
+  Future<bool> addRemoveWishList(String storeId, int varientId,
+      GlobalKey<ScaffoldState> scaffoldKey) async {
     bool _isAddedSuccesFully = false;
     try {
       showOnlyLoaderDialog();
-      await apiHelper.addRemoveWishList(storeId, varientId).then((result) async {
+      await apiHelper
+          .addRemoveWishList(storeId, varientId)
+          .then((result) async {
         if (result != null) {
           if (result.status == "1" || result.status == "2") {
             _isAddedSuccesFully = true;
@@ -75,7 +79,10 @@ class BaseState extends State<Base> with TickerProviderStateMixin, WidgetsBindin
             _isAddedSuccesFully = false;
             hideLoader();
 
-            showSnackBar(key: scaffoldKey, snackBarMessage: AppLocalizations.of(context).txt_please_try_again_after_sometime);
+            showSnackBar(
+                key: scaffoldKey,
+                snackBarMessage: AppLocalizations.of(context)
+                    .txt_please_try_again_after_sometime);
           }
         }
       });
@@ -86,11 +93,14 @@ class BaseState extends State<Base> with TickerProviderStateMixin, WidgetsBindin
     }
   }
 
-  Future<bool> addToCart( String storeId,int qty, int varientId, int special, GlobalKey<ScaffoldState> scaffoldKey, bool isAdd) async {
+  Future<bool> addToCart(String storeId, int qty, int varientId, int special,
+      GlobalKey<ScaffoldState> scaffoldKey, bool isAdd) async {
     bool _isAddedSuccesFully = false;
     try {
       showOnlyLoaderDialog();
-      await apiHelper.addToCart(storeId,qty, varientId, special).then((result) async {
+      await apiHelper
+          .addToCart(storeId, qty, varientId, special)
+          .then((result) async {
         if (result != null) {
           if (result.status == "1") {
             if (qty == 1 && isAdd) {
@@ -104,7 +114,10 @@ class BaseState extends State<Base> with TickerProviderStateMixin, WidgetsBindin
           } else {
             hideLoader();
             _isAddedSuccesFully = false;
-            showSnackBar(key: scaffoldKey, snackBarMessage: AppLocalizations.of(context).txt_please_try_again_after_sometime);
+            showSnackBar(
+                key: scaffoldKey,
+                snackBarMessage: AppLocalizations.of(context)
+                    .txt_please_try_again_after_sometime);
           }
         }
       });
@@ -115,7 +128,8 @@ class BaseState extends State<Base> with TickerProviderStateMixin, WidgetsBindin
     }
   }
 
-  Future addToCartShowModalBottomSheet(Product product, GlobalKey<ScaffoldState> _scaffoldKey) {
+  Future addToCartShowModalBottomSheet(
+      Product product, GlobalKey<ScaffoldState> _scaffoldKey) {
     try {
       return showModalBottomSheet(
           context: context,
@@ -126,7 +140,8 @@ class BaseState extends State<Base> with TickerProviderStateMixin, WidgetsBindin
             topRight: Radius.circular(10),
           )),
           builder: (context) {
-            return StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+            return StatefulBuilder(
+                builder: (BuildContext context, StateSetter setState) {
               return WillPopScope(
                 onWillPop: () {
                   Navigator.of(context).pop();
@@ -156,7 +171,8 @@ class BaseState extends State<Base> with TickerProviderStateMixin, WidgetsBindin
                               itemCount: product.varient.length,
                               itemBuilder: (context, index) {
                                 return Container(
-                                    margin: EdgeInsets.only(top: 10, bottom: 10),
+                                    margin:
+                                        EdgeInsets.only(top: 10, bottom: 10),
                                     decoration: BoxDecoration(
                                       color: Theme.of(context).cardTheme.color,
                                       borderRadius: BorderRadius.all(
@@ -166,7 +182,8 @@ class BaseState extends State<Base> with TickerProviderStateMixin, WidgetsBindin
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
                                       mainAxisAlignment: MainAxisAlignment.end,
-                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
                                       children: [
                                         Row(
                                           mainAxisSize: MainAxisSize.min,
@@ -175,64 +192,132 @@ class BaseState extends State<Base> with TickerProviderStateMixin, WidgetsBindin
                                               child: Padding(
                                                 padding: EdgeInsets.all(8),
                                                 child: Column(
-                                                  mainAxisSize: MainAxisSize.min,
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
                                                   children: [
                                                     ReadMoreText(
                                                       '${product.varient[index].description}',
                                                       trimLines: 2,
                                                       trimMode: TrimMode.Line,
-                                                      trimCollapsedText: 'Show more',
-                                                      trimExpandedText: 'Show less',
-                                                      style: Theme.of(context).primaryTextTheme.bodyText1,
-                                                      lessStyle: Theme.of(context).primaryTextTheme.bodyText1,
-                                                      moreStyle: Theme.of(context).primaryTextTheme.bodyText1,
+                                                      trimCollapsedText:
+                                                          'Show more',
+                                                      trimExpandedText:
+                                                          'Show less',
+                                                      style: Theme.of(context)
+                                                          .primaryTextTheme
+                                                          .bodyText1,
+                                                      lessStyle:
+                                                          Theme.of(context)
+                                                              .primaryTextTheme
+                                                              .bodyText1,
+                                                      moreStyle:
+                                                          Theme.of(context)
+                                                              .primaryTextTheme
+                                                              .bodyText1,
                                                     ),
                                                     RichText(
-                                                        text: TextSpan(text: "${global.appInfo.currencySign} ", style: Theme.of(context).primaryTextTheme.headline2, children: [
-                                                      TextSpan(
-                                                        text: '${product.varient[index].price}',
-                                                        style: Theme.of(context).primaryTextTheme.bodyText1,
-                                                      ),
-                                                      TextSpan(
-                                                        text: ' / ${product.varient[index].quantity} ${product.varient[index].unit}',
-                                                        style: Theme.of(context).primaryTextTheme.headline2,
-                                                      ),
-                                                      TextSpan(
-                                                        text: '    ${global.appInfo.currencySign} ',
-                                                        style: Theme.of(context).primaryTextTheme.headline2,
-                                                      ),
-                                                      TextSpan(
-                                                        text: ' ${product.varient[index].mrp}',
-                                                        style: Theme.of(context).primaryTextTheme.headline2.copyWith(decoration: TextDecoration.lineThrough),
-                                                      ),
-                                                    ])),
-                                                    product.varient[index].rating != null && product.varient[index].rating > 0
+                                                        text: TextSpan(
+                                                            text:
+                                                                "${global.appInfo.currencySign} ",
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .primaryTextTheme
+                                                                .headline2,
+                                                            children: [
+                                                          TextSpan(
+                                                            text:
+                                                                '${product.varient[index].price}',
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .primaryTextTheme
+                                                                .bodyText1,
+                                                          ),
+                                                          TextSpan(
+                                                            text:
+                                                                ' / ${product.varient[index].quantity} ${product.varient[index].unit}',
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .primaryTextTheme
+                                                                .headline2,
+                                                          ),
+                                                          TextSpan(
+                                                            text:
+                                                                '    ${global.appInfo.currencySign} ',
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .primaryTextTheme
+                                                                .headline2,
+                                                          ),
+                                                          TextSpan(
+                                                            text:
+                                                                ' ${product.varient[index].mrp}',
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .primaryTextTheme
+                                                                .headline2
+                                                                .copyWith(
+                                                                    decoration:
+                                                                        TextDecoration
+                                                                            .lineThrough),
+                                                          ),
+                                                        ])),
+                                                    product.varient[index]
+                                                                    .rating !=
+                                                                null &&
+                                                            product
+                                                                    .varient[
+                                                                        index]
+                                                                    .rating >
+                                                                0
                                                         ? Padding(
-                                                            padding: EdgeInsets.only(top: 4.0),
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    top: 4.0),
                                                             child: Row(
-                                                              mainAxisSize: MainAxisSize.min,
-                                                              mainAxisAlignment: MainAxisAlignment.start,
-                                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .min,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .start,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .center,
                                                               children: [
                                                                 Icon(
                                                                   Icons.star,
                                                                   size: 18,
-                                                                  color: Theme.of(context).primaryColorLight,
+                                                                  color: Theme.of(
+                                                                          context)
+                                                                      .primaryColorLight,
                                                                 ),
                                                                 RichText(
-                                                                  text: TextSpan(
-                                                                    text: "${product.varient[index].rating} ",
-                                                                    style: Theme.of(context).primaryTextTheme.bodyText1,
+                                                                  text:
+                                                                      TextSpan(
+                                                                    text:
+                                                                        "${product.varient[index].rating} ",
+                                                                    style: Theme.of(
+                                                                            context)
+                                                                        .primaryTextTheme
+                                                                        .bodyText1,
                                                                     children: [
                                                                       TextSpan(
-                                                                        text: '|',
-                                                                        style: Theme.of(context).primaryTextTheme.headline2,
+                                                                        text:
+                                                                            '|',
+                                                                        style: Theme.of(context)
+                                                                            .primaryTextTheme
+                                                                            .headline2,
                                                                       ),
                                                                       TextSpan(
-                                                                        text: ' ${product.varient[index].ratingCount} ${AppLocalizations.of(context).txt_ratings}',
-                                                                        style: Theme.of(context).primaryTextTheme.headline1,
+                                                                        text:
+                                                                            ' ${product.varient[index].ratingCount} ${AppLocalizations.of(context).txt_ratings}',
+                                                                        style: Theme.of(context)
+                                                                            .primaryTextTheme
+                                                                            .headline1,
                                                                       )
                                                                     ],
                                                                   ),
@@ -247,24 +332,42 @@ class BaseState extends State<Base> with TickerProviderStateMixin, WidgetsBindin
                                             ),
                                             Column(
                                               mainAxisSize: MainAxisSize.min,
-                                              mainAxisAlignment: MainAxisAlignment.end,
-                                              crossAxisAlignment: CrossAxisAlignment.end,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
                                               children: [
-                                                product.varient[index].discount != null && product.varient[index].discount > 0
+                                                product.varient[index]
+                                                                .discount !=
+                                                            null &&
+                                                        product.varient[index]
+                                                                .discount >
+                                                            0
                                                     ? Container(
                                                         height: 20,
                                                         width: 70,
-                                                        decoration: BoxDecoration(
-                                                          color: Colors.lightBlue,
-                                                          borderRadius: BorderRadius.only(
-                                                            topRight: Radius.circular(10),
-                                                            bottomLeft: Radius.circular(10),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color:
+                                                              Colors.lightBlue,
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                            topRight:
+                                                                Radius.circular(
+                                                                    10),
+                                                            bottomLeft:
+                                                                Radius.circular(
+                                                                    10),
                                                           ),
                                                         ),
                                                         child: Text(
                                                           "${product.varient[index].discount}% ${AppLocalizations.of(context).txt_off}",
-                                                          textAlign: TextAlign.center,
-                                                          style: Theme.of(context).primaryTextTheme.caption,
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .primaryTextTheme
+                                                              .caption,
                                                         ),
                                                       )
                                                     : SizedBox(
@@ -273,177 +376,360 @@ class BaseState extends State<Base> with TickerProviderStateMixin, WidgetsBindin
                                                       ),
                                                 IconButton(
                                                     onPressed: () async {
-                                                      if (global.currentUser.id == null) {
-                                                        Future.delayed(Duration.zero, () {
-                                                          Navigator.of(context).push(
+                                                      if (global
+                                                              .currentUser.id ==
+                                                          null) {
+                                                        Future.delayed(
+                                                            Duration.zero, () {
+                                                          Navigator.of(context)
+                                                              .push(
                                                             MaterialPageRoute(
-                                                                builder: (context) => LoginScreen(
-                                                                  false,
-                                                                      a: widget.analytics,
-                                                                      o: widget.observer,
-                                                                    )),
+                                                                builder:
+                                                                    (context) =>
+                                                                        LoginScreen(
+                                                                          false,
+                                                                          a: widget
+                                                                              .analytics,
+                                                                          o: widget
+                                                                              .observer,
+                                                                        )),
                                                           );
                                                         });
                                                       } else {
-                                                        bool _isAdded = await addRemoveWishList(product.storeId.toString(),product.varient[index].varientId, _scaffoldKey);
+                                                        bool _isAdded =
+                                                            await addRemoveWishList(
+                                                                product.storeId
+                                                                    .toString(),
+                                                                product
+                                                                    .varient[
+                                                                        index]
+                                                                    .varientId,
+                                                                _scaffoldKey);
                                                         if (_isAdded) {
-                                                          if (product.varient[index].varientId == product.varientId) {
-                                                            product.isFavourite = !product.varient[index].isFavourite;
+                                                          if (product
+                                                                  .varient[
+                                                                      index]
+                                                                  .varientId ==
+                                                              product
+                                                                  .varientId) {
+                                                            product.isFavourite =
+                                                                !product
+                                                                    .varient[
+                                                                        index]
+                                                                    .isFavourite;
                                                           }
-                                                          product.varient[index].isFavourite = !product.varient[index].isFavourite;
+                                                          product.varient[index]
+                                                                  .isFavourite =
+                                                              !product
+                                                                  .varient[
+                                                                      index]
+                                                                  .isFavourite;
                                                         }
 
                                                         setState(() {});
                                                       }
                                                     },
-                                                    icon: product.varient[index].isFavourite
+                                                    icon: product.varient[index]
+                                                            .isFavourite
                                                         ? Icon(
                                                             MdiIcons.heart,
                                                             size: 20,
-                                                            color: Color(0xFFEF5656),
+                                                            color: Color(
+                                                                0xFFEF5656),
                                                           )
                                                         : Icon(
                                                             MdiIcons.heart,
                                                             size: 20,
-                                                            color: Color(0xFF4A4352),
+                                                            color: Color(
+                                                                0xFF4A4352),
                                                           )),
-
                                                 product.varient[index].stock > 0
-                                                    ? product.varient[index].cartQty == null || (product.varient[index].cartQty != null && product.varient[index].cartQty == 0)
-                                                        ?
-                                                Container(
-                                                  height: 30,
-                                                  width: 60,
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.orange,
-                                                    borderRadius: BorderRadius.only(
-                                                      bottomRight: Radius.circular(10),
-                                                      topLeft: Radius.circular(10),
-                                                    ),
-                                                  ),
-                                                  child:
-                                                  FlatButton(
-                                                    child: Text('ADD',style: TextStyle(color: Colors.white),),
+                                                    ? product.varient[index]
+                                                                    .cartQty ==
+                                                                null ||
+                                                            (product
+                                                                        .varient[
+                                                                            index]
+                                                                        .cartQty !=
+                                                                    null &&
+                                                                product
+                                                                        .varient[
+                                                                            index]
+                                                                        .cartQty ==
+                                                                    0)
+                                                        ? Container(
+                                                            height: 30,
+                                                            // width: 60,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color:
+                                                                  Colors.orange,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .only(
+                                                                bottomRight:
+                                                                    Radius
+                                                                        .circular(
+                                                                            10),
+                                                                topLeft: Radius
+                                                                    .circular(
+                                                                        10),
+                                                              ),
+                                                            ),
+                                                            child: FlatButton(
+                                                              child: Padding(
+                                                                padding: const EdgeInsets
+                                                                        .symmetric(
+                                                                    horizontal:
+                                                                        5),
+                                                                child: Text(
+                                                                  'ADD TO CART',
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .white),
+                                                                ),
+                                                              ),
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .all(0),
+                                                              visualDensity:
+                                                                  VisualDensity(
+                                                                      vertical:
+                                                                          -4,
+                                                                      horizontal:
+                                                                          -4),
+                                                              onPressed:
+                                                                  () async {
+                                                                if (global
+                                                                        .currentUser
+                                                                        .id ==
+                                                                    null) {
+                                                                  Future.delayed(
+                                                                      Duration
+                                                                          .zero,
+                                                                      () {
+                                                                    Navigator.of(
+                                                                            context)
+                                                                        .push(
+                                                                      MaterialPageRoute(
+                                                                          builder: (context) =>
+                                                                              LoginScreen(
+                                                                                false,
+                                                                                a: widget.analytics,
+                                                                                o: widget.observer,
+                                                                              )),
+                                                                    );
+                                                                  });
+                                                                } else {
+                                                                  bool isAdded = await addToCart(
+                                                                      product
+                                                                          .storeId
+                                                                          .toString(),
+                                                                      1,
+                                                                      product
+                                                                          .varient[
+                                                                              index]
+                                                                          .varientId,
+                                                                      0,
+                                                                      _scaffoldKey,
+                                                                      true);
+                                                                  if (isAdded) {
+                                                                    product
+                                                                        .varient[
+                                                                            index]
+                                                                        .cartQty = product
+                                                                            .varient[index]
+                                                                            .cartQty +
+                                                                        1;
+                                                                  }
+                                                                  setState(
+                                                                      () {});
+                                                                }
+                                                              },
+                                                            ),
+                                                          )
 
-                                                    padding: EdgeInsets.all(0),
-
-                                                    visualDensity: VisualDensity(vertical: -4, horizontal: -4),
-
-                                                    onPressed: () async {
-                                                      if (global.currentUser.id == null) {
-                                                        Future.delayed(Duration.zero, () {
-                                                          Navigator.of(context).push(
-                                                            MaterialPageRoute(
-                                                                builder: (context) => LoginScreen(
-                                                                  false,
-                                                                  a: widget.analytics,
-                                                                  o: widget.observer,
-                                                                )),
-                                                          );
-                                                        });
-                                                      } else {
-                                                        bool isAdded = await addToCart(product.storeId.toString(),1, product.varient[index].varientId, 0, _scaffoldKey, true);
-                                                        if (isAdded) {
-                                                          product.varient[index].cartQty = product.varient[index].cartQty + 1;
-                                                        }
-                                                        setState(() {});
-                                                      }
-
-                                                    },
-                                                  ),
-                                                )
-
-                                                // Container(
-                                                //             height: 30,
-                                                //             width: 30,
-                                                //             decoration: BoxDecoration(
-                                                //               color: Theme.of(context).iconTheme.color,
-                                                //               borderRadius: BorderRadius.only(
-                                                //                 bottomRight: Radius.circular(10),
-                                                //                 topLeft: Radius.circular(10),
-                                                //               ),
-                                                //             ),
-                                                //             child: IconButton(
-                                                //               padding: EdgeInsets.all(0),
-                                                //               visualDensity: VisualDensity(vertical: -4, horizontal: -4),
-                                                //               onPressed: () async {
-                                                //                 if (global.currentUser.id == null) {
-                                                //                   Future.delayed(Duration.zero, () {
-                                                //                     Navigator.of(context).push(
-                                                //                       MaterialPageRoute(
-                                                //                           builder: (context) => LoginScreen(
-                                                //                                 a: widget.analytics,
-                                                //                                 o: widget.observer,
-                                                //                               )),
-                                                //                     );
-                                                //                   });
-                                                //                 } else {
-                                                //                   bool isAdded = await addToCart(1, product.varient[index].varientId, 0, _scaffoldKey, true);
-                                                //                   if (isAdded) {
-                                                //                     product.varient[index].cartQty = product.varient[index].cartQty + 1;
-                                                //                   }
-                                                //                   setState(() {});
-                                                //                 }
-                                                //               },
-                                                //               icon: Icon(
-                                                //                 Icons.add,
-                                                //                 color: Theme.of(context).primaryTextTheme.caption.color,
-                                                //               ),
-                                                //             ),
-                                                //           )
+                                                        // Container(
+                                                        //             height: 30,
+                                                        //             width: 30,
+                                                        //             decoration: BoxDecoration(
+                                                        //               color: Theme.of(context).iconTheme.color,
+                                                        //               borderRadius: BorderRadius.only(
+                                                        //                 bottomRight: Radius.circular(10),
+                                                        //                 topLeft: Radius.circular(10),
+                                                        //               ),
+                                                        //             ),
+                                                        //             child: IconButton(
+                                                        //               padding: EdgeInsets.all(0),
+                                                        //               visualDensity: VisualDensity(vertical: -4, horizontal: -4),
+                                                        //               onPressed: () async {
+                                                        //                 if (global.currentUser.id == null) {
+                                                        //                   Future.delayed(Duration.zero, () {
+                                                        //                     Navigator.of(context).push(
+                                                        //                       MaterialPageRoute(
+                                                        //                           builder: (context) => LoginScreen(
+                                                        //                                 a: widget.analytics,
+                                                        //                                 o: widget.observer,
+                                                        //                               )),
+                                                        //                     );
+                                                        //                   });
+                                                        //                 } else {
+                                                        //                   bool isAdded = await addToCart(1, product.varient[index].varientId, 0, _scaffoldKey, true);
+                                                        //                   if (isAdded) {
+                                                        //                     product.varient[index].cartQty = product.varient[index].cartQty + 1;
+                                                        //                   }
+                                                        //                   setState(() {});
+                                                        //                 }
+                                                        //               },
+                                                        //               icon: Icon(
+                                                        //                 Icons.add,
+                                                        //                 color: Theme.of(context).primaryTextTheme.caption.color,
+                                                        //               ),
+                                                        //             ),
+                                                        //           )
                                                         : Container(
                                                             height: 28,
                                                             width: 80,
-                                                            decoration: BoxDecoration(
-                                                              gradient: LinearGradient(
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              gradient:
+                                                                  LinearGradient(
                                                                 stops: [0, .90],
-                                                                begin: Alignment.centerLeft,
-                                                                end: Alignment.centerRight,
-                                                                colors: [Color(0xFFe03337), Color(0xFFb73537)],
+                                                                begin: Alignment
+                                                                    .centerLeft,
+                                                                end: Alignment
+                                                                    .centerRight,
+                                                                colors: [
+                                                                  Color(
+                                                                      0xFFe03337),
+                                                                  Color(
+                                                                      0xFFb73537)
+                                                                ],
                                                               ),
-                                                              borderRadius: BorderRadius.only(
-                                                                bottomRight: Radius.circular(10),
-                                                                topLeft: Radius.circular(10),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .only(
+                                                                bottomRight:
+                                                                    Radius
+                                                                        .circular(
+                                                                            10),
+                                                                topLeft: Radius
+                                                                    .circular(
+                                                                        10),
                                                               ),
                                                             ),
                                                             child: Row(
-                                                              mainAxisSize: MainAxisSize.min,
-                                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .min,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceEvenly,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .center,
                                                               children: [
                                                                 IconButton(
-                                                                    padding: EdgeInsets.all(0),
-                                                                    visualDensity: VisualDensity(vertical: -4, horizontal: -4),
-                                                                    onPressed: () async {
-                                                                      bool isAdded = await addToCart(product.storeId.toString(),product.varient[index].cartQty - 1, product.varient[index].varientId, 0, _scaffoldKey, false);
+                                                                    padding:
+                                                                        EdgeInsets
+                                                                            .all(
+                                                                                0),
+                                                                    visualDensity: VisualDensity(
+                                                                        vertical:
+                                                                            -4,
+                                                                        horizontal:
+                                                                            -4),
+                                                                    onPressed:
+                                                                        () async {
+                                                                      bool isAdded = await addToCart(
+                                                                          product
+                                                                              .storeId
+                                                                              .toString(),
+                                                                          product.varient[index].cartQty -
+                                                                              1,
+                                                                          product
+                                                                              .varient[index]
+                                                                              .varientId,
+                                                                          0,
+                                                                          _scaffoldKey,
+                                                                          false);
                                                                       if (isAdded) {
-                                                                        product.varient[index].cartQty = product.varient[index].cartQty - 1;
+                                                                        product
+                                                                            .varient[
+                                                                                index]
+                                                                            .cartQty = product
+                                                                                .varient[index].cartQty -
+                                                                            1;
                                                                       }
-                                                                      setState(() {});
+                                                                      setState(
+                                                                          () {});
                                                                     },
                                                                     icon: Icon(
-                                                                      FontAwesomeIcons.minus,
+                                                                      FontAwesomeIcons
+                                                                          .minus,
                                                                       size: 11,
-                                                                      color: Theme.of(context).primaryTextTheme.caption.color,
+                                                                      color: Theme.of(
+                                                                              context)
+                                                                          .primaryTextTheme
+                                                                          .caption
+                                                                          .color,
                                                                     )),
                                                                 Text(
                                                                   "${product.varient[index].cartQty}",
-                                                                  style: Theme.of(context).primaryTextTheme.bodyText1.copyWith(color: Theme.of(context).primaryTextTheme.caption.color),
+                                                                  style: Theme.of(
+                                                                          context)
+                                                                      .primaryTextTheme
+                                                                      .bodyText1
+                                                                      .copyWith(
+                                                                          color: Theme.of(context)
+                                                                              .primaryTextTheme
+                                                                              .caption
+                                                                              .color),
                                                                 ),
                                                                 IconButton(
-                                                                    padding: EdgeInsets.all(0),
-                                                                    visualDensity: VisualDensity(vertical: -4, horizontal: -4),
-                                                                    onPressed: () async {
-                                                                      bool isAdded = await addToCart(product.storeId.toString(),product.varient[index].cartQty + 1, product.varient[index].varientId, 0, _scaffoldKey, false);
+                                                                    padding:
+                                                                        EdgeInsets
+                                                                            .all(
+                                                                                0),
+                                                                    visualDensity: VisualDensity(
+                                                                        vertical:
+                                                                            -4,
+                                                                        horizontal:
+                                                                            -4),
+                                                                    onPressed:
+                                                                        () async {
+                                                                      bool isAdded = await addToCart(
+                                                                          product
+                                                                              .storeId
+                                                                              .toString(),
+                                                                          product.varient[index].cartQty +
+                                                                              1,
+                                                                          product
+                                                                              .varient[index]
+                                                                              .varientId,
+                                                                          0,
+                                                                          _scaffoldKey,
+                                                                          false);
                                                                       if (isAdded) {
-                                                                        product.varient[index].cartQty = product.varient[index].cartQty + 1;
+                                                                        product
+                                                                            .varient[
+                                                                                index]
+                                                                            .cartQty = product
+                                                                                .varient[index].cartQty +
+                                                                            1;
                                                                       }
-                                                                      setState(() {});
+                                                                      setState(
+                                                                          () {});
                                                                     },
                                                                     icon: Icon(
-                                                                      FontAwesomeIcons.plus,
+                                                                      FontAwesomeIcons
+                                                                          .plus,
                                                                       size: 11,
-                                                                      color: Theme.of(context).primaryTextTheme.caption.color,
+                                                                      color: Theme.of(
+                                                                              context)
+                                                                          .primaryTextTheme
+                                                                          .caption
+                                                                          .color,
                                                                     )),
                                                               ],
                                                             ),
@@ -464,7 +750,8 @@ class BaseState extends State<Base> with TickerProviderStateMixin, WidgetsBindin
                           Navigator.of(context).pop();
                         },
                         child: Container(
-                          margin: EdgeInsets.only(top: 5, left: 5, right: 5, bottom: 10),
+                          margin: EdgeInsets.only(
+                              top: 5, left: 5, right: 5, bottom: 10),
                           padding: EdgeInsets.all(2),
                           width: MediaQuery.of(context).size.width,
                           height: 50,
@@ -478,7 +765,9 @@ class BaseState extends State<Base> with TickerProviderStateMixin, WidgetsBindin
                           ),
                           child: Container(
                               decoration: BoxDecoration(
-                                color: global.isDarkModeEnable ? Colors.black : Colors.white,
+                                color: global.isDarkModeEnable
+                                    ? Colors.black
+                                    : Colors.white,
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               width: MediaQuery.of(context).size.width,
@@ -486,7 +775,12 @@ class BaseState extends State<Base> with TickerProviderStateMixin, WidgetsBindin
                               alignment: Alignment.center,
                               child: Text(
                                 "Done",
-                                style: TextStyle(fontSize: 16, color: global.isDarkModeEnable ? Theme.of(context).primaryColorLight : Theme.of(context).primaryColor, fontWeight: FontWeight.w400),
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: global.isDarkModeEnable
+                                        ? Theme.of(context).primaryColorLight
+                                        : Theme.of(context).primaryColor,
+                                    fontWeight: FontWeight.w400),
                               )),
                         ),
                       ),
@@ -499,7 +793,9 @@ class BaseState extends State<Base> with TickerProviderStateMixin, WidgetsBindin
         setState(() {});
       });
     } catch (e) {
-      print("Exception  - productListScreen.dart - _newProductAddToCartChoiceDialog(): " + e.toString());
+      print(
+          "Exception  - productListScreen.dart - _newProductAddToCartChoiceDialog(): " +
+              e.toString());
       return null;
     }
   }
@@ -532,7 +828,8 @@ class BaseState extends State<Base> with TickerProviderStateMixin, WidgetsBindin
     return _widgetList;
   }
 
-  Future<MembershipStatus> checkMemberShipStatus(GlobalKey<ScaffoldState> scaffoldKey) async {
+  Future<MembershipStatus> checkMemberShipStatus(
+      GlobalKey<ScaffoldState> scaffoldKey) async {
     MembershipStatus _membershipStatus = MembershipStatus();
     try {
       bool _isConnected = await br.checkConnectivity();
@@ -547,7 +844,8 @@ class BaseState extends State<Base> with TickerProviderStateMixin, WidgetsBindin
             } else {
               hideLoader();
 
-              showSnackBar(key: scaffoldKey, snackBarMessage: '${result.message}');
+              showSnackBar(
+                  key: scaffoldKey, snackBarMessage: '${result.message}');
             }
           }
         });
@@ -565,7 +863,8 @@ class BaseState extends State<Base> with TickerProviderStateMixin, WidgetsBindin
     Navigator.of(context).pop();
   }
 
-  dialogToOpenImage(String name, List<ImageModel> imageList, int index,{int screenId}) {
+  dialogToOpenImage(String name, List<ImageModel> imageList, int index,
+      {int screenId}) {
     try {
       showDialog(
           context: context,
@@ -576,7 +875,7 @@ class BaseState extends State<Base> with TickerProviderStateMixin, WidgetsBindin
               imageList: imageList,
               index: index,
               name: name,
-              screenId:screenId ,
+              screenId: screenId,
             );
           });
     } catch (e) {
@@ -605,11 +904,13 @@ class BaseState extends State<Base> with TickerProviderStateMixin, WidgetsBindin
           }
         }
       }
-    } else if (global.localNotificationModel != null && global.localNotificationModel.chatId != null && !global.isChatNotTapped) {
+    } else if (global.localNotificationModel != null &&
+        global.localNotificationModel.chatId != null &&
+        !global.isChatNotTapped) {
       if (state == AppLifecycleState.resumed) {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => LoginScreen(
-              false,
+                  false,
                   a: widget.analytics,
                   o: widget.observer,
                 )));
@@ -674,7 +975,8 @@ class BaseState extends State<Base> with TickerProviderStateMixin, WidgetsBindin
 
   getAddressFromLatLng() async {
     try {
-      List<Placemark> placemarks = await placemarkFromCoordinates(global.lat, global.lng);
+      List<Placemark> placemarks =
+          await placemarkFromCoordinates(global.lat, global.lng);
 
       Placemark place = placemarks[0];
 
@@ -688,7 +990,8 @@ class BaseState extends State<Base> with TickerProviderStateMixin, WidgetsBindin
   }
 
   getCurrentLocation() async {
-    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best).then((Position position) async {
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+        .then((Position position) async {
       setState(() {
         global.lat = position.latitude;
         global.lng = position.longitude;
@@ -705,10 +1008,12 @@ class BaseState extends State<Base> with TickerProviderStateMixin, WidgetsBindin
     try {
       if (Platform.isIOS) {
         LocationPermission s = await Geolocator.checkPermission();
-        if (s == LocationPermission.denied || s == LocationPermission.deniedForever) {
+        if (s == LocationPermission.denied ||
+            s == LocationPermission.deniedForever) {
           s = await Geolocator.requestPermission();
         }
-        if (s != LocationPermission.denied || s != LocationPermission.deniedForever) {
+        if (s != LocationPermission.denied ||
+            s != LocationPermission.deniedForever) {
           await getCurrentLocation();
         } else {
           global.locationMessage = 'Please enable location permission';
@@ -734,7 +1039,8 @@ class BaseState extends State<Base> with TickerProviderStateMixin, WidgetsBindin
       List<Location> _locationList = await locationFromAddress(address);
       return '${_locationList[0].latitude}|${_locationList[0].longitude}';
     } catch (e) {
-      print("Exception -  base.dart - getLocationFromAddress():" + e.toString());
+      print(
+          "Exception -  base.dart - getLocationFromAddress():" + e.toString());
       return null;
     }
   }
@@ -746,7 +1052,8 @@ class BaseState extends State<Base> with TickerProviderStateMixin, WidgetsBindin
           if (result.status == "1") {
             global.nearStoreModel = result.data;
             if (global.currentUser.id != null) {
-              await apiHelper.updateFirebaseUserFcmToken(global.currentUser.id, global.appDeviceId);
+              await apiHelper.updateFirebaseUserFcmToken(
+                  global.currentUser.id, global.appDeviceId);
             }
 
             if (global.appInfo.lastLoc == 1) {
@@ -770,20 +1077,24 @@ class BaseState extends State<Base> with TickerProviderStateMixin, WidgetsBindin
         if (result != null) {
           if (result.status == "1") {
             global.nearPincodeModel = result.data;
-            global.sp.setString("myPincode", '${global.nearPincodeModel.pincode}');
+            global.sp
+                .setString("myPincode", '${global.nearPincodeModel.pincode}');
             // print("aaaaaaaaaaaaaaaaaaaaa111 : "+global.nearPincodeModel.pincode.toString());
             if (global.currentUser.id != null) {
-              await apiHelper.updateFirebaseUserFcmToken(global.currentUser.id, global.appDeviceId);
+              await apiHelper.updateFirebaseUserFcmToken(
+                  global.currentUser.id, global.appDeviceId);
             }
 
             if (global.appInfo.lastLoc == 1) {
               global.sp.setString("lastloc", '${global.lat}|${global.lng}');
             }
           } else {
-            print("aaaaaaaaaaaaaaaaaaaaa11 : "+result.data.toString());
+            print("aaaaaaaaaaaaaaaaaaaaa11 : " + result.data.toString());
             global.nearPincodeModel2 = result.data;
-            print("aaaaaaaaaaaaaaaaaaaaa11 : "+global.nearPincodeModel2.pincode.toString());
-            global.sp.setString("myPincode", '${global.nearPincodeModel2.pincode}');
+            print("aaaaaaaaaaaaaaaaaaaaa11 : " +
+                global.nearPincodeModel2.pincode.toString());
+            global.sp
+                .setString("myPincode", '${global.nearPincodeModel2.pincode}');
             global.nearPincodeModel.id = null;
             global.locationMessage = result.message;
           }
@@ -825,18 +1136,23 @@ class BaseState extends State<Base> with TickerProviderStateMixin, WidgetsBindin
         await _getBarcodeResult(scaffoldKey, barcodeScanRes);
       }
     } catch (e) {
-      print("Exception - businessRule.dart - openBarcodeScanner():" + e.toString());
+      print("Exception - businessRule.dart - openBarcodeScanner():" +
+          e.toString());
     }
   }
 
-  sendOTP(String phoneNumber, GlobalKey<ScaffoldState> scaffoldKey, int screenId) async {
+  sendOTP(String phoneNumber, GlobalKey<ScaffoldState> scaffoldKey,
+      int screenId) async {
     try {
       await FirebaseAuth.instance.verifyPhoneNumber(
         phoneNumber: '+${global.appInfo.countryCode}$phoneNumber',
         verificationCompleted: (PhoneAuthCredential credential) {},
         verificationFailed: (FirebaseAuthException e) {
           hideLoader();
-          showSnackBar(key: scaffoldKey, snackBarMessage: AppLocalizations.of(context).txt_please_try_again_after_sometime);
+          showSnackBar(
+              key: scaffoldKey,
+              snackBarMessage: AppLocalizations.of(context)
+                  .txt_please_try_again_after_sometime);
         },
         codeSent: (String verificationId, int resendToken) async {
           hideLoader();
@@ -906,7 +1222,8 @@ class BaseState extends State<Base> with TickerProviderStateMixin, WidgetsBindin
         backgroundColor: Colors.grey,
       ));
     } catch (e) {
-      print("Exception -  base.dart - showNetworkErrorSnackBar():" + e.toString());
+      print("Exception -  base.dart - showNetworkErrorSnackBar():" +
+          e.toString());
     }
   }
 
@@ -942,16 +1259,25 @@ class BaseState extends State<Base> with TickerProviderStateMixin, WidgetsBindin
       bool isConnected = await br.checkConnectivity();
       if (isConnected) {
         showOnlyLoaderDialog();
-        final LoginResult loginResult = await FacebookAuth.instance.login(permissions: ["email", "public_profile"]);
+        final LoginResult loginResult = await FacebookAuth.instance
+            .login(permissions: ["email", "public_profile"]);
         if (loginResult.accessToken.token != null) {
-          final OAuthCredential facebookAuthCredential = FacebookAuthProvider.credential(loginResult.accessToken.token);
-          var authCredentials = await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+          final OAuthCredential facebookAuthCredential =
+              FacebookAuthProvider.credential(loginResult.accessToken.token);
+          var authCredentials = await FirebaseAuth.instance
+              .signInWithCredential(facebookAuthCredential);
           if (authCredentials != null && authCredentials.user != null) {
-            await apiHelper.socialLogin(userEmail: authCredentials.user.email, facebookId: authCredentials.user.uid, type: "facebook").then((result) async {
+            await apiHelper
+                .socialLogin(
+                    userEmail: authCredentials.user.email,
+                    facebookId: authCredentials.user.uid,
+                    type: "facebook")
+                .then((result) async {
               if (result != null) {
                 if (result.status == "1") {
                   global.currentUser = result.recordList;
-                  global.sp.setString('currentUser', json.encode(global.currentUser.toJson()));
+                  global.sp.setString(
+                      'currentUser', json.encode(global.currentUser.toJson()));
 
                   hideLoader();
                   Navigator.of(context).push(
@@ -986,7 +1312,8 @@ class BaseState extends State<Base> with TickerProviderStateMixin, WidgetsBindin
         showNetworkErrorSnackBar(scaffoldKey);
       }
     } catch (e) {
-      print("Exception - loginScreen.dart - signInWithFacebook():" + e.toString());
+      print("Exception - loginScreen.dart - signInWithFacebook():" +
+          e.toString());
     }
   }
 
@@ -1001,11 +1328,16 @@ class BaseState extends State<Base> with TickerProviderStateMixin, WidgetsBindin
           result.authentication.then((googleKey) async {
             if (_googleSignIn.currentUser != null) {
               showOnlyLoaderDialog();
-              await apiHelper.socialLogin(userEmail: _googleSignIn.currentUser.email, type: 'google').then((result) async {
+              await apiHelper
+                  .socialLogin(
+                      userEmail: _googleSignIn.currentUser.email,
+                      type: 'google')
+                  .then((result) async {
                 if (result != null) {
                   if (result.status == "1") {
                     global.currentUser = result.data;
-                    global.sp.setString('currentUser', json.encode(global.currentUser.toJson()));
+                    global.sp.setString('currentUser',
+                        json.encode(global.currentUser.toJson()));
 
                     hideLoader();
                     Navigator.of(context).push(
@@ -1024,7 +1356,10 @@ class BaseState extends State<Base> with TickerProviderStateMixin, WidgetsBindin
                     // registration required
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => SignUpScreen(user: _currentUser, a: widget.analytics, o: widget.observer),
+                        builder: (context) => SignUpScreen(
+                            user: _currentUser,
+                            a: widget.analytics,
+                            o: widget.observer),
                       ),
                     );
                   }
@@ -1035,7 +1370,8 @@ class BaseState extends State<Base> with TickerProviderStateMixin, WidgetsBindin
         }
       });
     } catch (e) {
-      print("Exception - loginScreen.dart - _signInWithGoogle():" + e.toString());
+      print(
+          "Exception - loginScreen.dart - _signInWithGoogle():" + e.toString());
     }
   }
 
@@ -1067,13 +1403,17 @@ class BaseState extends State<Base> with TickerProviderStateMixin, WidgetsBindin
 
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => ProductDetailScreen(productDetail: result.data, a: widget.analytics, o: widget.observer),
+                  builder: (context) => ProductDetailScreen(
+                      productDetail: result.data,
+                      a: widget.analytics,
+                      o: widget.observer),
                 ),
               );
             } else {
               hideLoader();
 
-              showSnackBar(key: scaffoldKey, snackBarMessage: '${result.message}');
+              showSnackBar(
+                  key: scaffoldKey, snackBarMessage: '${result.message}');
             }
           } else {
             hideLoader();
@@ -1083,7 +1423,8 @@ class BaseState extends State<Base> with TickerProviderStateMixin, WidgetsBindin
         showNetworkErrorSnackBar(scaffoldKey);
       }
     } catch (e) {
-      print("Exception - businessRule.dart - _getBarcodeResult():" + e.toString());
+      print("Exception - businessRule.dart - _getBarcodeResult():" +
+          e.toString());
     }
   }
 

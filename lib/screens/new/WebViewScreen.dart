@@ -7,7 +7,15 @@ import 'package:gomeat/models/businessLayer/global.dart' as global;
 class WebViewScreen extends StatefulWidget {
   final String custid;
   final String mlmid;
-  WebViewScreen({@required this.custid, @required this.mlmid});
+  final bool report;
+  final String url;
+  final String name;
+  WebViewScreen(
+      {@required this.custid,
+      @required this.mlmid,
+      @required this.report,
+      this.url,
+      this.name});
 
   @override
   _WebViewScreenState createState() => _WebViewScreenState();
@@ -28,6 +36,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.url);
     return WillPopScope(
       onWillPop: _exitApp,
       child: SafeArea(
@@ -39,7 +48,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
             ),
             elevation: 0.0,
             title: Text(
-              "MLM Tree",
+              widget.report ? widget.name : "MLM Tree",
               style: TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.w600,
@@ -54,13 +63,17 @@ class _WebViewScreenState extends State<WebViewScreen> {
                   children: [
                     WebView(
                       javascriptMode: JavascriptMode.unrestricted,
-                      initialUrl: global.baseUrl+"mlmtreec/"+widget.mlmid+"/"+widget.custid,
+                      initialUrl: widget.report
+                          ? "${global.baseUrl}${widget.url}"
+                          : global.baseUrl +
+                              "mlmtreec/" +
+                              widget.mlmid +
+                              "/" +
+                              widget.custid,
                       gestureNavigationEnabled: true,
                       onWebViewCreated: (WebViewController webViewController) {
                         _controller.future
-                            .then((value)
-
-                        => controllerGlobal = value);
+                            .then((value) => controllerGlobal = value);
                         _controller.complete(webViewController);
                       },
                       onPageStarted: (String url) {

@@ -5,6 +5,7 @@ import 'package:avatar_glow/avatar_glow.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_html/shims/dart_ui_real.dart';
@@ -47,9 +48,13 @@ import 'package:shimmer/shimmer.dart';
 import 'package:http/http.dart' as http;
 import 'package:speech_to_text/speech_to_text.dart' as speechToText;
 
+import '../models/userModel.dart';
 import 'aboutUsAndTermsOfServiceScreen.dart';
+import 'loginScreen.dart';
+import 'new/WebViewScreen.dart';
 import 'new/scanner.dart';
 import 'new/scannerqr.dart';
+import 'referToVendors.dart';
 // import 'package:speed_dial_fab/speed_dial_fab.dart';
 
 class HomeScreen extends BaseRoute {
@@ -115,6 +120,52 @@ class _HomeScreenState extends BaseRouteState {
         isListen = false;
       });
       speech.stop();
+    }
+  }
+
+  Future logoutAppDialog() async {
+    try {
+      showCupertinoDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return Theme(
+              data: ThemeData(dialogBackgroundColor: Colors.white),
+              child: CupertinoAlertDialog(
+                title: Text(
+                  "Logout",
+                ),
+                content: Text(
+                  "Are you sure you want to Logout?",
+                ),
+                actions: <Widget>[
+                  CupertinoDialogAction(
+                    child: Text(
+                      '${AppLocalizations.of(context).lbl_cancel}',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                    onPressed: () {
+                      return Navigator.of(context).pop(false);
+                    },
+                  ),
+                  CupertinoDialogAction(
+                    child: Text("Confirm"),
+                    onPressed: () async {
+                      global.sp.remove('currentUser');
+                      global.currentUser = new CurrentUser();
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => LoginScreen(true,
+                              a: widget.analytics, o: widget.observer),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            );
+          });
+    } catch (e) {
+      print('Exception - base.dart - logoutAppDialog(): ' + e.toString());
     }
   }
 
@@ -219,7 +270,59 @@ class _HomeScreenState extends BaseRouteState {
               SizedBox(
                 height: 15,
               ),
+              InkWell(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => ReferToVendors(
+                          a: widget.analytics, o: widget.observer),
+                    ),
+                  );
+                },
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 12,
+                    ),
+                    Icon(Icons.people),
+                    SizedBox(
+                      width: 12,
+                    ),
+                    Text("Refer to Vendors")
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
 
+              InkWell(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => WebViewScreen(
+                        report: true,
+                        custid: '',
+                        mlmid: '',
+                        name: "MLM Report",
+                        url: "mlmlevelweb/${global.currentUser.id}"),
+                  ));
+                },
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 12,
+                    ),
+                    Icon(Icons.report_gmailerrorred),
+                    SizedBox(
+                      width: 12,
+                    ),
+                    Text("MLM Report")
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
               InkWell(
                 onTap: () {
                   Navigator.of(context).push(
@@ -421,7 +524,27 @@ class _HomeScreenState extends BaseRouteState {
                   ],
                 ),
               ),
+              SizedBox(
+                height: 15,
+              ),
 
+              InkWell(
+                onTap: () {
+                  logoutAppDialog();
+                },
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 12,
+                    ),
+                    Icon(Icons.help_outline),
+                    SizedBox(
+                      width: 12,
+                    ),
+                    Text("Logout")
+                  ],
+                ),
+              ),
               // SizedBox(height: 15,),
               // InkWell(
               //   onTap: () {

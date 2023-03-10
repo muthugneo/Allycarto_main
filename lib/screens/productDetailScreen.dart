@@ -1214,7 +1214,7 @@ class _ProductDetailScreenState extends BaseRouteState {
                                                   children: [
                                                     Container(
                                                       height: 30,
-                                                      width: 100,
+                                                      // width: 100,
                                                       decoration: BoxDecoration(
                                                         color: Colors.orange,
                                                         borderRadius:
@@ -1229,7 +1229,7 @@ class _ProductDetailScreenState extends BaseRouteState {
                                                       ),
                                                       child: FlatButton(
                                                         child: Text(
-                                                          '   ADD   ',
+                                                          '   ADD TO CART  ',
                                                           style: TextStyle(
                                                               color:
                                                                   Colors.white),
@@ -1723,7 +1723,7 @@ class _ProductDetailScreenState extends BaseRouteState {
                                                   right: 0,
                                                   child: Container(
                                                     height: 30,
-                                                    width: 60,
+                                                    // width: 60,
                                                     decoration: BoxDecoration(
                                                       color: Colors.orange,
                                                       borderRadius:
@@ -1735,11 +1735,17 @@ class _ProductDetailScreenState extends BaseRouteState {
                                                       ),
                                                     ),
                                                     child: FlatButton(
-                                                      child: Text(
-                                                        'ADD',
-                                                        style: TextStyle(
-                                                            color:
-                                                                Colors.white),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal: 5),
+                                                        child: Text(
+                                                          'ADD TO CART',
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white),
+                                                        ),
                                                       ),
                                                       padding:
                                                           EdgeInsets.all(0),
